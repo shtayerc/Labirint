@@ -140,8 +140,8 @@ function mapInit()
             map.block[name].crossOrigin = 'Anonymous'; //zaradi metode screen.getImageData ki mece security error
             map.block[name].onload = function () 
             {
-                map.draw();
-                map.drawPanel();
+               map.draw();
+               map.drawPanel();
             }                      
             map.block[name].src=url;
         },
