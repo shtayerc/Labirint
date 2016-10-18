@@ -20,12 +20,13 @@ function gameInit()
                 game.menu.button.make.draw();
                 if(game.menu.button.play.isClicked())
                 {
-                    map.level=window['level_'+map.levelIndex];
-
-
-                    game.menu.loop=false;
+                   game.menu.loop=false;
                     game.loop=true;
                     game.clear();
+                      map.level=toArray(level_00);
+
+                    map.keys.reset();
+                   
                     map.loadBlocks();
                     map.drawPanel();
                     game.start();
@@ -109,8 +110,11 @@ function gameInit()
                 break;
 
             }
-
-            //  if ((((mouse_x >= text_play_1.x && mouse_x <= text_play_1.x_2) && (mouse_y >= text_play_1.y_1 && mouse_y <= text_play_1.y))) && mouse_click_left == true)
+            if(map.button.restart.isClicked())
+            {
+            
+ map.restart();           
+            }
             if(map.button.back.isClicked())
             {
                 game.loop=false;

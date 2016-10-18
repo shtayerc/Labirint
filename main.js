@@ -10,7 +10,7 @@ function main()
     playerInit();
     gameInit();
        game.menu.main();
-     map.level=level_00; 
+    // map.level=level_00; 
   
     //  game.start();
 }

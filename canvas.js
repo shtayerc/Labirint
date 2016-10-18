@@ -47,3 +47,28 @@ function text(x,y,txt)
         screen.fillText(this.txt, this.x, this.y);
     };
 }
+function toArray(str) //pretvori string mape v dvodimenzionalno polje
+{
+    var arr=str.split('|');
+    var n=[];
+    for(var i=0;i<arr.length;i=i+1)
+    {
+        n[i]=JSON.parse('[' + arr[i] + ']');
+
+    }
+    return n;
+}
+function toMapString(arr) //pretvori dvodimenzionalno polje v string
+{
+    var str='';
+    for(var i=0;i<arr.length;i=i+1)
+    {
+        str=str+arr[i].join(',');
+        if(i+1<arr.length)
+        {
+            str=str+'|';
+        }
+
+    }
+    return str;
+}

@@ -6,8 +6,18 @@ function mapInit()
         levelIndex:'00',
         level:[],
         button:{
-            back:new text(0,625,'Back')
+            back:new text(0,625,'Back'),
+            restart: new text(70,625,'Restart')
 
+        },
+        restart:function()
+        {
+            map.level=toArray(window['level_'+map.levelIndex]);
+            game.clear();
+            map.keys.reset();
+            map.draw();
+                map.drawPanel();
+        
         },
         make:{
             level:empty,
@@ -16,7 +26,7 @@ function mapInit()
             blockNum:9,
             loop:true,
             button:{
-                back:new text(0,625,'Back')
+                back:new text(0,625,'Back'),
             },
             panel:function()
             {
@@ -165,6 +175,7 @@ function mapInit()
                 {
                     map.make.loop=false;
                     game.clear();
+                    map.keys.reset();
                     game.menu.loop=true;
                     game.menu.main();
 
@@ -283,12 +294,15 @@ function mapInit()
             reset:function()
             {
                 map.keys.key_1.num=0;
+                map.keys.key_1.taken=false;
                 map.keys.key_2.num=0;
+                map.keys.key_2.taken=false;
             }
         },
         drawPanel:function()
         {
             map.button.back.draw();
+            map.button.restart.draw();
             screen.beginPath();
             screen.moveTo(0, 602);
             screen.lineTo(800, 602);
