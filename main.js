@@ -1,13 +1,15 @@
 function main()
 {
     createCanvas();
+     levelsInit();
+
     keyInit();
     mapInit();
-   //map.loadBlocks();   
+   
+    //map.loadBlocks();   
     playerInit();
     gameInit();
-    levelsInit();
-  game.menu.main();
+       game.menu.main();
      map.level=level_00; 
   
     //  game.start();

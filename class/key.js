@@ -53,7 +53,7 @@ function keyInit()
             }
             if (event.which == 3)
             {
-                mouse.button.left=true;
+                mouse.button.right=true;
             }
         },
         buttonUp:function(event)

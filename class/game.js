@@ -4,7 +4,7 @@ function gameInit()
         loop:true,
         tick:100,
         menu:{
-            font:'30px Arial',
+            font:'25px Arial',
             color:'#ffffff',
             loop:true,
             tick:50,
@@ -20,12 +20,27 @@ function gameInit()
                 game.menu.button.make.draw();
                 if(game.menu.button.play.isClicked())
                 {
+                    map.level=window['level_'+map.levelIndex];
 
 
                     game.menu.loop=false;
+                    game.loop=true;
                     game.clear();
                     map.loadBlocks();
+                    map.drawPanel();
                     game.start();
+                }
+                if(game.menu.button.make.isClicked())
+                {
+                    game.menu.loop=false;
+                    game.clear();
+                    map.level=empty;
+                    map.loadBlocks();
+                    game.clear();
+                    map.make.loop=true;
+                    map.make.panel();
+                    map.make.newLevel();
+
                 }
                 if(game.menu.loop!=false)
                 {
@@ -96,6 +111,13 @@ function gameInit()
             }
 
             //  if ((((mouse_x >= text_play_1.x && mouse_x <= text_play_1.x_2) && (mouse_y >= text_play_1.y_1 && mouse_y <= text_play_1.y))) && mouse_click_left == true)
+            if(map.button.back.isClicked())
+            {
+                game.loop=false;
+                game.menu.loop=true;
+                game.clear();
+                game.menu.main();
+            }
             if(game.loop != false)
             {
 
@@ -106,39 +128,5 @@ function gameInit()
 
 
     };
-
-    function text(x,y,txt)
-    {
-        this.txt=txt;
-        this.x=x;
-        this.y=y;
-
-        this.isClicked=function()
-
-        {
-            screen.font=game.menu.font;
-
-            var width=screen.measureText(txt).width; //izracuna dolzino besedila v pikslih
-            var height=screen.measureText('M').width; //sirina velikega M je priblizno visina fonta
-
-            if((mouse.canvasCoord.x >= this.x && mouse.canvasCoord.x <= this.x+width) && 
-                (mouse.canvasCoord.y >= this.y-height && mouse.canvasCoord.y <= this.y))
-            {
-                if(mouse.button.left==true)
-                {
-                    return true;
-                }
-            }
-            
-            
-            return false;
-        };
-        this.draw=function()
-        {
-            screen.font=game.menu.font;
-            screen.fillStyle=game.menu.color;
-            screen.fillText(this.txt, this.x, this.y);
-        };
-    }
 
 }

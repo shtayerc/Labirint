@@ -3,7 +3,180 @@ function mapInit()
     map={
         blockSize:25, //velikost bloka v pikslih
         block:[],
+        levelIndex:'00',
         level:[],
+        button:{
+            back:new text(0,625,'Back')
+
+        },
+        make:{
+            level:empty,
+            tick:10, //vsakih koliko ms se funkcija ponovi
+            block:1, //kateri blok je izbran in se postavlja v mapo
+            blockNum:9,
+            loop:true,
+            button:{
+                back:new text(0,625,'Back')
+            },
+            panel:function()
+            {
+
+                screen.beginPath();
+                screen.moveTo(0, 602);
+                screen.lineTo(800, 602);
+                screen.lineWidth = 2;
+                screen.strokeStyle = "grey";
+                screen.stroke();
+                map.make.button.back.draw();
+                switch(map.make.block)
+                {
+                    case 1:
+                        screen.clearRect(100, 602, map.blockSize, map.blockSize);
+                        screen.drawImage(map.block['wall'], 100, 602);
+                        break;
+
+                    case 2:
+                        screen.clearRect(100, 602, map.blockSize, map.blockSize);
+                        screen.drawImage(map.block['key_1'], 100, 602);
+                        break;
+
+                    case 3:
+                        screen.clearRect(100, 602, map.blockSize, map.blockSize);
+                        screen.drawImage(map.block['keylock_1'], 100, 602);
+                        break;
+
+                    case  4:
+                        screen.clearRect(100, 602, map.blockSize, map.blockSize);
+                        screen.drawImage(map.block['key_2'], 100, 602);
+                        break;
+
+                    case 5:
+                        screen.clearRect(100, 602, map.blockSize, map.blockSize);
+                        screen.drawImage(map.block['keylock_2'], 100, 602);
+                        break;
+
+                    case 6:
+                        screen.clearRect(100, 602, map.blockSize, map.blockSize);
+                        screen.beginPath();
+                        screen.rect(100, 602, map.blockSize, map.blockSize);
+                        screen.fillStyle = "#0000FF";
+                        screen.fill();
+                        screen.closePath();
+                        break;
+
+                    case 7:
+                        screen.clearRect(100, 602, map.blockSize, map.blockSize);
+                        screen.drawImage(map.block['end'], 100, 602);
+                        break;
+
+                    case 8:
+                        screen.clearRect(100, 602, map.blockSize, map.blockSize);
+                        break;
+                }
+            },
+            newLevel:function()
+            {
+                var mapa=new coord(0,0);
+                var curPos=new coord(0,0);
+                mapa.x = ((mouse.canvasCoord.x / map.blockSize) + 1) | 0; //zracuna koordinate v mapi in zaokrozi navzdol
+                mapa.y = ((mouse.canvasCoord.y / map.blockSize) + 1) | 0;
+                curPos.x = map.blockSize * (mapa.x - 1);
+                curPos.y = map.blockSize * (mapa.y - 1);
+                if ((mouse.canvasCoord.x >= 100 && mouse.canvasCoord.x <= 100 + map.blockSize) && (mouse.canvasCoord.y >= 602 && mouse.canvasCoord.y <= 627))
+                {
+                    mouse.click.timer = 10; //treba je nastavit na manj da se ob enem kliku blok ne spremeni veckrat
+                    if (mouse.click.left == true)
+                    {
+                        map.make.block = map.make.block + 1;
+                    }
+
+
+                    if (map.make.block == map.make.blockNum)
+                    {
+                        map.make.block = 1;
+                    }
+                    map.make.panel();
+                }else
+                {
+                    mouse.click.timer = 100;
+                }
+
+                if (mouse.button.right == true)
+                {
+                    if (mouse.canvasCoord.y < 600 && mapa.y <= 24)
+                    {
+                        switch(map.make.block)
+                        {
+                            case 1:
+                                map.make.level[mapa.y][mapa.x] = 2;
+                                screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
+                                screen.drawImage(map.block['wall'], curPos.x, curPos.y);
+                                break;
+
+                            case 2:
+                                map.make.level[mapa.y][mapa.x] = 5;
+                                screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
+                                screen.drawImage(map.block['key_1'], curPos.x, curPos.y);
+                                break;
+
+                            case 3:
+                                map.make.level[mapa.y][mapa.x] = 8;
+                                screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
+                                screen.drawImage(map.block['keylock_1'], curPos.x, curPos.y);
+                                break;
+
+                            case 4:
+                                map.make.level[mapa.y][mapa.x] = 7;
+                                screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
+                                screen.drawImage(map.block['key_2'], curPos.x, curPos.y);
+                                break;
+
+                            case 5:
+                                map.make.level[mapa.y][mapa.x] = 6;
+                                screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
+                                screen.drawImage(map.block['keylock_2'], curPos.x, curPos.y);
+                                break;
+
+                            case 6:
+                                map.make.level[mapa.y][mapa.x] = 1;
+                                screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
+                                screen.beginPath();
+                                screen.rect(curPos.x, curPos.y, map.blockSize, map.blockSize);
+                                screen.fillStyle = "#0000FF";
+                                screen.fill();
+                                screen.closePath();
+                                break;
+
+                            case 7:
+                                map.make.level[mapa.y][mapa.x] = 10;
+                                screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
+                                screen.drawImage(map.block['end'], curPos.x, curPos.y);
+                                break;
+
+                            case 8:
+                                map.make.level[mapa.y][mapa.x] = 0;
+                                screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
+                                break;
+                        }
+                    }
+
+                }
+                if(map.make.button.back.isClicked())
+                {
+                    map.make.loop=false;
+                    game.clear();
+                    game.menu.loop=true;
+                    game.menu.main();
+
+                }
+                if(map.make.loop!=false) 
+                {
+                    setTimeout(map.make.newLevel, map.make.tick);
+                }
+
+
+            }
+        },
         draw:function()
         {
             var curPos=new coord(0,0); //current position
@@ -19,36 +192,36 @@ function mapInit()
                     switch(map.level[mapa.y][mapa.x]) //preverja polje map.level in narise ustrezen blok
                     {
                         case 2:
-                            screen.drawImage(map.block['wall'], curPos.x, curPos.y);
-                            break;
+                        screen.drawImage(map.block['wall'], curPos.x, curPos.y);
+                        break;
 
                         case 5:
-                            screen.drawImage(map.block['key_1'], curPos.x, curPos.y);
-                            break;
+                        screen.drawImage(map.block['key_1'], curPos.x, curPos.y);
+                        break;
 
                         case 7:
-                            screen.drawImage(map.block['key_2'], curPos.x, curPos.y);
-                            break;
+                        screen.drawImage(map.block['key_2'], curPos.x, curPos.y);
+                        break;
 
                         case 8:
-                            screen.drawImage(map.block['keylock_1'], curPos.x, curPos.y);
-                            break;
+                        screen.drawImage(map.block['keylock_1'], curPos.x, curPos.y);
+                        break;
 
                         case 6:
-                            screen.drawImage(map.block['keylock_2'], curPos.x, curPos.y);
-                            break;
+                        screen.drawImage(map.block['keylock_2'], curPos.x, curPos.y);
+                        break;
 
                         case 10:
-                            screen.drawImage(map.block['end'], curPos.x, curPos.y);
-                            break;
+                        screen.drawImage(map.block['end'], curPos.x, curPos.y);
+                        break;
 
                         case 1:
-                            player.canvasCoord.x = (mapa.x - 1) * map.blockSize;
-                            player.canvasCoord.y = (mapa.y - 1) * map.blockSize;
-                            player.mapCoord.x = mapa.x;
-                            player.mapCoord.y = mapa.y;
-                            player.draw();
-                            break;
+                        player.canvasCoord.x = (mapa.x - 1) * map.blockSize;
+                        player.canvasCoord.y = (mapa.y - 1) * map.blockSize;
+                        player.mapCoord.x = mapa.x;
+                        player.mapCoord.y = mapa.y;
+                        player.draw();
+                        break;
                     }
 
                     mapa.x = mapa.x + 1;
@@ -115,6 +288,7 @@ function mapInit()
         },
         drawPanel:function()
         {
+            map.button.back.draw();
             screen.beginPath();
             screen.moveTo(0, 602);
             screen.lineTo(800, 602);
@@ -140,8 +314,8 @@ function mapInit()
             map.block[name].crossOrigin = 'Anonymous'; //zaradi metode screen.getImageData ki mece security error
             map.block[name].onload = function () 
             {
-               map.draw();
-               map.drawPanel();
+                map.draw();
+                //map.drawPanel();
             }                      
             map.block[name].src=url;
         },
