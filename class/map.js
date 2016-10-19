@@ -27,6 +27,7 @@ function mapInit()
             loop:true,
             button:{
                 back:new text(0,625,'Back'),
+                clear:new text(70,625,'Clear')
             },
             panel:function()
             {
@@ -38,6 +39,7 @@ function mapInit()
                 screen.strokeStyle = "grey";
                 screen.stroke();
                 map.make.button.back.draw();
+                map.make.button.clear.draw();
                 switch(map.make.block)
                 {
                     case 1:
@@ -179,6 +181,13 @@ function mapInit()
                     game.menu.loop=true;
                     game.menu.main();
 
+                }
+                if(map.make.button.clear.isClicked())
+                {
+                    game.clear();
+                    map.make.level=toArray(emptyTest);
+                    map.make.panel();
+                
                 }
                 if(map.make.loop!=false) 
                 {
