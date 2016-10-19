@@ -43,46 +43,46 @@ function mapInit()
                 switch(map.make.block)
                 {
                     case 1:
-                        screen.clearRect(100, 602, map.blockSize, map.blockSize);
-                        screen.drawImage(map.block['wall'], 100, 602);
+                        screen.clearRect(200, 602, map.blockSize, map.blockSize);
+                        screen.drawImage(map.block['wall'], 200, 602);
                         break;
 
                     case 2:
-                        screen.clearRect(100, 602, map.blockSize, map.blockSize);
-                        screen.drawImage(map.block['key_1'], 100, 602);
+                        screen.clearRect(200, 602, map.blockSize, map.blockSize);
+                        screen.drawImage(map.block['key_1'], 200, 602);
                         break;
 
                     case 3:
-                        screen.clearRect(100, 602, map.blockSize, map.blockSize);
-                        screen.drawImage(map.block['keylock_1'], 100, 602);
+                        screen.clearRect(200, 602, map.blockSize, map.blockSize);
+                        screen.drawImage(map.block['keylock_1'], 200, 602);
                         break;
 
                     case  4:
-                        screen.clearRect(100, 602, map.blockSize, map.blockSize);
-                        screen.drawImage(map.block['key_2'], 100, 602);
+                        screen.clearRect(200, 602, map.blockSize, map.blockSize);
+                        screen.drawImage(map.block['key_2'], 200, 602);
                         break;
 
                     case 5:
-                        screen.clearRect(100, 602, map.blockSize, map.blockSize);
-                        screen.drawImage(map.block['keylock_2'], 100, 602);
+                        screen.clearRect(200, 602, map.blockSize, map.blockSize);
+                        screen.drawImage(map.block['keylock_2'], 200, 602);
                         break;
 
                     case 6:
-                        screen.clearRect(100, 602, map.blockSize, map.blockSize);
+                        screen.clearRect(200, 602, map.blockSize, map.blockSize);
                         screen.beginPath();
-                        screen.rect(100, 602, map.blockSize, map.blockSize);
+                        screen.rect(200, 602, map.blockSize, map.blockSize);
                         screen.fillStyle = "#0000FF";
                         screen.fill();
                         screen.closePath();
                         break;
 
                     case 7:
-                        screen.clearRect(100, 602, map.blockSize, map.blockSize);
-                        screen.drawImage(map.block['end'], 100, 602);
+                        screen.clearRect(200, 602, map.blockSize, map.blockSize);
+                        screen.drawImage(map.block['end'], 200, 602);
                         break;
 
                     case 8:
-                        screen.clearRect(100, 602, map.blockSize, map.blockSize);
+                        screen.clearRect(200, 602, map.blockSize, map.blockSize);
                         break;
                 }
             },
@@ -94,7 +94,7 @@ function mapInit()
                 mapa.y = ((mouse.canvasCoord.y / map.blockSize) + 1) | 0;
                 curPos.x = map.blockSize * (mapa.x - 1);
                 curPos.y = map.blockSize * (mapa.y - 1);
-                if ((mouse.canvasCoord.x >= 100 && mouse.canvasCoord.x <= 100 + map.blockSize) && (mouse.canvasCoord.y >= 602 && mouse.canvasCoord.y <= 627))
+                if ((mouse.canvasCoord.x >= 200 && mouse.canvasCoord.x <= 200 + map.blockSize) && (mouse.canvasCoord.y >= 602 && mouse.canvasCoord.y <= 627))
                 {
                     mouse.click.timer = 10; //treba je nastavit na manj da se ob enem kliku blok ne spremeni veckrat
                     if (mouse.click.left == true)
