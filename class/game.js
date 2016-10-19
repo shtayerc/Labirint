@@ -10,7 +10,7 @@ function gameInit()
             tick:50,
             button:{
                 play:new text(250,250,'Play'),
-                make:new text(250,300,'Make level')
+                make:new text(250,300,'Create stage')
 
             },
             main:function()
