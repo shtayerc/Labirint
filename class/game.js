@@ -35,7 +35,7 @@ function gameInit()
                 {
                     game.menu.loop=false;
                     game.clear();
-                    map.level=toArray(emnptyTest);
+                    map.level=toArray(emptyTest);
                     map.loadBlocks();
                     game.clear();
                     map.make.loop=true;
