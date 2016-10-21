@@ -33,7 +33,7 @@ function text(x,y,txt)
         {
             if(mouse.click.left==true)
             {
-                mouse.click.left=false; //preprecuje dvakratno zaznavanje klika back
+               mouse.click.left=false;
                 return true;
             }
         }
