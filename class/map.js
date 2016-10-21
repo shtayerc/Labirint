@@ -10,24 +10,65 @@ function mapInit()
             restart: new text(70,625,'Restart')
 
         },
+        nextLevel:function()
+        {
+            var prva=Number(map.levelIndex.charAt(0));
+            var druga=Number(map.levelIndex.charAt(1));
+            var next='';
+            if(druga==9)
+            {
+                prva=prva+1;
+                druga=0;
+            }else
+            {
+                druga=druga+1;
+            }
+            next=String(prva)+String(druga);
+            if(window['level_'+next]!=null) //ce naslednji level obstaja
+            {
+                map.levelIndex=next;
+                map.level=toArray(window['level_'+map.levelIndex]);
+
+            }else
+            {
+                console.log('Konec');
+                game.loop=false;
+
+            }
+        },
         restart:function()
         {
-            map.level=toArray(window['level_'+map.levelIndex]);
-            game.clear();
-            map.keys.reset();
-            map.draw();
+            if(map.make.flag==true)
+            {
+                map.level=toArray(map.make.levelString);
+                game.clear();
+                map.keys.reset();
+                map.draw();
                 map.drawPanel();
-        
+
+
+            }else{   
+
+                map.level=toArray(window['level_'+map.levelIndex]);
+                game.clear();
+                map.keys.reset();
+                map.draw();
+                map.drawPanel();
+            }
+
         },
         make:{
-            level:empty,
+            levelString:'', //string levela(se ustvari iz polja)
+            flag:false, //ce je true funkcija game.start uporablja level iz map.make.level in funkcijo map.make.newLevel 
+            level:empty, //polje levela
             tick:10, //vsakih koliko ms se funkcija ponovi
             block:1, //kateri blok je izbran in se postavlja v mapo
             blockNum:9,
             loop:true,
             button:{
                 back:new text(0,625,'Back'),
-                clear:new text(70,625,'Clear')
+                clear:new text(70,625,'Clear'),
+                play:new text(300,625,'Play')
             },
             panel:function()
             {
@@ -40,6 +81,7 @@ function mapInit()
                 screen.stroke();
                 map.make.button.back.draw();
                 map.make.button.clear.draw();
+                map.make.button.play.draw();
                 switch(map.make.block)
                 {
                     case 1:
@@ -175,6 +217,7 @@ function mapInit()
                 }
                 if(map.make.button.back.isClicked())
                 {
+                    map.make.flag=false;
                     map.make.loop=false;
                     game.clear();
                     map.keys.reset();
@@ -187,7 +230,21 @@ function mapInit()
                     game.clear();
                     map.make.level=toArray(emptyTest);
                     map.make.panel();
-                
+
+                }
+                if(map.make.button.play.isClicked())
+                {
+                    map.make.levelString=toMapString(map.make.level);    
+                    map.make.flag=true;
+                    map.make.loop=false;
+                    game.loop=true;
+                    game.clear();
+                    map.level=map.make.level;
+                    map.keys.reset();
+                    map.draw();
+                    map.drawPanel();
+                    game.start();
+
                 }
                 if(map.make.loop!=false) 
                 {
@@ -207,7 +264,7 @@ function mapInit()
             {
                 mapa.x=1;
                 curPos.x=0;
-                while(mapa.x < limit.x)
+                while(mapa.x <= limit.x)
                 {
                     switch(map.level[mapa.y][mapa.x]) //preverja polje map.level in narise ustrezen blok
                     {

@@ -31,12 +31,12 @@ function text(x,y,txt)
         if((mouse.canvasCoord.x >= this.x && mouse.canvasCoord.x <= this.x+width) && 
             (mouse.canvasCoord.y >= this.y-height && mouse.canvasCoord.y <= this.y))
         {
-            if(mouse.button.left==true)
+            if(mouse.click.left==true)
             {
+                mouse.click.left=false; //preprecuje dvakratno zaznavanje klika back
                 return true;
             }
         }
-
 
         return false;
     };

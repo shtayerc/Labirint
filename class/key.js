@@ -45,6 +45,7 @@ function keyInit()
             left:false,
             right:false
         },
+    
         buttonDown:function(event)
         {
             if (event.which == 1)
@@ -69,12 +70,15 @@ function keyInit()
         },
         onClick:function(event)
         {
+            
             if (event.which == 1)
             {
                 mouse.click.left = true;
                 setTimeout(function(){
                     mouse.click.left = false;
                 }, mouse.click.timer);
+                
+                
             }
         },
         onMove:function(event) {
@@ -89,6 +93,7 @@ function keyInit()
     canvas.addEventListener("mousemove", mouse.onMove); //poslusa dogodek ko se misko premakne znotraj canvas in racuna koordinate
     canvas.addEventListener("mousedown", mouse.buttonDown, false);  //poslusa dogodek ko uporabnik pritisne gump na miski
     canvas.addEventListener("mouseup", mouse.buttonUp, false); //poslusa dogodek ko uporabnik spusti gump na miski
+   
     canvas.addEventListener("click", mouse.onClick, false);
     window.addEventListener('contextmenu', function (event) { //prepreci da bi se ob desnem kliku z misko pojavil meni
         event.preventDefault();
