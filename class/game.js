@@ -106,19 +106,18 @@ function gameInit()
                 break;
 
                 case 10: //end
-              // game.loop=false;
+                if(map.make.flag==false)
+                {
                 map.nextLevel();
-                console.log('ok');
                 game.clear();
-                console.log('ok');
                 map.keys.reset();
                 map.draw();
-                //map.loadBlocks();
-                
                 map.drawPanel();
-                /*game.loop=true;
-                game.start();
-                */               
+                }else
+                {
+                map.restart();
+                
+                }         
                 break;
 
             }

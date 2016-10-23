@@ -128,6 +128,60 @@ function mapInit()
                         break;
                 }
             },
+            checkLevel:function()
+            {
+                //var curPos=new coord(0,0); //current position
+                var mapa = new coord(1,1); //zacetna pozicija risanja v dvodimenzionalnem polju 
+                var limit = new coord(32,25); // meja polja po sirini, po visini
+                var player=0;
+                var end=0;
+                var ok=true;
+
+                while(mapa.y < limit.y) //zanka gre od 0,0 do limit.x, limit.y
+                {
+                    mapa.x=1;
+                    while(mapa.x <= limit.x)
+                    {
+                        switch(map.make.level[mapa.y][mapa.x]) //preverja polje map.level in narise ustrezen blok
+                        {
+                            case 10:
+                            end=end+1;
+                            break;
+
+                            case 1:
+                            player=player+1;
+                            break;
+                        }
+
+                        mapa.x = mapa.x + 1;
+                    }
+                    mapa.y = mapa.y +1;
+                }
+
+                if(player==0)
+                {
+                console.log('There is no player.');
+                ok=false;
+                }
+                if(player>1)
+                {
+                console.log('There can only be one player.');
+                ok=false;
+                }
+                if(end==0)
+                {
+                console.log('There is no end.');
+                ok=false;
+                }
+                if(end>1)
+                {
+                console.log('There can only be one end.');
+                ok=false;
+                }
+
+                return ok;
+
+            },
             newLevel:function()
             {
                 var mapa=new coord(0,0);
@@ -234,6 +288,8 @@ function mapInit()
                 }
                 if(map.make.button.play.isClicked())
                 {
+                    if(map.make.checkLevel())
+                    {
                     map.make.levelString=toMapString(map.make.level);    
                     map.make.flag=true;
                     map.make.loop=false;
@@ -244,6 +300,8 @@ function mapInit()
                     map.draw();
                     map.drawPanel();
                     game.start();
+                    }            
+                    
 
                 }
                 if(map.make.loop!=false) 

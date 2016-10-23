@@ -72,3 +72,13 @@ function toMapString(arr) //pretvori dvodimenzionalno polje v string
     }
     return str;
 }
+function msg(text,color)
+{
+
+
+    screen.font = "50px Arial";
+    screen.fillStyle = color;
+    screen.textAlign = "center";
+    screen.fillText(text, canvas.width / 2, canvas.height / 2);
+
+}
