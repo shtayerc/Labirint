@@ -5,6 +5,7 @@ function main()
 
     keyInit();
     mapInit();
+    enemyInit();
    
     //map.loadBlocks();   
     playerInit();
