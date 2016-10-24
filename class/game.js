@@ -16,6 +16,7 @@ function gameInit()
             main:function()
             {
 
+                game.clear();
                 game.menu.button.play.draw();
                 game.menu.button.make.draw();
                 if(game.menu.button.play.isClicked())
@@ -27,16 +28,16 @@ function gameInit()
 
                     map.keys.reset();
 
-                    map.loadBlocks();
+                    map.draw();
                     map.drawPanel();
                     game.start();
                 }
-                           if(game.menu.button.make.isClicked())
+                if(game.menu.button.make.isClicked())
                 {
                     game.menu.loop=false;
                     game.clear();
                     map.level=toArray(emptyTest);
-                    map.loadBlocks();
+                    map.draw();
                     game.clear();
                     map.make.loop=true;
                     map.make.panel();
@@ -133,7 +134,6 @@ function gameInit()
                     game.loop=false;
                     game.clear();
                     map.draw();
-                    map.loadBlocks();
                     map.make.panel();
                     map.make.loop=true;
                     map.make.newLevel();

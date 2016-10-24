@@ -14,7 +14,7 @@ function coord(x,y) //za lazje shranjevanje koordinat, npr. start=new coord(2,10
     this.y=y;
 
 }
-function text(x,y,txt)
+function text(x,y,txt) //ustvari besedilo na katerega lahko kliknes, metoda object.isClicked vrne true ce je uporabnik stisnil na text
 {
     this.txt=txt;
     this.x=x;

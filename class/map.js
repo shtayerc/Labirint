@@ -5,6 +5,7 @@ function mapInit()
         block:[],
         levelIndex:'00',
         level:[],
+        imgLoaded:0,
         button:{
             back:new text(0,625,'Back'),
             restart: new text(70,625,'Restart')
@@ -160,23 +161,23 @@ function mapInit()
 
                 if(player==0)
                 {
-                console.log('There is no player.');
-                ok=false;
+                    console.log('There is no player.');
+                    ok=false;
                 }
                 if(player>1)
                 {
-                console.log('There can only be one player.');
-                ok=false;
+                    console.log('There can only be one player.');
+                    ok=false;
                 }
                 if(end==0)
                 {
-                console.log('There is no end.');
-                ok=false;
+                    console.log('There is no end.');
+                    ok=false;
                 }
                 if(end>1)
                 {
-                console.log('There can only be one end.');
-                ok=false;
+                    console.log('There can only be one end.');
+                    ok=false;
                 }
 
                 return ok;
@@ -290,18 +291,18 @@ function mapInit()
                 {
                     if(map.make.checkLevel())
                     {
-                    map.make.levelString=toMapString(map.make.level);    
-                    map.make.flag=true;
-                    map.make.loop=false;
-                    game.loop=true;
-                    game.clear();
-                    map.level=map.make.level;
-                    map.keys.reset();
-                    map.draw();
-                    map.drawPanel();
-                    game.start();
+                        map.make.levelString=toMapString(map.make.level);    
+                        map.make.flag=true;
+                        map.make.loop=false;
+                        game.loop=true;
+                        game.clear();
+                        map.level=map.make.level;
+                        map.keys.reset();
+                        map.draw();
+                        map.drawPanel();
+                        game.start();
                     }            
-                    
+
 
                 }
                 if(map.make.loop!=false) 
@@ -452,10 +453,22 @@ function mapInit()
             map.block[name].crossOrigin = 'Anonymous'; //zaradi metode screen.getImageData ki mece security error
             map.block[name].onload = function () 
             {
-                map.draw();
-                //map.drawPanel();
-            }                      
+                map.imgLoaded=map.imgLoaded+1;
+           }                      
             map.block[name].src=url;
+        },
+        loading:function()
+        {
+
+            if(map.imgLoaded!=Object.keys(map.block.length))
+            {
+                setTimeout(map.loading,100);
+
+
+            }else
+            {
+                game.menu.main();
+            }
         },
         loadBlocks:function() //funkcija ki klice funkcijo map.loadImg in nalozi vse potrebne slike
         {
@@ -465,9 +478,7 @@ function mapInit()
             map.loadImg('end','./blocks/end.png');
             map.loadImg('keylock_1','./blocks/keylock_1.png');
             map.loadImg('keylock_2','./blocks/keylock_2.png');
-
-        }
-
+       }
 
 
     };
