@@ -14,3 +14,5 @@ include('./class/player.js');
 include('./class/key.js');
 include('./class/game.js');
 include('./class/levels.js');
+include('./class/enemy01.js');
+
