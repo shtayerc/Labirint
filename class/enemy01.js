@@ -1,109 +1,160 @@
 function enemyInit(){
-    
-	enemy01={
-		startCoord:new coord(8,1),
-		endCoord:new coord(12,1),
-		mapCoord:new coord(8,1),     //v new so koordinati dimenzionalnega polja
-		canvasCoord:new coord(200,0),   //na kerih pikslih je v canvasi, dejanska pozicija
-		color:"#ff0000",
-		draw:function(){
-            screen.beginPath();
-            screen.rect(enemy01.canvasCoord.x, enemy01.canvasCoord.y, map.blockSize, map.blockSize);
-            screen.fillStyle = enemy01.color ;
-            screen.fill();
-            screen.closePath();
+
+    enemy01={
+        list:[],
+        startCoord:new coord(8,1),
+        distance:4,
+        color:"#ff0000",
+        speed:300, //ms
+        add:function(startCoordX,startCoordY){
+            enemy01.list[enemy01.list.length]= new enemy_01(startCoordX,startCoordY);
 
         },
-		
-		move:function(dir) //funkcija za premikanje igralca
+        resetAll:function()
         {
-            enemy01.clear();
-            switch(dir)
+            for(var i=0;i<enemy01.list.length;i=i+1)
             {
-                case 'up':
-                    enemy01.mapCoord.y = enemy01.mapCoord.y - 1; //koordinati igralca v polju map.level
-                    enemy01.canvasCoord.y = enemy01.canvasCoord.y - map.blockSize; // kooordinate igralca v px na canvasu
-                    break;
+                clearInterval(enemy01.list[i].movingInterval);
 
-                case 'down':
-                    enemy01.mapCoord.y = enemy01.mapCoord.y + 1;
-                    enemy01.canvasCoord.y = enemy01.canvasCoord.y + map.blockSize;
-                    break;
-
-                case 'left':
-                    enemy01.mapCoord.x = enemy01.mapCoord.x - 1;
-                    enemy01.canvasCoord.x = enemy01.canvasCoord.x - map.blockSize;
-                    break;
-
-                case 'right':
-                    enemy01.mapCoord.x = enemy01.mapCoord.x + 1;
-                    enemy01.canvasCoord.x = enemy01.canvasCoord.x + map.blockSize;
-                    break;
             }
-			enemy01.draw();
-		},
-		
-		clear:function()
-        {
-            screen.clearRect(enemy01.canvasCoord.x, enemy01.canvasCoord.y, map.blockSize, map.blockSize); //brisanje igralca narisanega na starem polozaju
+            enemy01.list=[];
+
         },
-		
-		canMove:function(dir) //funkcija vrne true ce igralec lahko premakne v zeljeno smer(ce ni ovir), false ce se ne more
-        {
-            var nextBlock=new coord(0,0); //tu so shranjeni koordinati naslednjega bloka, ki se bo preverjal
-            switch(dir)
+        drawAll:function(){
+
+            for(var i=0;i<enemy01.list.length;i=i+1)
             {
-                case 'up':
-                    nextBlock.x=enemy01.mapCoord.x;
-                    nextBlock.y=enemy01.mapCoord.y-1;
-                    break;
-
-                case 'down':
-                    nextBlock.x=enemy01.mapCoord.x;
-                    nextBlock.y=enemy01.mapCoord.y+1;
-                    break;
-
-                case 'left':
-                    nextBlock.x=enemy01.mapCoord.x-1;
-                    nextBlock.y=enemy01.mapCoord.y;
-                    break;
-
-                case 'right':
-                    nextBlock.x=enemy01.mapCoord.x+1;
-                    nextBlock.y=enemy01.mapCoord.y;
-                    break;
+                enemy01.list[i].draw(); 
             }
-            //2 - wall  6 - keylock_2  8 - keylock_1
-            if (map.level[nextBlock.y][nextBlock.x] ==0)
+
+        },
+        patrolAll:function()
+        {
+
+            for(var i=0;i<enemy01.list.length;i=i+1)
+            {
+                enemy01.list[i].movingInterval=setInterval(function (i){enemy01.list[i].patrol();},enemy01.speed,i);
+            }
+
+        }
+    };
+    function enemy_01(startCoordX,startCoordY)
+    {
+        this.startCoord=new coord(startCoordX,startCoordY);
+        this.endCoord=new coord(startCoordX+enemy01.distance,startCoordY);
+        this.mapCoord=new coord(startCoordX,startCoordY);     //v new so koordinati dimenzionalnega polja
+        this.canvasCoord=new coord((startCoordX-1)*map.blockSize,(startCoordY-1)*map.blockSize);   //na kerih pikslih je v canvasi, dejanska pozicija
+        this.movingInterval=0;
+        this.patrol.limit=new coord(startCoordX,startCoordY);
+        this.patrol.dir='left';
+    }
+    enemy_01.prototype.draw=function()
+    {
+        screen.beginPath();
+        screen.rect(this.canvasCoord.x, this.canvasCoord.y, map.blockSize, map.blockSize);
+        screen.fillStyle = enemy01.color ;
+        screen.fill();
+        screen.closePath();    
+    }
+    enemy_01.prototype.clear=function()
+    {
+        screen.clearRect(this.canvasCoord.x, this.canvasCoord.y, map.blockSize, map.blockSize); //brisanje igralca narisanega na starem polozaju
+    }
+    enemy_01.prototype.move=function(dir)
+    {
+        this.clear();
+        map.level[this.mapCoord.y][this.mapCoord.x]=0;
+        switch(dir)
+        {
+            case 'up':
+
+                this.mapCoord.y = this.mapCoord.y - 1; //koordinati igralca v polju map.level
+                this.canvasCoord.y = this.canvasCoord.y - map.blockSize; // kooordinate igralca v px na canvasu
+                break;
+
+            case 'down':
+                this.mapCoord.y = this.mapCoord.y + 1;
+                this.canvasCoord.y = this.canvasCoord.y + map.blockSize;
+                break;
+
+            case 'left':
+                this.mapCoord.x = this.mapCoord.x - 1;
+                this.canvasCoord.x = this.canvasCoord.x - map.blockSize;
+                break;
+
+            case 'right':
+                this.mapCoord.x = this.mapCoord.x + 1;
+                this.canvasCoord.x = this.canvasCoord.x + map.blockSize;
+                break;
+        }
+        map.level[this.mapCoord.y][this.mapCoord.x]=11;
+        this.draw();
+    }
+    enemy_01.prototype.canMove=function(dir)
+    {
+        var nextBlock=new coord(0,0); //tu so shranjeni koordinati naslednjega bloka, ki se bo preverjal
+        switch(dir)
+        {
+            case 'up':
+                nextBlock.x=this.mapCoord.x;
+                nextBlock.y=this.mapCoord.y-1;
+                break;
+
+            case 'down':
+                nextBlock.x=this.mapCoord.x;
+                nextBlock.y=this.mapCoord.y+1;
+                break;
+
+            case 'left':
+                nextBlock.x=this.mapCoord.x-1;
+                nextBlock.y=this.mapCoord.y;
+                break;
+
+            case 'right':
+                nextBlock.x=this.mapCoord.x+1;
+                nextBlock.y=this.mapCoord.y;
+                break;
+        }
+        //2 - wall  6 - keylock_2  8 - keylock_1
+        if (map.level[nextBlock.y][nextBlock.x] ==0)
             //ce naslednji blok ni zid, ali kljucavnica vrne true
-            {
-                return true;   
-            }
-			console.log(map.level[nextBlock.y][nextBlock.x])
-            return false;
-        },
-		patrol:{
-			limit:new coord(12,1),
-			check: function(){
-			var dir="";
-			if(enemy01.mapCoord.x==enemy01.patrol.limit.x)
-			//if (enemy01.mapCoord==enemy01.startCoord)
-			{enemy01.patrol.limit=enemy01.endCoord;
-			}
-			if(enemy01.mapCoord.x==enemy01.patrol.limit.x) 
-			//if (enemy01.mapCoord===enemy01.endCoord)
-			{enemy01.patrol.limit=enemy01.startCoord;
-			}
-			if (enemy01.mapCoord.x<enemy01.patrol.limit.x){
-			dir="right";
-			}
-			if (enemy01.mapCoord.x>enemy01.patrol.limit.x){
-			dir="left";
-			}
-			
-			enemy01.move(dir);
-		}
-		},
-		
-	};
+        {
+            return true;   
+        }
+        return false;
+    }
+    enemy_01.prototype.patrol=function()
+    {
+        if(this.mapCoord.x == this.endCoord.x )
+        {
+            // this.patrol.limit=this.endCoord;
+            this.patrol.dir='left';
+        }
+        if(this.mapCoord.x==this.startCoord.x) 
+            //if (enemy01.mapCoord===enemy01.endCoord)
+        {
+            this.patrol.dir='right';
+            //   dir=oppositeDir(dir);
+
+        }
+        /*   if (this.mapCoord.x==this.patrol.limit.x){
+            dir="right";
+        }
+        if (this.mapCoord.x==this.patrol.limit.x){
+            dir="left";
+        }*/
+        // if(!this.canMove(dir))
+        // {
+        //     dir=oppositeDir(dir);
+        //}
+        if(this.canMove(this.patrol.dir))
+        {
+            this.move(this.patrol.dir);
+        }else
+        {
+            this.patrol.dir=oppositeDir(this.patrol.dir);
+            this.move(this.patrol.dir);
+        }
+    }
+
 }

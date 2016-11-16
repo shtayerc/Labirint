@@ -30,6 +30,7 @@ function gameInit()
 
                     map.draw();
                     map.drawPanel();
+                    enemy01.patrolAll();
                     game.start();
                 }
                 if(game.menu.button.make.isClicked())
@@ -120,6 +121,7 @@ function gameInit()
                 
                 }         
                 break;
+                
 
             }
             if(map.button.restart.isClicked())
@@ -131,8 +133,13 @@ function gameInit()
             {
                 if(map.make.flag==true)
                 {
+                
                     game.loop=false;
-                    game.clear();
+                                   map.restart();
+                    enemy01.resetAll();
+                 //  game.loop=false;
+                 game.clear();
+
                     map.draw();
                     map.make.panel();
                     map.make.loop=true;
@@ -143,11 +150,13 @@ function gameInit()
                 {
 
                     game.loop=false;
+                    enemy01.resetAll();
                     game.menu.loop=true;
                     game.clear();
                     game.menu.main();
                 }
             }
+ //           enemy01.patrolAll();
             if(game.loop != false)
             {
 

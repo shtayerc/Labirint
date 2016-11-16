@@ -41,6 +41,7 @@ function mapInit()
         {
             if(map.make.flag==true)
             {
+                //enemy01.resetAll();
                 map.level=toArray(map.make.levelString);
                 game.clear();
                 map.keys.reset();
@@ -56,6 +57,7 @@ function mapInit()
                 map.draw();
                 map.drawPanel();
             }
+            enemy01.patrolAll();
 
         },
         make:{
@@ -64,7 +66,7 @@ function mapInit()
             level:empty, //polje levela
             tick:10, //vsakih koliko ms se funkcija ponovi
             block:1, //kateri blok je izbran in se postavlja v mapo
-            blockNum:9,
+            blockNum:10,
             loop:true,
             button:{
                 back:new text(0,625,'Back'),
@@ -123,8 +125,18 @@ function mapInit()
                         screen.clearRect(200, 602, map.blockSize, map.blockSize);
                         screen.drawImage(map.block['end'], 200, 602);
                         break;
-
                     case 8:
+                        screen.clearRect(200, 602, map.blockSize, map.blockSize);
+                        screen.beginPath();
+                        screen.rect(200, 602, map.blockSize, map.blockSize);
+                        screen.fillStyle = enemy01.color ;
+                        screen.fill();
+                        screen.closePath();    
+
+
+                        break;
+
+                    case map.make.blockNum-1:
                         screen.clearRect(200, 602, map.blockSize, map.blockSize);
                         break;
                 }
@@ -260,9 +272,20 @@ function mapInit()
                                 map.make.level[mapa.y][mapa.x] = 10;
                                 screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
                                 screen.drawImage(map.block['end'], curPos.x, curPos.y);
-                                break;
+                               break;
 
                             case 8:
+                                map.make.level[mapa.y][mapa.x]=11;
+                                screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
+                                screen.beginPath();
+                                screen.rect(curPos.x, curPos.y, map.blockSize, map.blockSize);
+                                screen.fillStyle = enemy01.color ;
+                                screen.fill();
+                                screen.closePath();    
+
+                               break;
+
+                            case 9:
                                 map.make.level[mapa.y][mapa.x] = 0;
                                 screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
                                 break;
@@ -272,6 +295,7 @@ function mapInit()
                 }
                 if(map.make.button.back.isClicked())
                 {
+                    enemy01.resetAll();
                     map.make.flag=false;
                     map.make.loop=false;
                     game.clear();
@@ -282,6 +306,7 @@ function mapInit()
                 }
                 if(map.make.button.clear.isClicked())
                 {
+                    enemy01.resetAll();
                     game.clear();
                     map.make.level=toArray(emptyTest);
                     map.make.panel();
@@ -300,6 +325,7 @@ function mapInit()
                         map.keys.reset();
                         map.draw();
                         map.drawPanel();
+                        enemy01.patrolAll();
                         game.start();
                     }            
 
@@ -315,6 +341,7 @@ function mapInit()
         },
         draw:function()
         {
+            enemy01.resetAll();
             var curPos=new coord(0,0); //current position
             var mapa = new coord(1,1); //zacetna pozicija risanja v dvodimenzionalnem polju 
             var limit = new coord(32,25); // meja polja po sirini, po visini
@@ -351,6 +378,12 @@ function mapInit()
                         screen.drawImage(map.block['end'], curPos.x, curPos.y);
                         break;
 
+                        case 11:
+                        
+                        enemy01.add(mapa.x,mapa.y);
+                        console.log(mapa.x,mapa.y);
+                        break;
+
                         case 1:
                         player.canvasCoord.x = (mapa.x - 1) * map.blockSize;
                         player.canvasCoord.y = (mapa.y - 1) * map.blockSize;
@@ -365,6 +398,7 @@ function mapInit()
                 }
                 mapa.y = mapa.y +1;
                 curPos.y = curPos.y + map.blockSize;
+                enemy01.drawAll();
             }
         },
         keys:{  //v tem objektu so podatki o pobranih klucih

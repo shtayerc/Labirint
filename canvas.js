@@ -33,7 +33,7 @@ function text(x,y,txt) //ustvari besedilo na katerega lahko kliknes, metoda obje
         {
             if(mouse.click.left==true)
             {
-               mouse.click.left=false;
+                mouse.click.left=false;
                 return true;
             }
         }
@@ -80,5 +80,35 @@ function msg(text,color)
     screen.fillStyle = color;
     screen.textAlign = "center";
     screen.fillText(text, canvas.width / 2, canvas.height / 2);
+
+}
+function oppositeDir(dir) //funkcija za pomoc pri algoritmih za premikanje sovraznika
+{
+    var newDir='';
+    switch(dir)
+    {
+
+        case 'up':
+            newDir='down';
+            break;
+
+        case 'down':
+            newDir='up';
+            break;
+
+        case 'left':
+            newDir='right';
+            break;
+
+        case 'right':
+            newDir='left';
+            break;
+        default:
+            console.log(dir);
+            console.log('wrong dir parameter (oppositeDir)');
+
+
+    }
+    return newDir;
 
 }
