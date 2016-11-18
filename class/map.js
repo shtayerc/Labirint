@@ -125,6 +125,7 @@ function mapInit()
                         screen.clearRect(200, 602, map.blockSize, map.blockSize);
                         screen.drawImage(map.block['end'], 200, 602);
                         break;
+            
                     case 8:
                         screen.clearRect(200, 602, map.blockSize, map.blockSize);
                         screen.beginPath();
@@ -132,8 +133,6 @@ function mapInit()
                         screen.fillStyle = enemy01.color ;
                         screen.fill();
                         screen.closePath();    
-
-
                         break;
 
                     case map.make.blockNum-1:
@@ -316,6 +315,7 @@ function mapInit()
                 {
                     if(map.make.checkLevel())
                     {
+                      
                         map.make.levelString=toMapString(map.make.level);    
                         map.make.flag=true;
                         map.make.loop=false;

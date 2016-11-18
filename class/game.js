@@ -45,7 +45,7 @@ function gameInit()
                     map.make.newLevel();
 
                 }
-               if(game.menu.loop!=false)
+                if(game.menu.loop!=false)
                 {
                     setTimeout(game.menu.main,game.menu.tick);
 
@@ -110,18 +110,18 @@ function gameInit()
                 case 10: //end
                 if(map.make.flag==false)
                 {
-                map.nextLevel();
-                game.clear();
-                map.keys.reset();
-                map.draw();
-                map.drawPanel();
+                    map.nextLevel();
+                    game.clear();
+                    map.keys.reset();
+                    map.draw();
+                    map.drawPanel();
                 }else
                 {
-                map.restart();
-                
+                    map.restart();
+
                 }         
                 break;
-                
+
 
             }
             if(map.button.restart.isClicked())
@@ -133,13 +133,12 @@ function gameInit()
             {
                 if(map.make.flag==true)
                 {
-                
-                    game.loop=false;
-                                   map.restart();
-                    enemy01.resetAll();
-                 //  game.loop=false;
-                 game.clear();
 
+                    game.loop=false;
+                    map.restart();
+                    enemy01.resetAll();
+                    game.clear();
+                    map.make.level=toArray(map.make.levelString);
                     map.draw();
                     map.make.panel();
                     map.make.loop=true;
@@ -156,7 +155,6 @@ function gameInit()
                     game.menu.main();
                 }
             }
- //           enemy01.patrolAll();
             if(game.loop != false)
             {
 
