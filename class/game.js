@@ -38,8 +38,15 @@ function gameInit()
                     game.menu.loop=false;
                     game.clear();
                     map.level=toArray(emptyTest);
-                    map.draw();
                     game.clear();
+                    if(map.make.levelString!='')
+                    {
+                    map.level=toArray(map.make.levelString);
+                    
+                    }
+                    map.draw();
+
+                    
                     map.make.loop=true;
                     map.make.panel();
                     map.make.newLevel();

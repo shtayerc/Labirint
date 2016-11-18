@@ -297,6 +297,7 @@ function mapInit()
                     enemy01.resetAll();
                     map.make.flag=false;
                     map.make.loop=false;
+                    map.make.levelString=toMapString(map.make.level);
                     game.clear();
                     map.keys.reset();
                     game.menu.loop=true;
