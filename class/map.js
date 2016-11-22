@@ -113,13 +113,19 @@ function mapInit()
                         break;
 
                     case 6:
+                 
+                 
                         screen.clearRect(200, 602, map.blockSize, map.blockSize);
+                 
+                        screen.drawImage(map.block['player'],200,602);
+/*
                         screen.beginPath();
                         screen.rect(200, 602, map.blockSize, map.blockSize);
                         screen.fillStyle = "#0000FF";
                         screen.fill();
                         screen.closePath();
-                        break;
+*/  
+                      break;
 
                     case 7:
                         screen.clearRect(200, 602, map.blockSize, map.blockSize);
@@ -128,12 +134,15 @@ function mapInit()
             
                     case 8:
                         screen.clearRect(200, 602, map.blockSize, map.blockSize);
-                        screen.beginPath();
+  
+                           screen.drawImage(map.block['enemy01'], 200, 602);
+                /*      screen.beginPath();
                         screen.rect(200, 602, map.blockSize, map.blockSize);
                         screen.fillStyle = enemy01.color ;
                         screen.fill();
                         screen.closePath();    
-                        break;
+*/                  
+      break;
 
                     case map.make.blockNum-1:
                         screen.clearRect(200, 602, map.blockSize, map.blockSize);
@@ -259,13 +268,11 @@ function mapInit()
 
                             case 6:
                                 map.make.level[mapa.y][mapa.x] = 1;
-                                screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
-                                screen.beginPath();
-                                screen.rect(curPos.x, curPos.y, map.blockSize, map.blockSize);
-                                screen.fillStyle = "#0000FF";
-                                screen.fill();
-                                screen.closePath();
-                                break;
+                               screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
+  
+                                screen.drawImage(map.block['player'], curPos.x, curPos.y);
+
+                             break;
 
                             case 7:
                                 map.make.level[mapa.y][mapa.x] = 10;
@@ -275,13 +282,16 @@ function mapInit()
 
                             case 8:
                                 map.make.level[mapa.y][mapa.x]=11;
+  
                                 screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
-                                screen.beginPath();
+                                 screen.drawImage(map.block['enemy01'], curPos.x, curPos.y);
+
+                                /*        screen.beginPath();
                                 screen.rect(curPos.x, curPos.y, map.blockSize, map.blockSize);
                                 screen.fillStyle = enemy01.color ;
                                 screen.fill();
                                 screen.closePath();    
-
+*/
                                break;
 
                             case 9:
@@ -513,6 +523,8 @@ function mapInit()
             map.loadImg('end','./blocks/end.png');
             map.loadImg('keylock_1','./blocks/keylock_1.png');
             map.loadImg('keylock_2','./blocks/keylock_2.png');
+            map.loadImg('player','./blocks/player.png');
+            map.loadImg('enemy01','./blocks/enemy01.png');
        }
 
 

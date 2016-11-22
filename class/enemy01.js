@@ -33,7 +33,10 @@ function enemyInit(){
 
             for(var i=0;i<enemy01.list.length;i=i+1)
             {
-                enemy01.list[i].movingInterval=setInterval(function (i){enemy01.list[i].patrol();},enemy01.speed,i);
+                enemy01.list[i].movingInterval=setInterval(function (i){enemy01.list[i].patrol();
+                console.log(i);
+                
+                },enemy01.speed,i);
             }
 
         }
@@ -50,11 +53,14 @@ function enemyInit(){
     }
     enemy_01.prototype.draw=function()
     {
+            screen.drawImage(map.block['enemy01'], this.canvasCoord.x, this.canvasCoord.y);
+/*
         screen.beginPath();
         screen.rect(this.canvasCoord.x, this.canvasCoord.y, map.blockSize, map.blockSize);
         screen.fillStyle = enemy01.color ;
         screen.fill();
         screen.closePath();    
+*/
     }
     enemy_01.prototype.clear=function()
     {
@@ -149,9 +155,11 @@ function enemyInit(){
         //}
         if(this.canMove(this.patrol.dir))
         {
+
             this.move(this.patrol.dir);
         }else
         {
+console.log(this);
             this.patrol.dir=oppositeDir(this.patrol.dir);
             this.move(this.patrol.dir);
         }
