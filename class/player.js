@@ -9,11 +9,7 @@ function playerInit()
         },
         draw:function()
         {
-            screen.beginPath();
-            screen.rect(player.canvasCoord.x, player.canvasCoord.y, map.blockSize, map.blockSize);
-            screen.fillStyle = player.color ;
-            screen.fill();
-            screen.closePath();
+            screen.drawImage(map.block['player'], player.canvasCoord.x, player.canvasCoord.y);
 
         },
         move:function(dir) //funkcija za premikanje igralca
