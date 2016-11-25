@@ -34,7 +34,6 @@ function enemyInit(){
             for(var i=0;i<enemy01.list.length;i=i+1)
             {
                 enemy01.list[i].movingInterval=setInterval(function (i){enemy01.list[i].patrol();
-                console.log(i);
                 
                 },enemy01.speed,i);
             }
@@ -49,18 +48,11 @@ function enemyInit(){
         this.canvasCoord=new coord((startCoordX-1)*map.blockSize,(startCoordY-1)*map.blockSize);   //na kerih pikslih je v canvasi, dejanska pozicija
         this.movingInterval=0;
         this.patrol.limit=new coord(startCoordX,startCoordY);
-        this.patrol.dir='left';
+        this.dir='left';
     }
     enemy_01.prototype.draw=function()
     {
             screen.drawImage(map.block['enemy01'], this.canvasCoord.x, this.canvasCoord.y);
-/*
-        screen.beginPath();
-        screen.rect(this.canvasCoord.x, this.canvasCoord.y, map.blockSize, map.blockSize);
-        screen.fillStyle = enemy01.color ;
-        screen.fill();
-        screen.closePath();    
-*/
     }
     enemy_01.prototype.clear=function()
     {
@@ -133,35 +125,24 @@ function enemyInit(){
     {
         if(this.mapCoord.x == this.endCoord.x )
         {
-            // this.patrol.limit=this.endCoord;
-            this.patrol.dir='left';
+            this.dir='left';
         }
         if(this.mapCoord.x==this.startCoord.x) 
-            //if (enemy01.mapCoord===enemy01.endCoord)
         {
-            this.patrol.dir='right';
-            //   dir=oppositeDir(dir);
-
+            this.dir='right';
         }
-        /*   if (this.mapCoord.x==this.patrol.limit.x){
-            dir="right";
-        }
-        if (this.mapCoord.x==this.patrol.limit.x){
-            dir="left";
-        }*/
-        // if(!this.canMove(dir))
-        // {
-        //     dir=oppositeDir(dir);
-        //}
-        if(this.canMove(this.patrol.dir))
+      
+        if(this.canMove(this.dir))
         {
 
-            this.move(this.patrol.dir);
+            this.move(this.dir);
         }else
         {
-console.log(this);
-            this.patrol.dir=oppositeDir(this.patrol.dir);
-            this.move(this.patrol.dir);
+            this.dir=oppositeDir(this.dir);
+            if(this.canMove(this.dir))
+            {
+                this.move(this.dir);
+            }
         }
     }
 
