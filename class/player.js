@@ -15,6 +15,7 @@ function playerInit()
         move:function(dir) //funkcija za premikanje igralca
         {
             player.clear();
+             map.level[player.mapCoord.y][player.mapCoord.x]=0;
             switch(dir)
             {
                 case 'up':
@@ -37,6 +38,7 @@ function playerInit()
                     player.canvasCoord.x = player.canvasCoord.x + map.blockSize;
                     break;
             }
+            map.level[player.mapCoord.y][player.mapCoord.x]=1;
             player.draw();
             
         },
