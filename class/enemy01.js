@@ -5,7 +5,7 @@ function enemyInit(){
         startCoord:new coord(8,1),
         distance:4,
         color:"#ff0000",
-        speed:300, //ms
+        speed:150, //ms
         add:function(startCoordX,startCoordY){
             enemy01.list[enemy01.list.length]= new enemy_01(startCoordX,startCoordY);
 
@@ -85,8 +85,18 @@ function enemyInit(){
                 this.canvasCoord.x = this.canvasCoord.x + map.blockSize;
                 break;
         }
+        
+      /*  if (this.canvasCoord.x==player.canvasCoord.x && this.canvasCoord.y==player.canvasCoord.y)
+        {
+       
+            player.hp=player.hp-10;
+            player.drawHp();
+       }*/
+    
         map.level[this.mapCoord.y][this.mapCoord.x]=11;
+
         this.draw();
+            
     }
     enemy_01.prototype.canMove=function(dir)
     {
@@ -114,7 +124,7 @@ function enemyInit(){
                 break;
         }
         //2 - wall  6 - keylock_2  8 - keylock_1
-        if (map.level[nextBlock.y][nextBlock.x] ==0)
+       if (map.level[nextBlock.y][nextBlock.x] ==0 || map.level[nextBlock.y][nextBlock.x] ==1 )
             //ce naslednji blok ni zid, ali kljucavnica vrne true
         {
             return true;   

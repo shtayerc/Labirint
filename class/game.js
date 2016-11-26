@@ -162,6 +162,21 @@ function gameInit()
                     game.menu.main();
                 }
             }
+            if(player.isHit('enemy01'))
+            {
+                if(player.hp-10>0)
+                {
+            player.hp=player.hp-10;
+                }else
+                {
+                    player.hp=100;
+                map.restart();
+
+                }
+                    player.drawHp();
+            
+            }
+            player.draw();
             if(game.loop != false)
             {
 

@@ -3,6 +3,7 @@ function playerInit()
     player={
         color:"#0000FF",
         mapCoord:new coord(8,2), //koordinati v polju labirinta
+        hp:100,
         canvasCoord:function()  //dejanski koordinati v canvasu, v funkciji se izracunajo iz player.mapCoord in map.blockSize
         {
             player.canvasCoord=new coord((this.mapCoord.x-1)*map.blockSize, (this.mapCoord.y-1)* map.blockSize);
@@ -12,10 +13,29 @@ function playerInit()
             screen.drawImage(map.block['player'], player.canvasCoord.x, player.canvasCoord.y);
 
         },
+        drawHp:function()
+        {
+            screen.font = "25px Arial";
+            screen.fillStyle = "red";
+            screen.clearRect(430, 603, screen.measureText('999').width, map.blockSize);
+            screen.fillText(player.hp, 430, 625);
+
+
+        },
+        isHit:function(enemy)
+        {
+        for(var i=0;i<window[enemy].list.length;i=i+1)
+            {
+            if(player.canvasCoord.x==window[enemy].list[i].canvasCoord.x && player.canvasCoord.y==window[enemy].list[i].canvasCoord.y)
+                {
+                return true;
+                }
+            }
+        
+        },
         move:function(dir) //funkcija za premikanje igralca
         {
             player.clear();
-             map.level[player.mapCoord.y][player.mapCoord.x]=0;
             switch(dir)
             {
                 case 'up':
@@ -38,9 +58,8 @@ function playerInit()
                     player.canvasCoord.x = player.canvasCoord.x + map.blockSize;
                     break;
             }
-            map.level[player.mapCoord.y][player.mapCoord.x]=1;
             player.draw();
-            
+
         },
         clear:function()
         {
@@ -71,14 +90,15 @@ function playerInit()
                     nextBlock.y=player.mapCoord.y;
                     break;
             }
+     
             //2 - wall  6 - keylock_2  8 - keylock_1
             if (map.level[nextBlock.y][nextBlock.x] != 2 && map.level[nextBlock.y][nextBlock.x] != 8 && map.level[nextBlock.y][nextBlock.x] != 6)
-            //ce naslednji blok ni zid, ali kljucavnica vrne true
+                //ce naslednji blok ni zid, ali kljucavnica vrne true
             {
                 return true;   
             }else if ((map.level[nextBlock.y][nextBlock.x] == 8 && map.keys.key_1.taken == true) ||
-                    (map.level[nextBlock.y][nextBlock.x]==6 && map.keys.key_2.taken == true))
-            //ce naslednje blok je klucavnica in ima igralec ustrezen kljuc vrne true 
+                (map.level[nextBlock.y][nextBlock.x]==6 && map.keys.key_2.taken == true))
+                //ce naslednje blok je klucavnica in ima igralec ustrezen kljuc vrne true 
             {
                 return true;
 

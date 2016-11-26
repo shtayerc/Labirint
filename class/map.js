@@ -113,36 +113,24 @@ function mapInit()
                         break;
 
                     case 6:
-                 
-                 
+
+
                         screen.clearRect(200, 602, map.blockSize, map.blockSize);
-                 
+
                         screen.drawImage(map.block['player'],200,602);
-/*
-                        screen.beginPath();
-                        screen.rect(200, 602, map.blockSize, map.blockSize);
-                        screen.fillStyle = "#0000FF";
-                        screen.fill();
-                        screen.closePath();
-*/  
-                      break;
+                        break;
 
                     case 7:
                         screen.clearRect(200, 602, map.blockSize, map.blockSize);
                         screen.drawImage(map.block['end'], 200, 602);
                         break;
-            
+
                     case 8:
                         screen.clearRect(200, 602, map.blockSize, map.blockSize);
-  
-                           screen.drawImage(map.block['enemy01'], 200, 602);
-                /*      screen.beginPath();
-                        screen.rect(200, 602, map.blockSize, map.blockSize);
-                        screen.fillStyle = enemy01.color ;
-                        screen.fill();
-                        screen.closePath();    
-*/                  
-      break;
+
+                        screen.drawImage(map.block['enemy01'], 200, 602);
+
+                        break;
 
                     case map.make.blockNum-1:
                         screen.clearRect(200, 602, map.blockSize, map.blockSize);
@@ -268,31 +256,24 @@ function mapInit()
 
                             case 6:
                                 map.make.level[mapa.y][mapa.x] = 1;
-                               screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
-  
+                                screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
+
                                 screen.drawImage(map.block['player'], curPos.x, curPos.y);
 
-                             break;
+                                break;
 
                             case 7:
                                 map.make.level[mapa.y][mapa.x] = 10;
                                 screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
                                 screen.drawImage(map.block['end'], curPos.x, curPos.y);
-                               break;
+                                break;
 
                             case 8:
                                 map.make.level[mapa.y][mapa.x]=11;
-  
-                                screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
-                                 screen.drawImage(map.block['enemy01'], curPos.x, curPos.y);
 
-                                /*        screen.beginPath();
-                                screen.rect(curPos.x, curPos.y, map.blockSize, map.blockSize);
-                                screen.fillStyle = enemy01.color ;
-                                screen.fill();
-                                screen.closePath();    
-*/
-                               break;
+                                screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
+                                screen.drawImage(map.block['enemy01'], curPos.x, curPos.y);
+                                break;
 
                             case 9:
                                 map.make.level[mapa.y][mapa.x] = 0;
@@ -326,7 +307,7 @@ function mapInit()
                 {
                     if(map.make.checkLevel())
                     {
-                      
+
                         map.make.levelString=toMapString(map.make.level);    
                         map.make.flag=true;
                         map.make.loop=false;
@@ -390,7 +371,7 @@ function mapInit()
                         break;
 
                         case 11:
-                        
+
                         enemy01.add(mapa.x,mapa.y);
                         console.log(mapa.x,mapa.y);
                         break;
@@ -471,6 +452,7 @@ function mapInit()
         },
         drawPanel:function()
         {
+            player.drawHp();
             map.button.back.draw();
             map.button.restart.draw();
             screen.beginPath();
@@ -499,7 +481,7 @@ function mapInit()
             map.block[name].onload = function () 
             {
                 map.imgLoaded=map.imgLoaded+1;
-           }                      
+            }                      
             map.block[name].src=url;
         },
         loading:function()
@@ -525,7 +507,7 @@ function mapInit()
             map.loadImg('keylock_2','./blocks/keylock_2.png');
             map.loadImg('player','./blocks/player.png');
             map.loadImg('enemy01','./blocks/enemy01.png');
-       }
+        }
 
 
     };
