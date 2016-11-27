@@ -22,16 +22,53 @@ function playerInit()
 
 
         },
-        isHit:function(enemy)
+        isDead:function()
         {
-        for(var i=0;i<window[enemy].list.length;i=i+1)
+
+            if(player.hp<=0)
             {
-            if(player.canvasCoord.x==window[enemy].list[i].canvasCoord.x && player.canvasCoord.y==window[enemy].list[i].canvasCoord.y)
-                {
                 return true;
+            }else
+            {
+                return false;
+
+            }
+        },
+        isHit:function()
+        {    
+            if(map.level[player.mapCoord.y][player.mapCoord.x]==11)
+            {
+                player.hp=player.hp-enemy01.dmg;
+
+            }
+        },
+        getCloseEnemy:function()
+        {
+            var dist=new coord(0,0);
+            var pos=new coord(0,0);
+            for(var i=0;i<enemy01.list.length;i=i+1)
+            {
+                if(i==0)
+                {
+                    dist.x=Math.abs(enemy01.list[i].canvasCoord.x-player.canvasCoord.x);
+                    dist.y=Math.abs(enemy01.list[i].canvasCoord.y-player.canvasCoord.y);
+                    pos.x=enemy01.list[i].canvasCoord.x;
+                    pos.y=enemy01.list[i].canvasCoord.y;
+
+                }
+                if(Math.abs(enemy01.list[i].canvasCoord.x-player.canvasCoord.x)<dist.x && Math.abs(enemy01.list[i].canvasCoord.y-player.canvasCoord.y)<dist.y)
+                {
+                    dist.x=Math.abs(enemy01.list[i].canvasCoord.x-player.canvasCoord.x);
+                    dist.y=Math.abs(enemy01.list[i].canvasCoord.y-player.canvasCoord.y);
+                    pos.x=enemy01.list[i].canvasCoord.x;
+                    pos.y=enemy01.list[i].canvasCoord.y;
+
+
+
                 }
             }
-        
+            return pos;
+
         },
         move:function(dir) //funkcija za premikanje igralca
         {
@@ -90,7 +127,7 @@ function playerInit()
                     nextBlock.y=player.mapCoord.y;
                     break;
             }
-     
+
             //2 - wall  6 - keylock_2  8 - keylock_1
             if (map.level[nextBlock.y][nextBlock.x] != 2 && map.level[nextBlock.y][nextBlock.x] != 8 && map.level[nextBlock.y][nextBlock.x] != 6)
                 //ce naslednji blok ni zid, ali kljucavnica vrne true

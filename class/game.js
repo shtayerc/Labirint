@@ -121,6 +121,7 @@ function gameInit()
                     game.clear();
                     map.keys.reset();
                     map.draw();
+                    enemy01.patrolAll();
                     map.drawPanel();
                 }else
                 {
@@ -162,20 +163,16 @@ function gameInit()
                     game.menu.main();
                 }
             }
-            if(player.isHit('enemy01'))
+            if(player.isDead())
             {
-                if(player.hp-10>0)
-                {
-            player.hp=player.hp-10;
-                }else
-                {
                     player.hp=100;
                 map.restart();
 
-                }
+                
                     player.drawHp();
             
             }
+            player.isHit();
             player.draw();
             if(game.loop != false)
             {

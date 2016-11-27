@@ -5,6 +5,7 @@ function enemyInit(){
         startCoord:new coord(8,1),
         distance:4,
         color:"#ff0000",
+        dmg:100,
         speed:150, //ms
         add:function(startCoordX,startCoordY){
             enemy01.list[enemy01.list.length]= new enemy_01(startCoordX,startCoordY);
