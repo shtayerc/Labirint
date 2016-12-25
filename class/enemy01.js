@@ -6,10 +6,9 @@ function enemyInit(){
         distance:4,
         color:"#ff0000",
         dmg:100,
-        speed:150, //ms
+        speed:200, //ms
         add:function(startCoordX,startCoordY){
             enemy01.list[enemy01.list.length]= new enemy_01(startCoordX,startCoordY);
-
         },
         resetAll:function()
         {
@@ -25,7 +24,7 @@ function enemyInit(){
 
             for(var i=0;i<enemy01.list.length;i=i+1)
             {
-                enemy01.list[i].draw(); 
+                //    enemy01.list[i].draw(); 
             }
 
         },
@@ -35,7 +34,7 @@ function enemyInit(){
             for(var i=0;i<enemy01.list.length;i=i+1)
             {
                 enemy01.list[i].movingInterval=setInterval(function (i){enemy01.list[i].patrol();
-                
+
                 },enemy01.speed,i);
             }
 
@@ -53,7 +52,7 @@ function enemyInit(){
     }
     enemy_01.prototype.draw=function()
     {
-            screen.drawImage(map.block['enemy01'], this.canvasCoord.x, this.canvasCoord.y);
+      //  screen.drawImage(map.block['enemy01'], this.canvasCoord.x, this.canvasCoord.y);
     }
     enemy_01.prototype.clear=function()
     {
@@ -61,7 +60,7 @@ function enemyInit(){
     }
     enemy_01.prototype.move=function(dir)
     {
-        this.clear();
+   //     game.clear();
         map.level[this.mapCoord.y][this.mapCoord.x]=0;
         switch(dir)
         {
@@ -86,18 +85,11 @@ function enemyInit(){
                 this.canvasCoord.x = this.canvasCoord.x + map.blockSize;
                 break;
         }
-        
-      /*  if (this.canvasCoord.x==player.canvasCoord.x && this.canvasCoord.y==player.canvasCoord.y)
-        {
-       
-            player.hp=player.hp-10;
-            player.drawHp();
-       }*/
-    
-        map.level[this.mapCoord.y][this.mapCoord.x]=11;
 
-        this.draw();
-            
+       map.level[this.mapCoord.y][this.mapCoord.x]=11;
+
+ //       map.drawPlay();
+
     }
     enemy_01.prototype.canMove=function(dir)
     {
@@ -125,7 +117,7 @@ function enemyInit(){
                 break;
         }
         //2 - wall  6 - keylock_2  8 - keylock_1
-       if (map.level[nextBlock.y][nextBlock.x] ==0 || map.level[nextBlock.y][nextBlock.x] ==1 )
+        if (map.level[nextBlock.y][nextBlock.x] ==0 || map.level[nextBlock.y][nextBlock.x] ==1 )
             //ce naslednji blok ni zid, ali kljucavnica vrne true
         {
             return true;   
@@ -142,7 +134,7 @@ function enemyInit(){
         {
             this.dir='right';
         }
-      
+
         if(this.canMove(this.dir))
         {
 

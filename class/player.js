@@ -4,12 +4,342 @@ function playerInit()
         color:"#0000FF",
         mapCoord:new coord(8,2), //koordinati v polju labirinta
         hp:100,
+        speed:5,
+        movingInterval:0,
+        isMoving:false,
+        dir:'',
+        lastDir:'',
+        movingFrame:{
+            xCh:0, //x change
+            yCh:0, //y change
+            start:new coord(0,0),
+            firstLine:0,
+            midLine:0,
+            lastLine:0,
+            exitCount:0, 
+            interval:0 // tu je shranjen interval premikanja igralca
+
+        },
+        inventory:{
+            canvasCoord:new coord(655,400),
+            drawSize:new coord(125,80),
+            start:new coord(660,500),
+            slot:[],
+            size:new coord(5,2),
+            maxItems:10,
+            cellSize:new coord(25,40),
+            color:"#d3d3d3",
+            clear:function()
+            {
+                screen.clearRect(650,400,150,200);
+
+            },
+            draw:function()
+            {
+                screen.beginPath();               
+                for (var x = 0; x <= player.inventory.drawSize.x; x += player.inventory.cellSize.x) {
+                    screen.moveTo(0.5 + x + player.inventory.start.x, player.inventory.start.y);
+                    screen.lineTo(0.5 + x + player.inventory.start.x, player.inventory.drawSize.y + player.inventory.start.y);
+                }
+
+
+
+                for (var x = 0; x <= player.inventory.drawSize.y; x += player.inventory.cellSize.y) {
+                    screen.moveTo(player.inventory.start.x, 0.5 + x + player.inventory.start.y);
+                    screen.lineTo(player.inventory.drawSize.x + player.inventory.start.x, 0.5 + x + player.inventory.start.y);
+                }
+
+                screen.strokeStyle = player.inventory.color;
+                screen.stroke();
+                screen.fillStyle="white";
+                screen.font="12px Arial";
+                var k=0;
+                var i=0;
+                for(var c=0;c<player.inventory.maxItems;c=c+1)
+                {
+
+                    if(typeof(player.inventory.slot[c]) != 'undefined' && player.inventory.slot[c] != null)
+                    {
+
+                        screen.drawImage(player.inventory.slot[c].img,player.inventory.start.x+i*player.inventory.cellSize.x,
+                            player.inventory.start.y+k*player.inventory.cellSize.y);
+                        screen.fillText(player.inventory.slot[c].num,player.inventory.start.x+i*player.inventory.cellSize.x+3,
+                            player.inventory.start.y+k*player.inventory.cellSize.y+35);
+                    }
+                    i=i+1;
+                    if(i==5)
+                    {
+                        i=0;
+                        k=k+1;
+                    }
+
+
+
+                }            
+            },
+            add:function(img,num)
+            {
+                for(var i=0;i<player.inventory.maxItems;i=i+1)
+                {
+                    if(player.inventory.slot[i] == null)
+                    {
+                        player.inventory.slot[i]={
+                            img:img,
+                            num:num
+                        };
+                        break;
+                    }
+
+
+                }
+            },
+            update:function(i,num)
+            {
+                player.inventory.slot[i].num=num;
+
+            },
+            remove:function(i)
+            {
+                player.inventory.slot[i]=null;
+
+            },
+            getIndex:function(string)
+            {
+                for(var i=0;i<player.inventory.maxItems;i=i+1)
+                {
+                    if(typeof(player.inventory.slot[i]) != 'undefined' && player.inventory.slot[i] != null)
+                    {
+
+                        if(player.inventory.slot[i].img.src.includes(string))
+                        {
+                            return i;
+                        }
+                    }
+                }
+            }
+
+        },
+        getStartCoord:function()
+        {
+            var curPos=new coord(0,0); //current position
+            var mapa = new coord(1,1); //zacetna pozicija risanja v dvodimenzionalnem polju 
+            var limit = new coord(32,25); // meja polja po sirini, po visini
+
+            while(mapa.y < limit.y) //zanka gre od 0,0 do limit.x, limit.y
+            {
+                mapa.x=1;
+                curPos.x=0;
+                while(mapa.x <= limit.x)
+                {
+                    switch(map.level[mapa.y][mapa.x]) //preverja polje map.level in narise ustrezen blok
+                    {
+                        case 11:
+                        enemy01.add(mapa.x,mapa.y);
+                        break;
+
+                        case 1:
+                        player.canvasCoord.x=6* map.blockSize;
+                        player.canvasCoord.y=6 * map.blockSize;
+                        player.mapCoord.x = mapa.x;
+                        player.mapCoord.y = mapa.y;
+                        player.movingFrame.start=new coord(mapa.x-6,mapa.y-6);
+                        break;
+                    }
+
+                    mapa.x = mapa.x + 1;
+                    curPos.x = curPos.x + map.blockSize;
+                }
+                mapa.y = mapa.y +1;
+                curPos.y = curPos.y + map.blockSize;
+            }
+
+
+        },
+        move:function(dir)
+        {   
+            if(player.lastDir==dir)
+            {
+                player.movingFrame.start.y=player.movingFrame.start.y+player.movingFrame.yCh;
+                player.movingFrame.start.x=player.movingFrame.start.x+player.movingFrame.xCh;
+            }
+            if(dir=='up')
+            {
+                if(player.lastDir=='right')
+                {
+                    player.movingFrame.start.y=player.movingFrame.start.y-1;
+                    player.movingFrame.start.x=player.movingFrame.start.x+1;
+                }
+                if(player.lastDir=='left')
+                {
+
+                    player.movingFrame.start.y=player.movingFrame.start.y-1;
+                }
+                if(player.lastDir=='')
+                {
+                    player.movingFrame.start.y=player.movingFrame.start.y-1;
+                }
+                player.lastDir='up';
+                player.movingFrame.lastLine=0;
+                player.movingFrame.midLine=0;
+                player.movingFrame.firstLine=50;
+                player.movingFrame.yCh=-1;
+                player.movingFrame.xCh=0;
+            }
+            if(dir=='down')
+            {   
+                player.movingFrame.yCh=+1;
+                if(player.lastDir=='right')
+                {
+                    player.movingFrame.start.x=player.movingFrame.start.x+1;
+                }
+
+
+                player.lastDir='down';
+                player.movingFrame.lastLine=-50;
+                player.movingFrame.midLine=-50;
+                player.movingFrame.firstLine=0;
+                player.movingFrame.xCh=0;
+            }
+            if(dir=='left')
+            {
+
+                player.movingFrame.xCh=-1;
+                if(player.lastDir=='down')
+                {
+                    player.movingFrame.start.y=player.movingFrame.start.y+1;
+
+                }
+                if(player.lastDir!='left' && player.lastDir!='right')
+                {
+                    player.movingFrame.start.x=player.movingFrame.start.x+player.movingFrame.xCh;
+
+                }
+                player.lastDir='left';
+                player.movingFrame.midLine=0;
+                player.movingFrame.firstLine=50; 
+                player.movingFrame.lastLine=0;    
+                player.movingFrame.yCh=0;
+            }
+            if(dir== 'right')
+            {
+                if(player.lastDir=='down')
+                {
+                    player.movingFrame.start.y=player.movingFrame.start.y+1;
+
+                }
+                player.lastDir='right';
+                player.movingFrame.firstLine=0;
+                player.movingFrame.midLine=-50;
+                player.movingFrame.lastLine=-50;
+                player.movingFrame.xCh=1;
+                player.movingFrame.yCh=0;
+            }
+            player.movingFrame.exitCount=0;
+            player.mapCoord.x=player.mapCoord.x+player.movingFrame.xCh;
+            player.mapCoord.y=player.mapCoord.y+player.movingFrame.yCh; 
+            player.isMoving=true;          
+            player.movingFrame.interval=setInterval(function (){
+
+                if(player.movingFrame.exitCount>=map.blockSize){
+                    player.isMoving=false;
+                    clearInterval(player.movingFrame.interval);
+
+                }
+                player.movingFrame.firstLine=player.movingFrame.firstLine+player.movingFrame.yCh+player.movingFrame.xCh;
+                player.movingFrame.lastLine=player.movingFrame.lastLine+player.movingFrame.yCh+player.movingFrame.xCh; 
+                player.movingFrame.midLine=player.movingFrame.midLine+player.movingFrame.yCh+player.movingFrame.xCh;     
+                player.movingFrame.exitCount+=1;
+            },player.speed);
+
+        },
+        drawMovingFrame:function()
+        { 
+
+            map.clear();
+            screen.drawImage(map.block['floorBig'], 0, 0);
+            var curPos=new coord(0,0);
+            var canLimit=new coord(601,551);
+            var mapCoord=new coord(player.movingFrame.start.x,player.movingFrame.start.y);
+
+            if(player.movingFrame.xCh!=0) //levo ali desno
+            {
+
+                for(curPos.y=0;curPos.y<canLimit.y;curPos.y=curPos.y+map.blockSize)//leva vrsta
+                {
+
+                    screen.drawImage(map.block[map.getBlock(mapCoord.x,mapCoord.y)],player.movingFrame.firstLine,
+                        0, map.blockSize, map.blockSize, 0, curPos.y, map.blockSize, map.blockSize); 
+                    mapCoord.y=mapCoord.y+1;
+                }
+                mapCoord.y=player.movingFrame.start.y;
+                mapCoord.x=mapCoord.x+1;
+                for(curPos.x=0;curPos.x<canLimit.x-map.blockSize;curPos.x=curPos.x+map.blockSize)//ostali bloki vmes
+                {
+                    mapCoord.y=player.movingFrame.start.y;
+                    for(curPos.y=0;curPos.y<canLimit.y;curPos.y=curPos.y+map.blockSize)//ostali bloki vmes
+                    {
+                        screen.drawImage(map.block[map.getBlock(mapCoord.x,mapCoord.y)], 0,
+                            0,map.blockSize, map.blockSize, curPos.x+player.movingFrame.midLine*-1, curPos.y, map.blockSize, map.blockSize);
+                        mapCoord.y=mapCoord.y+1;
+                    }
+                    mapCoord.x=mapCoord.x+1;
+
+                }
+                mapCoord.y=player.movingFrame.start.y;
+                for(curPos.y=0;curPos.y<canLimit.y;curPos.y=curPos.y+map.blockSize)//desna vrsta
+                {
+                    screen.drawImage(map.block[map.getBlock(mapCoord.x,mapCoord.y)],player.movingFrame.lastLine,
+                        0,map.blockSize,map.blockSize,600,curPos.y,map.blockSize,map.blockSize); 
+
+                    mapCoord.y=mapCoord.y+1;
+                }
+
+
+            }
+            if(player.movingFrame.yCh!=0)  //gor ali dol
+            {
+                for(curPos.x=0;curPos.x<canLimit.x;curPos.x=curPos.x+map.blockSize)//zgornja vrsta
+                {
+
+                    screen.drawImage(map.block[map.getBlock(mapCoord.x,mapCoord.y)],0,
+                        player.movingFrame.firstLine, map.blockSize, map.blockSize, curPos.x, 0, map.blockSize, map.blockSize); 
+                    mapCoord.x=mapCoord.x+1;
+                }
+                mapCoord.y=mapCoord.y+1;
+                mapCoord.x=player.movingFrame.start.x;
+                for(curPos.y=0;curPos.y<canLimit.y-map.blockSize;curPos.y=curPos.y+map.blockSize)//ostali bloki vmes
+                {
+                    mapCoord.x=player.movingFrame.start.x;
+                    for(curPos.x=0;curPos.x<canLimit.x;curPos.x=curPos.x+map.blockSize)//ostali bloki vmes
+                    {
+                        screen.drawImage(map.block[map.getBlock(mapCoord.x,mapCoord.y)], 0,
+                            0,map.blockSize, map.blockSize, curPos.x, curPos.y+player.movingFrame.midLine*-1, map.blockSize, map.blockSize);
+                        mapCoord.x=mapCoord.x+1;
+                    }
+                    mapCoord.y=mapCoord.y+1;
+
+                }
+                mapCoord.x=player.movingFrame.start.x;
+                for(curPos.x=0;curPos.x<canLimit.x;curPos.x=curPos.x+map.blockSize)//spodnja vrsta
+                {
+                    screen.drawImage(map.block[map.getBlock(mapCoord.x,mapCoord.y)],0,
+                        player.movingFrame.lastLine,map.blockSize,map.blockSize,curPos.x,550,map.blockSize,map.blockSize); 
+
+                    mapCoord.x=mapCoord.x+1;
+                }
+            } 
+            player.draw();
+        },
+
+
         canvasCoord:function()  //dejanski koordinati v canvasu, v funkciji se izracunajo iz player.mapCoord in map.blockSize
         {
             player.canvasCoord=new coord((this.mapCoord.x-1)*map.blockSize, (this.mapCoord.y-1)* map.blockSize);
         },
         draw:function()
         {
+            screen.drawImage(map.block['floor'], player.canvasCoord.x, player.canvasCoord.y);
+
             screen.drawImage(map.block['player'], player.canvasCoord.x, player.canvasCoord.y);
 
         },
@@ -70,38 +400,7 @@ function playerInit()
             return pos;
 
         },
-        move:function(dir) //funkcija za premikanje igralca
-        {
-            player.clear();
-            switch(dir)
-            {
-                case 'up':
-                    player.mapCoord.y = player.mapCoord.y - 1; //koordinati igralca v polju map.level
-                    player.canvasCoord.y = player.canvasCoord.y - map.blockSize; // kooordinate igralca v px na canvasu
-                    break;
 
-                case 'down':
-                    player.mapCoord.y = player.mapCoord.y + 1;
-                    player.canvasCoord.y = player.canvasCoord.y + map.blockSize;
-                    break;
-
-                case 'left':
-                    player.mapCoord.x = player.mapCoord.x - 1;
-                    player.canvasCoord.x = player.canvasCoord.x - map.blockSize;
-                    break;
-
-                case 'right':
-                    player.mapCoord.x = player.mapCoord.x + 1;
-                    player.canvasCoord.x = player.canvasCoord.x + map.blockSize;
-                    break;
-            }
-            player.draw();
-
-        },
-        clear:function()
-        {
-            screen.clearRect(player.canvasCoord.x, player.canvasCoord.y, map.blockSize, map.blockSize); //brisanje igralca narisanega na starem polozaju
-        },
         canMove:function(dir) //funkcija vrne true ce igralec lahko premakne v zeljeno smer(ce ni ovir), false ce se ne more
         {
             var nextBlock=new coord(0,0); //tu so shranjeni koordinati naslednjega bloka, ki se bo preverjal
@@ -143,5 +442,6 @@ function playerInit()
             return false;
         }
     };
+
     player.onload=player.canvasCoord(); // funkcija ki izracuna player.canvasCoord se izvede ko se objekt player nalozi
 }

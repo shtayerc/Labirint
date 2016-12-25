@@ -1,7 +1,7 @@
 function mapInit()
 {
     map={
-        blockSize:25, //velikost bloka v pikslih
+        blockSize:50, //velikost bloka v pikslih
         block:[],
         levelIndex:'00',
         level:[],
@@ -11,11 +11,16 @@ function mapInit()
             restart: new text(70,625,'Restart')
 
         },
+        clear:function()
+        {
+            screen.clearRect(0,0,650,600);
+        },
         nextLevel:function()
         {
             var prva=Number(map.levelIndex.charAt(0));
             var druga=Number(map.levelIndex.charAt(1));
             var next='';
+            player.lastDir="";
             if(druga==9)
             {
                 prva=prva+1;
@@ -41,20 +46,27 @@ function mapInit()
         {
             if(map.make.flag==true)
             {
-                //enemy01.resetAll();
+
                 map.level=toArray(map.make.levelString);
                 game.clear();
+                enemy01.resetAll();
                 map.keys.reset();
-                map.draw();
+                player.lastDir='';
+                player.getStartCoord();
+                map.drawPlay();
                 map.drawPanel();
 
 
-            }else{   
+            }else
+            {   
 
                 map.level=toArray(window['level_'+map.levelIndex]);
                 game.clear();
+                enemy01.resetAll();
                 map.keys.reset();
-                map.draw();
+                player.lastDir='';
+                player.getStartCoord();
+                map.drawPlay();
                 map.drawPanel();
             }
             enemy01.patrolAll();
@@ -88,58 +100,53 @@ function mapInit()
                 switch(map.make.block)
                 {
                     case 1:
-                        screen.clearRect(200, 602, map.blockSize, map.blockSize);
-                        screen.drawImage(map.block['wall'], 200, 602);
+                        screen.clearRect(200, 602, map.blockSize/2, map.blockSize/2);
+                        screen.drawImage(map.block['wall25'], 200, 602);
                         break;
 
                     case 2:
-                        screen.clearRect(200, 602, map.blockSize, map.blockSize);
-                        screen.drawImage(map.block['key_1'], 200, 602);
+                        screen.clearRect(200, 602, map.blockSize/2, map.blockSize/2);
+                        screen.drawImage(map.block['key_1_25'], 200, 602);
                         break;
 
                     case 3:
-                        screen.clearRect(200, 602, map.blockSize, map.blockSize);
-                        screen.drawImage(map.block['keylock_1'], 200, 602);
+                        screen.clearRect(200, 602, map.blockSize/2, map.blockSize/2);
+                        screen.drawImage(map.block['keylock_1_25'], 200, 602);
                         break;
 
                     case  4:
-                        screen.clearRect(200, 602, map.blockSize, map.blockSize);
+                        screen.clearRect(200, 602, map.blockSize/2, map.blockSize/2);
                         screen.drawImage(map.block['key_2'], 200, 602);
                         break;
 
                     case 5:
-                        screen.clearRect(200, 602, map.blockSize, map.blockSize);
+                        screen.clearRect(200, 602, map.blockSize/2, map.blockSize/2);
                         screen.drawImage(map.block['keylock_2'], 200, 602);
                         break;
 
                     case 6:
-
-
-                        screen.clearRect(200, 602, map.blockSize, map.blockSize);
-
-                        screen.drawImage(map.block['player'],200,602);
+                        screen.clearRect(200, 602, map.blockSize/2, map.blockSize/2);
+                        screen.drawImage(map.block['player25'],200,602);
                         break;
 
                     case 7:
-                        screen.clearRect(200, 602, map.blockSize, map.blockSize);
+                        screen.clearRect(200, 602, map.blockSize/2, map.blockSize/2);
                         screen.drawImage(map.block['end'], 200, 602);
                         break;
 
                     case 8:
-                        screen.clearRect(200, 602, map.blockSize, map.blockSize);
-
-                        screen.drawImage(map.block['enemy01'], 200, 602);
+                        screen.clearRect(200, 602, map.blockSize/2, map.blockSize/2);
+                        screen.drawImage(map.block['enemy01_25'], 200, 602);
 
                         break;
 
                     case map.make.blockNum-1:
-                        screen.clearRect(200, 602, map.blockSize, map.blockSize);
+                        screen.clearRect(200, 602, map.blockSize/2, map.blockSize/2);
                         break;
                 }
             },
             checkLevel:function()
             {
-                //var curPos=new coord(0,0); //current position
                 var mapa = new coord(1,1); //zacetna pozicija risanja v dvodimenzionalnem polju 
                 var limit = new coord(32,25); // meja polja po sirini, po visini
                 var player=0;
@@ -193,13 +200,14 @@ function mapInit()
             },
             newLevel:function()
             {
+                var newBlockSize=25;
                 var mapa=new coord(0,0);
                 var curPos=new coord(0,0);
-                mapa.x = ((mouse.canvasCoord.x / map.blockSize) + 1) | 0; //zracuna koordinate v mapi in zaokrozi navzdol
-                mapa.y = ((mouse.canvasCoord.y / map.blockSize) + 1) | 0;
-                curPos.x = map.blockSize * (mapa.x - 1);
-                curPos.y = map.blockSize * (mapa.y - 1);
-                if ((mouse.canvasCoord.x >= 200 && mouse.canvasCoord.x <= 200 + map.blockSize) && (mouse.canvasCoord.y >= 602 && mouse.canvasCoord.y <= 627))
+                mapa.x = ((mouse.canvasCoord.x / newBlockSize) + 1) | 0; //zracuna koordinate v mapi in zaokrozi navzdol
+                mapa.y = ((mouse.canvasCoord.y / newBlockSize) + 1) | 0;
+                curPos.x = newBlockSize * (mapa.x - 1);
+                curPos.y = newBlockSize * (mapa.y - 1);
+                if ((mouse.canvasCoord.x >= 200 && mouse.canvasCoord.x <= 200 + newBlockSize) && (mouse.canvasCoord.y >= 602 && mouse.canvasCoord.y <= 627))
                 {
                     mouse.click.timer = 10; //treba je nastavit na manj da se ob enem kliku blok ne spremeni veckrat
                     if (mouse.click.left == true)
@@ -226,58 +234,57 @@ function mapInit()
                         {
                             case 1:
                                 map.make.level[mapa.y][mapa.x] = 2;
-                                screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
-                                screen.drawImage(map.block['wall'], curPos.x, curPos.y);
+                                screen.clearRect(curPos.x, curPos.y, newBlockSize, newBlockSize);
+                                screen.drawImage(map.block['wall25'], curPos.x, curPos.y);
                                 break;
 
                             case 2:
                                 map.make.level[mapa.y][mapa.x] = 5;
-                                screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
-                                screen.drawImage(map.block['key_1'], curPos.x, curPos.y);
+                                screen.clearRect(curPos.x, curPos.y, newBlockSize, newBlockSize);
+                                screen.drawImage(map.block['key_1_25'], curPos.x, curPos.y);
                                 break;
 
                             case 3:
                                 map.make.level[mapa.y][mapa.x] = 8;
-                                screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
-                                screen.drawImage(map.block['keylock_1'], curPos.x, curPos.y);
+                                screen.clearRect(curPos.x, curPos.y, newBlockSize, newBlockSize);
+                                screen.drawImage(map.block['keylock_1_25'], curPos.x, curPos.y);
                                 break;
 
                             case 4:
                                 map.make.level[mapa.y][mapa.x] = 7;
-                                screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
+                                screen.clearRect(curPos.x, curPos.y, newBlockSize, newBlockSize);
                                 screen.drawImage(map.block['key_2'], curPos.x, curPos.y);
                                 break;
 
                             case 5:
                                 map.make.level[mapa.y][mapa.x] = 6;
-                                screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
+                                screen.clearRect(curPos.x, curPos.y, newBlockSize, newBlockSize);
                                 screen.drawImage(map.block['keylock_2'], curPos.x, curPos.y);
                                 break;
 
                             case 6:
                                 map.make.level[mapa.y][mapa.x] = 1;
-                                screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
-
-                                screen.drawImage(map.block['player'], curPos.x, curPos.y);
+                                screen.clearRect(curPos.x, curPos.y, newBlockSize, newBlockSize);
+                                screen.drawImage(map.block['player25'], curPos.x, curPos.y);
 
                                 break;
 
                             case 7:
                                 map.make.level[mapa.y][mapa.x] = 10;
-                                screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
+                                screen.clearRect(curPos.x, curPos.y, newBlockSize, newBlockSize);
                                 screen.drawImage(map.block['end'], curPos.x, curPos.y);
                                 break;
 
                             case 8:
                                 map.make.level[mapa.y][mapa.x]=11;
 
-                                screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
-                                screen.drawImage(map.block['enemy01'], curPos.x, curPos.y);
+                                screen.clearRect(curPos.x, curPos.y, newBlockSize, newBlockSize);
+                                screen.drawImage(map.block['enemy01_25'], curPos.x, curPos.y);
                                 break;
 
                             case 9:
                                 map.make.level[mapa.y][mapa.x] = 0;
-                                screen.clearRect(curPos.x, curPos.y, map.blockSize, map.blockSize);
+                                screen.clearRect(curPos.x, curPos.y, newBlockSize, newBlockSize);
                                 break;
                         }
                     }
@@ -312,10 +319,12 @@ function mapInit()
                         map.make.flag=true;
                         map.make.loop=false;
                         game.loop=true;
+                        enemy01.resetAll();
                         game.clear();
                         map.level=map.make.level;
                         map.keys.reset();
-                        map.draw();
+                        player.getStartCoord();
+                        map.drawPlay();
                         map.drawPanel();
                         enemy01.patrolAll();
                         game.start();
@@ -330,6 +339,154 @@ function mapInit()
 
 
             }
+        },
+
+        getBlock:function(x,y){
+            if(typeof(map.level[y]) != 'undefined' && typeof(map.level[y][x]) != 'undefined')
+            {
+                switch(map.level[y][x]) //preverja polje map.level in narise ustrezen blok
+                {
+                    case 0:
+                    return 'floor';
+                    break;
+
+                    case 1:
+                    return 'floor';
+                    break;
+
+                    case 2:
+                    return 'wall';
+                    break;
+
+                    case 5:
+                    return 'key_1';
+                    break;
+
+                    case 7:
+                    return 'key_2';
+                    break;
+
+                    case 8:
+                    return 'keylock_1';
+                    break;
+
+                    case 6:
+                    return 'keylock_2';
+                    break;
+
+                    case 10:
+                    return 'end';
+                    break;
+
+                    case 11:
+                    return 'enemy01';
+                    break;
+
+                    default:
+                    return 'blank';
+                    break;
+                }
+
+            }else
+            {
+                return 'blank';
+            }
+        },
+        drawPlay:function()
+        {
+
+            var curPos=new coord(0,0); //current position
+            var mapa= new coord(player.movingFrame.start.x,player.movingFrame.start.y);
+            var mapaStart=new coord(player.movingFrame.start.x,player.movingFrame.start.y);
+            if(player.lastDir=='right')
+            {
+                mapaStart.x=mapaStart.x+1;
+
+            }
+            if(player.lastDir=='down')
+            {
+                mapa.y=mapa.y+1;
+
+            }
+            var limit = new coord(13,13); // meja polja po sirini, po visini
+            var column=1;
+            var row=1;
+            var canLimit = new coord(601,551);
+            screen.drawImage(map.block['floorBig'], 0, 0);
+
+            while(curPos.y<canLimit.y)
+            {
+                row=1;
+                mapa.x=mapaStart.x;
+                curPos.x=0;
+                while(curPos.x<canLimit.x)
+                { 
+
+                    if(typeof(map.level[mapa.y]) != 'undefined' && typeof(map.level[mapa.y][mapa.x]) != 'undefined')
+                    {
+                        switch(map.level[mapa.y][mapa.x]) //preverja polje map.level in narise ustrezen blok
+                        {
+                            case 2:
+                            screen.drawImage(map.block['wall'], curPos.x, curPos.y);
+                            break;
+
+                            case 5:
+                            screen.drawImage(map.block['key_1'], curPos.x, curPos.y);
+                            break;
+
+                            case 7:
+                            screen.drawImage(map.block['key_2'], curPos.x, curPos.y);
+                            break;
+
+                            case 8:
+                            screen.drawImage(map.block['keylock_1'], curPos.x, curPos.y);
+                            break;
+
+                            case 6:
+                            screen.drawImage(map.block['keylock_2'], curPos.x, curPos.y);
+                            break;
+
+                            case 10:
+                            screen.drawImage(map.block['end'], curPos.x, curPos.y);
+                            break;
+
+                            case 0:
+                            screen.drawImage(map.block['floor'], curPos.x, curPos.y);
+                            break;
+                            case 11:
+
+                            screen.drawImage(map.block['enemy01'], curPos.x, curPos.y);
+
+                            break;
+
+                        }
+                    } else
+                    {
+                        screen.beginPath();
+                        screen.rect(curPos.x, curPos.y, map.blockSize, map.blockSize);
+                        screen.fillStyle = '#000000';
+                        screen.fill();
+                        screen.closePath();
+
+
+                    }
+
+
+                    mapa.x = mapa.x + 1;
+                    row=row+1;
+                    curPos.x = curPos.x + map.blockSize;
+                }
+
+                mapa.y = mapa.y +1;
+                column=column+1;
+                curPos.y = curPos.y + map.blockSize;
+
+                enemy01.drawAll();
+
+                player.draw();
+            }
+
+
         },
         draw:function()
         {
@@ -347,11 +504,11 @@ function mapInit()
                     switch(map.level[mapa.y][mapa.x]) //preverja polje map.level in narise ustrezen blok
                     {
                         case 2:
-                        screen.drawImage(map.block['wall'], curPos.x, curPos.y);
+                        screen.drawImage(map.block['wall25'], curPos.x, curPos.y);
                         break;
 
                         case 5:
-                        screen.drawImage(map.block['key_1'], curPos.x, curPos.y);
+                        screen.drawImage(map.block['key_1_25'], curPos.x, curPos.y);
                         break;
 
                         case 7:
@@ -359,7 +516,7 @@ function mapInit()
                         break;
 
                         case 8:
-                        screen.drawImage(map.block['keylock_1'], curPos.x, curPos.y);
+                        screen.drawImage(map.block['keylock_1_25'], curPos.x, curPos.y);
                         break;
 
                         case 6:
@@ -371,25 +528,19 @@ function mapInit()
                         break;
 
                         case 11:
-
-                        enemy01.add(mapa.x,mapa.y);
-                        console.log(mapa.x,mapa.y);
+                        screen.drawImage(map.block['enemy01_25'],curPos.x,curPos.y);
                         break;
 
                         case 1:
-                        player.canvasCoord.x = (mapa.x - 1) * map.blockSize;
-                        player.canvasCoord.y = (mapa.y - 1) * map.blockSize;
-                        player.mapCoord.x = mapa.x;
-                        player.mapCoord.y = mapa.y;
-                        player.draw();
+                        screen.drawImage(map.block['player25'],curPos.x,curPos.y);
                         break;
                     }
 
                     mapa.x = mapa.x + 1;
-                    curPos.x = curPos.x + map.blockSize;
+                    curPos.x = curPos.x + map.blockSize/2;
                 }
                 mapa.y = mapa.y +1;
-                curPos.y = curPos.y + map.blockSize;
+                curPos.y = curPos.y + map.blockSize/2;
                 enemy01.drawAll();
             }
         },
@@ -404,7 +555,13 @@ function mapInit()
                     map.drawPanel();
                     if (this.num == 1)
                     {
+                        player.inventory.add(map.block['key_1_25'],map.keys.key_1.num);
+
                         this.taken = true;
+                    }else
+                    {
+                        player.inventory.update(player.inventory.getIndex('Boss_Key25x25.png'),map.keys.key_1.num);
+
                     }
                 },
                 unlock:function()
@@ -414,7 +571,12 @@ function mapInit()
                     map.drawPanel();
                     if (this.num == 0)
                     {
+                        player.inventory.remove(player.inventory.getIndex('Boss_Key25x25.png'));
                         this.taken = false;
+                    }else
+                    {
+                        player.inventory.update(player.inventory.getIndex('Boss_Key25x25.png'),map.keys.key_1.num);
+
                     }
                 }
             },
@@ -427,8 +589,14 @@ function mapInit()
                     this.num = this.num + 1;
                     map.drawPanel();
                     if (this.num == 1)
-                    {
+                    {           
                         this.taken = true;
+                        player.inventory.add(map.block['key_2'],map.keys.key_2.num);
+
+                    }else
+                    {
+                        player.inventory.update(player.inventory.getIndex('key_2'),map.keys.key_2.num);
+
                     }
                 },
                 unlock:function()
@@ -438,12 +606,21 @@ function mapInit()
                     map.drawPanel();
                     if (this.num == 0)
                     {
+                        player.inventory.remove(player.inventory.getIndex('key_2'));
+
+                        // player.inventory.remove()
                         this.taken = false;
+                    }else
+                    {
+                        player.inventory.update(player.inventory.getIndex('key_2.png'),map.keys.key_2.num);
+
+
                     }
                 }
             },
             reset:function()
             {
+                player.inventory.slot=[];
                 map.keys.key_1.num=0;
                 map.keys.key_1.taken=false;
                 map.keys.key_2.num=0;
@@ -462,17 +639,7 @@ function mapInit()
             screen.lineWidth = 2;
             screen.strokeStyle = "grey";
             screen.stroke();
-            screen.drawImage(map.block['key_1'], 300, 602);
-            screen.font = "25px Arial";
-            screen.fillStyle = "yellow";
-            screen.clearRect(325, 603, 40, map.blockSize);
-            screen.fillText(map.keys.key_1.num, 327, 625);
 
-            screen.drawImage(map.block['key_2'], 360, 602);
-            screen.font = "25px Arial";
-            screen.fillStyle = "white";
-            screen.clearRect(385, 603, 40, map.blockSize);
-            screen.fillText(map.keys.key_2.num, 387, 625);
         },
         loadImg:function(name,url) //funkcija sprejme dva parametra: name - index asociativnega polja(map.block) , url - lokacija slike
         {
@@ -499,14 +666,22 @@ function mapInit()
         },
         loadBlocks:function() //funkcija ki klice funkcijo map.loadImg in nalozi vse potrebne slike
         {
-            map.loadImg('wall','./blocks/wall.png');
-            map.loadImg('key_1','./blocks/key_1.png');
+            map.loadImg('player25','./textures/PlayerFront25x25.png');
+            map.loadImg('enemy01_25','./textures/Enemy01_Back25x25.png');
+            map.loadImg('wall','./textures/Pyramid_Walls.png');
+            map.loadImg('wall25','./textures/Pyramid_Walls25x25.png');
+            map.loadImg('key_1','./textures/Boss_Key.png');
+            map.loadImg('key_1_25','./textures/Boss_Key25x25.png');
             map.loadImg('key_2','./blocks/key_2.png');
             map.loadImg('end','./blocks/end.png');
-            map.loadImg('keylock_1','./blocks/keylock_1.png');
+            map.loadImg('keylock_1','./textures/Boss_Keyhole.png');
+            map.loadImg('keylock_1_25','./textures/Boss_Keyhole25x25.png');
             map.loadImg('keylock_2','./blocks/keylock_2.png');
-            map.loadImg('player','./blocks/player.png');
-            map.loadImg('enemy01','./blocks/enemy01.png');
+            map.loadImg('player','./textures/Player_Front1.png');
+            map.loadImg('enemy01','./textures/Enemy01_Left.png');
+            map.loadImg('floor','./textures/Floor_25.png');
+            map.loadImg('floorBig', './textures/Pyramid_Floor.png');
+            map.loadImg('blank','./blocks/blank.png');
         }
 
 
