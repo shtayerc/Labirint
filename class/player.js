@@ -22,13 +22,17 @@ function playerInit()
                 if(player.animation.isPlaying==false)
                 {  
                 player.animation.isPlaying=true;
-             player.animation.nextFrame(img1,img2); 
+               }else
+                {
+                
+                clearInterval(player.animation.interval);
+                }
+                   player.animation.nextFrame(img1,img2); 
 
                 player.animation.interval=setInterval(function (){
                  player.animation.nextFrame(img1,img2);
                 },player.animation.speed);
-                }
-
+           
             },
             nextFrame:function (img1,img2)
             {
