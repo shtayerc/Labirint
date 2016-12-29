@@ -5,10 +5,57 @@ function playerInit()
         mapCoord:new coord(8,2), //koordinati v polju labirinta
         hp:100,
         speed:5,
+        img:map.block['playerDown1'],
         movingInterval:0,
         isMoving:false,
         dir:'',
         lastDir:'',
+        animation:{
+            isPlaying:false,
+            speed:160,
+            interval:0,
+            num:0,
+            start:function (img1,img2)
+            {
+
+                player.animation.num=0;  
+                if(player.animation.isPlaying==false)
+                {  
+                player.animation.isPlaying=true;
+             player.animation.nextFrame(img1,img2); 
+
+                player.animation.interval=setInterval(function (){
+                 player.animation.nextFrame(img1,img2);
+                },player.animation.speed);
+                }
+
+            },
+            nextFrame:function (img1,img2)
+            {
+              if(player.animation.num%2==0)
+                {
+                    player.img=img1;
+                }else
+                {
+
+                    player.img=img2;
+                }
+                player.animation.num+=1;
+                player.draw();
+                if(player.animation.num==3)
+                {
+                    player.animation.num=0;
+                    player.animation.isPlaying=false;
+                    clearInterval(player.animation.interval);
+        
+
+                }
+
+
+            
+            }
+
+        },
         movingFrame:{
             xCh:0, //x change
             yCh:0, //y change
@@ -164,6 +211,8 @@ function playerInit()
             }
             if(dir=='up')
             {
+                 player.animation.start(map.block['playerUp1'],map.block['playerUp2']);
+               
                 if(player.lastDir=='right')
                 {
                     player.movingFrame.start.y=player.movingFrame.start.y-1;
@@ -187,6 +236,7 @@ function playerInit()
             }
             if(dir=='down')
             {   
+                player.animation.start(map.block['playerDown1'],map.block['playerDown2']);
                 player.movingFrame.yCh=+1;
                 if(player.lastDir=='right')
                 {
@@ -340,7 +390,7 @@ function playerInit()
         {
             screen.drawImage(map.block['floor'], player.canvasCoord.x, player.canvasCoord.y);
 
-            screen.drawImage(map.block['player'], player.canvasCoord.x, player.canvasCoord.y);
+            screen.drawImage(player.img, player.canvasCoord.x, player.canvasCoord.y);
 
         },
         drawHp:function()

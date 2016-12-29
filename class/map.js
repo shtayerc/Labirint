@@ -677,7 +677,12 @@ function mapInit()
             map.loadImg('keylock_1','./textures/Boss_Keyhole.png');
             map.loadImg('keylock_1_25','./textures/Boss_Keyhole25x25.png');
             map.loadImg('keylock_2','./blocks/keylock_2.png');
-            map.loadImg('player','./textures/Player_Front1.png');
+            map.loadImg('playerDown1','./textures/Player_Front1.png');
+            map.loadImg('playerDown2','./textures/Player_Front2.png');
+            map.loadImg('playerUp1','./textures/Player_Back1.png');
+
+            map.loadImg('playerUp2','./textures/Player_Back2.png');
+
             map.loadImg('enemy01','./textures/Enemy01_Left.png');
             map.loadImg('floor','./textures/Floor_25.png');
             map.loadImg('floorBig', './textures/Pyramid_Floor.png');
