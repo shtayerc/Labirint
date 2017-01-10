@@ -21,22 +21,22 @@ function playerInit()
                 player.animation.num=0;  
                 if(player.animation.isPlaying==false)
                 {  
-                player.animation.isPlaying=true;
-               }else
+                    player.animation.isPlaying=true;
+                }else
                 {
-                
-                clearInterval(player.animation.interval);
+
+                    clearInterval(player.animation.interval);
                 }
-                   player.animation.nextFrame(img1,img2); 
+                player.animation.nextFrame(img1,img2); 
 
                 player.animation.interval=setInterval(function (){
-                 player.animation.nextFrame(img1,img2);
+                    player.animation.nextFrame(img1,img2);
                 },player.animation.speed);
-           
+
             },
             nextFrame:function (img1,img2)
             {
-              if(player.animation.num%2==0)
+                if(player.animation.num%2==0)
                 {
                     player.img=img1;
                 }else
@@ -51,12 +51,12 @@ function playerInit()
                     player.animation.num=0;
                     player.animation.isPlaying=false;
                     clearInterval(player.animation.interval);
-        
+
 
                 }
 
 
-            
+
             }
 
         },
@@ -215,8 +215,8 @@ function playerInit()
             }
             if(dir=='up')
             {
-                 player.animation.start(map.block['playerUp1'],map.block['playerUp2']);
-               
+                player.animation.start(map.block['playerUp1'],map.block['playerUp2']);
+
                 if(player.lastDir=='right')
                 {
                     player.movingFrame.start.y=player.movingFrame.start.y-1;
@@ -320,10 +320,19 @@ function playerInit()
 
                 for(curPos.y=0;curPos.y<canLimit.y;curPos.y=curPos.y+map.blockSize)//leva vrsta
                 {
+                    if(map.getBlock(mapCoord.x,mapCoord.y)=='enemy01')
+                    {
+                        screen.drawImage( enemy01.list[enemy01.findByCoord(mapCoord.x,mapCoord.y)].img,player.movingFrame.firstLine,
+                            0,map.blockSize, map.blockSize, 0, curPos.y, map.blockSize, map.blockSize);
 
-                    screen.drawImage(map.block[map.getBlock(mapCoord.x,mapCoord.y)],player.movingFrame.firstLine,
-                        0, map.blockSize, map.blockSize, 0, curPos.y, map.blockSize, map.blockSize); 
+
+                    }else
+                    {
+                        screen.drawImage(map.block[map.getBlock(mapCoord.x,mapCoord.y)],player.movingFrame.firstLine,
+                            0, map.blockSize, map.blockSize, 0, curPos.y, map.blockSize, map.blockSize); 
+                    }
                     mapCoord.y=mapCoord.y+1;
+
                 }
                 mapCoord.y=player.movingFrame.start.y;
                 mapCoord.x=mapCoord.x+1;
@@ -332,8 +341,15 @@ function playerInit()
                     mapCoord.y=player.movingFrame.start.y;
                     for(curPos.y=0;curPos.y<canLimit.y;curPos.y=curPos.y+map.blockSize)//ostali bloki vmes
                     {
-                        screen.drawImage(map.block[map.getBlock(mapCoord.x,mapCoord.y)], 0,
-                            0,map.blockSize, map.blockSize, curPos.x+player.movingFrame.midLine*-1, curPos.y, map.blockSize, map.blockSize);
+                        if(map.getBlock(mapCoord.x,mapCoord.y)=='enemy01')
+                        {
+                            screen.drawImage( enemy01.list[enemy01.findByCoord(mapCoord.x,mapCoord.y)].img
+                                , 0,
+                                0,map.blockSize, map.blockSize, curPos.x+player.movingFrame.midLine*-1, curPos.y, map.blockSize, map.blockSize);
+                        }else{
+                            screen.drawImage(map.block[map.getBlock(mapCoord.x,mapCoord.y)], 0,
+                                0,map.blockSize, map.blockSize, curPos.x+player.movingFrame.midLine*-1, curPos.y, map.blockSize, map.blockSize);
+                        }
                         mapCoord.y=mapCoord.y+1;
                     }
                     mapCoord.x=mapCoord.x+1;
@@ -342,9 +358,16 @@ function playerInit()
                 mapCoord.y=player.movingFrame.start.y;
                 for(curPos.y=0;curPos.y<canLimit.y;curPos.y=curPos.y+map.blockSize)//desna vrsta
                 {
-                    screen.drawImage(map.block[map.getBlock(mapCoord.x,mapCoord.y)],player.movingFrame.lastLine,
-                        0,map.blockSize,map.blockSize,600,curPos.y,map.blockSize,map.blockSize); 
+                    if(map.getBlock(mapCoord.x,mapCoord.y)=='enemy01')
+                    {
+                        screen.drawImage(enemy01.list[enemy01.findByCoord(mapCoord.x,mapCoord.y)].img,player.movingFrame.lastLine,
+                            0,map.blockSize,map.blockSize,600,curPos.y,map.blockSize,map.blockSize); 
 
+
+                    }else{
+                        screen.drawImage(map.block[map.getBlock(mapCoord.x,mapCoord.y)],player.movingFrame.lastLine,
+                            0,map.blockSize,map.blockSize,600,curPos.y,map.blockSize,map.blockSize); 
+                    }
                     mapCoord.y=mapCoord.y+1;
                 }
 
@@ -352,11 +375,18 @@ function playerInit()
             }
             if(player.movingFrame.yCh!=0)  //gor ali dol
             {
+
                 for(curPos.x=0;curPos.x<canLimit.x;curPos.x=curPos.x+map.blockSize)//zgornja vrsta
                 {
 
-                    screen.drawImage(map.block[map.getBlock(mapCoord.x,mapCoord.y)],0,
-                        player.movingFrame.firstLine, map.blockSize, map.blockSize, curPos.x, 0, map.blockSize, map.blockSize); 
+                    if(map.getBlock(mapCoord.x,mapCoord.y)=='enemy01')
+                    {
+                        screen.drawImage(enemy01.list[enemy01.findByCoord(mapCoord.x,mapCoord.y)].img,0,
+                            player.movingFrame.firstLine, map.blockSize, map.blockSize, curPos.x, 0, map.blockSize, map.blockSize); 
+                    }else{
+                        screen.drawImage(map.block[map.getBlock(mapCoord.x,mapCoord.y)],0,
+                            player.movingFrame.firstLine, map.blockSize, map.blockSize, curPos.x, 0, map.blockSize, map.blockSize); 
+                    }
                     mapCoord.x=mapCoord.x+1;
                 }
                 mapCoord.y=mapCoord.y+1;
@@ -366,9 +396,17 @@ function playerInit()
                     mapCoord.x=player.movingFrame.start.x;
                     for(curPos.x=0;curPos.x<canLimit.x;curPos.x=curPos.x+map.blockSize)//ostali bloki vmes
                     {
-                        screen.drawImage(map.block[map.getBlock(mapCoord.x,mapCoord.y)], 0,
-                            0,map.blockSize, map.blockSize, curPos.x, curPos.y+player.movingFrame.midLine*-1, map.blockSize, map.blockSize);
+                        if(map.getBlock(mapCoord.x,mapCoord.y)=='enemy01')
+                        {
+                            screen.drawImage(enemy01.list[enemy01.findByCoord(mapCoord.x,mapCoord.y)].img,0,0,
+                                map.blockSize, map.blockSize, curPos.x, curPos.y+player.movingFrame.midLine*-1, map.blockSize, map.blockSize);
+                        }else{
+
+                            screen.drawImage(map.block[map.getBlock(mapCoord.x,mapCoord.y)], 0,
+                                0,map.blockSize, map.blockSize, curPos.x, curPos.y+player.movingFrame.midLine*-1, map.blockSize, map.blockSize);
+                        }
                         mapCoord.x=mapCoord.x+1;
+
                     }
                     mapCoord.y=mapCoord.y+1;
 
@@ -376,9 +414,15 @@ function playerInit()
                 mapCoord.x=player.movingFrame.start.x;
                 for(curPos.x=0;curPos.x<canLimit.x;curPos.x=curPos.x+map.blockSize)//spodnja vrsta
                 {
-                    screen.drawImage(map.block[map.getBlock(mapCoord.x,mapCoord.y)],0,
-                        player.movingFrame.lastLine,map.blockSize,map.blockSize,curPos.x,550,map.blockSize,map.blockSize); 
-
+                    if(map.getBlock(mapCoord.x,mapCoord.y)=='enemy01')
+                    {
+                        screen.drawImage(enemy01.list[enemy01.findByCoord(mapCoord.x,mapCoord.y)].img,0,
+                            player.movingFrame.lastLine,map.blockSize,map.blockSize,curPos.x,550,map.blockSize,map.blockSize);
+                    }else
+                    {
+                        screen.drawImage(map.block[map.getBlock(mapCoord.x,mapCoord.y)],0,
+                            player.movingFrame.lastLine,map.blockSize,map.blockSize,curPos.x,550,map.blockSize,map.blockSize); 
+                    }
                     mapCoord.x=mapCoord.x+1;
                 }
             } 

@@ -80,14 +80,36 @@ function mapInit()
             block:1, //kateri blok je izbran in se postavlja v mapo
             blockNum:10,
             loop:true,
+            selStart:200,
+            selNum:3,
+            change:0,
+            curBlock:1,
             button:{
                 back:new text(0,625,'Back'),
                 clear:new text(70,625,'Clear'),
-                play:new text(300,625,'Play')
+                play:new text(320,625,'Play')
+              
+            },
+            left:function()
+            {
+                if(map.make.block>1)
+                {
+                    map.make.block=map.make.block-1;
+                    map.make.panel();
+                }
+            },
+            right:function()
+            {
+                if(map.make.block<7)
+                {
+                    map.make.block=map.make.block+1;
+                    map.make.panel();
+                }
+
             },
             panel:function()
             {
-
+                screen.clearRect(602,0,800,25);
                 screen.beginPath();
                 screen.moveTo(0, 602);
                 screen.lineTo(800, 602);
@@ -97,52 +119,74 @@ function mapInit()
                 map.make.button.back.draw();
                 map.make.button.clear.draw();
                 map.make.button.play.draw();
-                switch(map.make.block)
+                map.make.selStart=200;
+
+
+                screen.beginPath();
+                screen.fillStyle="white";
+                screen.moveTo(170,615);
+                screen.lineTo(190,603);
+                screen.lineTo(190,627);
+                screen.fill();
+
+
+                screen.beginPath();
+                screen.fillStyle="white";
+                screen.moveTo(305,615);
+                screen.lineTo(285,603);
+                screen.lineTo(285,627);
+                screen.fill();
+
+                for(var i=map.make.block;i<map.make.block+map.make.selNum;i=i+1)
                 {
-                    case 1:
-                        screen.clearRect(200, 602, map.blockSize/2, map.blockSize/2);
-                        screen.drawImage(map.block['wall25'], 200, 602);
-                        break;
+                    switch(i)
+                    {
+                        case 1:
+                            screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
+                            screen.drawImage(map.block['wall25'], map.make.selStart, 602);
+                            break;
 
-                    case 2:
-                        screen.clearRect(200, 602, map.blockSize/2, map.blockSize/2);
-                        screen.drawImage(map.block['key_1_25'], 200, 602);
-                        break;
+                        case 2:
+                            screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
+                            screen.drawImage(map.block['key_1_25'], map.make.selStart, 602);
+                            break;
 
-                    case 3:
-                        screen.clearRect(200, 602, map.blockSize/2, map.blockSize/2);
-                        screen.drawImage(map.block['keylock_1_25'], 200, 602);
-                        break;
+                        case 3:
+                            screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
+                            screen.drawImage(map.block['keylock_1_25'], map.make.selStart, 602);
+                            break;
 
-                    case  4:
-                        screen.clearRect(200, 602, map.blockSize/2, map.blockSize/2);
-                        screen.drawImage(map.block['key_2'], 200, 602);
-                        break;
+                        case  4:
+                            screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
+                            screen.drawImage(map.block['key_2'], map.make.selStart, 602);
+                            break;
 
-                    case 5:
-                        screen.clearRect(200, 602, map.blockSize/2, map.blockSize/2);
-                        screen.drawImage(map.block['keylock_2'], 200, 602);
-                        break;
+                        case 5:
+                            screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
+                            screen.drawImage(map.block['keylock_2'], map.make.selStart, 602);
+                            break;
 
-                    case 6:
-                        screen.clearRect(200, 602, map.blockSize/2, map.blockSize/2);
-                        screen.drawImage(map.block['player25'],200,602);
-                        break;
+                        case 6:
+                            screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
+                            screen.drawImage(map.block['player25'],map.make.selStart,602);
+                            break;
 
-                    case 7:
-                        screen.clearRect(200, 602, map.blockSize/2, map.blockSize/2);
-                        screen.drawImage(map.block['end'], 200, 602);
-                        break;
+                        case 7:
+                            screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
+                            screen.drawImage(map.block['end'], map.make.selStart, 602);
+                            break;
 
-                    case 8:
-                        screen.clearRect(200, 602, map.blockSize/2, map.blockSize/2);
-                        screen.drawImage(map.block['enemy01_25'], 200, 602);
+                        case 8:
+                            screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
+                            screen.drawImage(map.block['enemy01_25'], map.make.selStart, 602);
 
-                        break;
+                            break;
 
-                    case map.make.blockNum-1:
-                        screen.clearRect(200, 602, map.blockSize/2, map.blockSize/2);
-                        break;
+                        case map.make.blockNum-1:
+                            screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
+                            break;
+                    }
+                    map.make.selStart+=map.blockSize/2;
                 }
             },
             checkLevel:function()
@@ -207,12 +251,48 @@ function mapInit()
                 mapa.y = ((mouse.canvasCoord.y / newBlockSize) + 1) | 0;
                 curPos.x = newBlockSize * (mapa.x - 1);
                 curPos.y = newBlockSize * (mapa.y - 1);
-                if ((mouse.canvasCoord.x >= 200 && mouse.canvasCoord.x <= 200 + newBlockSize) && (mouse.canvasCoord.y >= 602 && mouse.canvasCoord.y <= 627))
+                if ((mouse.canvasCoord.x >= 170 && mouse.canvasCoord.x <= 170 + 20) && (mouse.canvasCoord.y >= 602 && mouse.canvasCoord.y <= 627))
                 {
                     mouse.click.timer = 10; //treba je nastavit na manj da se ob enem kliku blok ne spremeni veckrat
                     if (mouse.click.left == true)
                     {
-                        map.make.block = map.make.block + 1;
+                        map.make.left();
+                        mouse.click.left=false;
+                        //map.make.block = map.make.block + 1;
+                    }
+
+
+                    map.make.panel();
+                }else
+                {
+                    mouse.click.timer = 100;
+                }
+                if ((mouse.canvasCoord.x >= 285 && mouse.canvasCoord.x <= 285 + 20) && (mouse.canvasCoord.y >= 602 && mouse.canvasCoord.y <= 627))
+                {
+                    mouse.click.timer = 10; //treba je nastavit na manj da se ob enem kliku blok ne spremeni veckrat
+                    if (mouse.click.left == true)
+                    {
+                        map.make.right();
+                        mouse.click.left=false;
+                        //map.make.block = map.make.block + 1;
+                    }
+
+
+                    map.make.panel();
+                }else
+                {
+                    mouse.click.timer = 100;
+                }
+
+                if ((mouse.canvasCoord.x >= 200 && mouse.canvasCoord.x <= 200 + newBlockSize) && (mouse.canvasCoord.y >= 602 && mouse.canvasCoord.y <= 627))
+                {
+                    //  mouse.click.timer = 10; //treba je nastavit na manj da se ob enem kliku blok ne spremeni veckrat
+                    if (mouse.click.left == true)
+                    {
+                        map.make.curBlock=map.make.block + 0;
+                        map.make.change=0;
+                        mouse.click.left=false;
+                        //map.make.block = map.make.block + 1;
                     }
 
 
@@ -221,16 +301,47 @@ function mapInit()
                         map.make.block = 1;
                     }
                     map.make.panel();
-                }else
+                } 
+                if ((mouse.canvasCoord.x >= 225 && mouse.canvasCoord.x <= 225 + newBlockSize) && (mouse.canvasCoord.y >= 602 && mouse.canvasCoord.y <= 627))
                 {
-                    mouse.click.timer = 100;
+                    //               mouse.click.timer = 10; //treba je nastavit na manj da se ob enem kliku blok ne spremeni veckrat
+                    if (mouse.click.left == true)
+                    {
+                        map.make.curBlock=map.make.block+1;
+                        map.make.change=1;
+                        mouse.click.left=false;       
+                    }
+
+
+                    if (map.make.block == map.make.blockNum)
+                    {
+                        map.make.block = 1;
+                    }
+                    map.make.panel();
+                } 
+                if ((mouse.canvasCoord.x >= 250 && mouse.canvasCoord.x <= 250 + newBlockSize) && (mouse.canvasCoord.y >= 602 && mouse.canvasCoord.y <= 627))
+                {
+                    //             mouse.click.timer = 10; //treba je nastavit na manj da se ob enem kliku blok ne spremeni veckrat
+                    if (mouse.click.left == true)
+                    {
+                        map.make.curBlock=map.make.block+2;
+                        map.make.change=2;
+                        mouse.click.left=false;
+                    }
+
+
+                    if (map.make.block == map.make.blockNum)
+                    {
+                        map.make.block = 1;
+                    }
+                    map.make.panel();
                 }
 
                 if (mouse.button.right == true)
                 {
                     if (mouse.canvasCoord.y < 600 && mapa.y <= 24)
                     {
-                        switch(map.make.block)
+                        switch(map.make.curBlock)
                         {
                             case 1:
                                 map.make.level[mapa.y][mapa.x] = 2;
@@ -455,7 +566,7 @@ function mapInit()
                             break;
                             case 11:
 
-                            screen.drawImage(map.block['enemy01'], curPos.x, curPos.y);
+                            screen.drawImage(enemy01.list[enemy01.findByCoord(mapa.x,mapa.y)].img, curPos.x, curPos.y);
 
                             break;
 
@@ -680,9 +791,9 @@ function mapInit()
             map.loadImg('playerDown1','./textures/Player_Front1.png');
             map.loadImg('playerDown2','./textures/Player_Front2.png');
             map.loadImg('playerUp1','./textures/Player_Back1.png');
-
             map.loadImg('playerUp2','./textures/Player_Back2.png');
-
+            map.loadImg('enemy01L','./textures/Enemy01_Left.png');
+            map.loadImg('enemy01R','./textures/Enemy01_Right.png');
             map.loadImg('enemy01','./textures/Enemy01_Left.png');
             map.loadImg('floor','./textures/Floor_25.png');
             map.loadImg('floorBig', './textures/Pyramid_Floor.png');

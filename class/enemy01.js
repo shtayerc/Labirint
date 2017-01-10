@@ -10,6 +10,19 @@ function enemyInit(){
         add:function(startCoordX,startCoordY){
             enemy01.list[enemy01.list.length]= new enemy_01(startCoordX,startCoordY);
         },
+        findByCoord(x,y)
+        {
+            for(var i=0;i<enemy01.list.length;i=i+1)
+            {
+                if(enemy01.list[i].mapCoord.x==x && enemy01.list[i].mapCoord.y==y)
+                {
+                    return i;
+                }
+
+            }
+            console.log('enemy not found');
+
+        },
         resetAll:function()
         {
             for(var i=0;i<enemy01.list.length;i=i+1)
@@ -46,13 +59,15 @@ function enemyInit(){
         this.endCoord=new coord(startCoordX+enemy01.distance,startCoordY);
         this.mapCoord=new coord(startCoordX,startCoordY);     //v new so koordinati dimenzionalnega polja
         this.canvasCoord=new coord((startCoordX-1)*map.blockSize,(startCoordY-1)*map.blockSize);   //na kerih pikslih je v canvasi, dejanska pozicija
+        this.img=map.block['enemy01R'];
+
         this.movingInterval=0;
         this.patrol.limit=new coord(startCoordX,startCoordY);
         this.dir='left';
     }
     enemy_01.prototype.draw=function()
     {
-      //  screen.drawImage(map.block['enemy01'], this.canvasCoord.x, this.canvasCoord.y);
+        //  screen.drawImage(map.block['enemy01'], this.canvasCoord.x, this.canvasCoord.y);
     }
     enemy_01.prototype.clear=function()
     {
@@ -60,7 +75,7 @@ function enemyInit(){
     }
     enemy_01.prototype.move=function(dir)
     {
-   //     game.clear();
+        //     game.clear();
         map.level[this.mapCoord.y][this.mapCoord.x]=0;
         switch(dir)
         {
@@ -86,9 +101,9 @@ function enemyInit(){
                 break;
         }
 
-       map.level[this.mapCoord.y][this.mapCoord.x]=11;
+        map.level[this.mapCoord.y][this.mapCoord.x]=11;
 
- //       map.drawPlay();
+        //       map.drawPlay();
 
     }
     enemy_01.prototype.canMove=function(dir)
@@ -132,6 +147,7 @@ function enemyInit(){
         }
         if(this.mapCoord.x==this.startCoord.x) 
         {
+
             this.dir='right';
         }
 
@@ -142,10 +158,22 @@ function enemyInit(){
         }else
         {
             this.dir=oppositeDir(this.dir);
+
             if(this.canMove(this.dir))
             {
                 this.move(this.dir);
             }
+        }
+        if(this.dir=='right')
+        {
+            this.img=map.block['enemy01R'];
+
+        }
+        if(this.dir=='left')
+        {
+
+            this.img=map.block['enemy01L'];
+
         }
     }
 

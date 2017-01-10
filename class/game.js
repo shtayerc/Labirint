@@ -127,7 +127,7 @@ function gameInit()
                 break;
 
 
-            }
+            }           
             if(player.isMoving==true)
             {
                 player.drawMovingFrame();
