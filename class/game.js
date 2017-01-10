@@ -93,10 +93,36 @@ function gameInit()
             }
             switch(map.level[player.mapCoord.y][player.mapCoord.x]) //preverja trenutne koordinate v polju map.level
             {
+                case 3: //builder
+                switch(player.lastDir)
+                {
+                    case 'up':
+                        map.level[player.mapCoord.y][player.mapCoord.x]=0;
+                        map.level[player.mapCoord.y-1][player.mapCoord.x]=3;
+                        break;
+                    case 'down':
+                         map.level[player.mapCoord.y][player.mapCoord.x]=0;
+                        map.level[player.mapCoord.y+1][player.mapCoord.x]=3;
+                        break;
+                    case 'left':
+                         map.level[player.mapCoord.y][player.mapCoord.x]=0;
+                        map.level[player.mapCoord.y][player.mapCoord.x-1]=3;
+                        break;
+                    case 'right':
+                        map.level[player.mapCoord.y][player.mapCoord.x]=0;
+                        map.level[player.mapCoord.y][player.mapCoord.x+1]=3;
+
+                        break;
+                    
+                
+                }
+                console.log(map.level[player.mapCoord.y][player.mapCoord.x]);
+                
+                break;
                 case 5: //key_1
                 map.keys.key_1.pickUp();
                 break;
-
+                
                 case 7: //key_2
                 map.keys.key_2.pickUp();
                 break;

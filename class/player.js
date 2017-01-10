@@ -501,31 +501,47 @@ function playerInit()
 
         canMove:function(dir) //funkcija vrne true ce igralec lahko premakne v zeljeno smer(ce ni ovir), false ce se ne more
         {
+            var next2Block=new coord(0,0);
             var nextBlock=new coord(0,0); //tu so shranjeni koordinati naslednjega bloka, ki se bo preverjal
             switch(dir)
             {
                 case 'up':
                     nextBlock.x=player.mapCoord.x;
                     nextBlock.y=player.mapCoord.y-1;
+                    next2Block.x=player.mapCoord.x;
+                    next2Block.y=player.mapCoord.y-2;
                     break;
 
                 case 'down':
                     nextBlock.x=player.mapCoord.x;
                     nextBlock.y=player.mapCoord.y+1;
+                    next2Block.x=player.mapCoord.x;
+                    next2Block.y=player.mapCoord.y+2;
+
                     break;
 
                 case 'left':
                     nextBlock.x=player.mapCoord.x-1;
                     nextBlock.y=player.mapCoord.y;
+                    next2Block.x=player.mapCoord.x-2;
+                    next2Block.y=player.mapCoord.y;
+
                     break;
 
                 case 'right':
                     nextBlock.x=player.mapCoord.x+1;
                     nextBlock.y=player.mapCoord.y;
+                    next2Block.x=player.mapCoord.x+2;
+                    next2Block.y=player.mapCoord.y;
+
                     break;
             }
 
             //2 - wall  6 - keylock_2  8 - keylock_1
+            if(map.level[nextBlock.y][nextBlock.x]==3 && map.level[next2Block.y][next2Block.x] !=0)
+            {
+                return false;
+            }
             if (map.level[nextBlock.y][nextBlock.x] != 2 && map.level[nextBlock.y][nextBlock.x] != 8 && map.level[nextBlock.y][nextBlock.x] != 6)
                 //ce naslednji blok ni zid, ali kljucavnica vrne true
             {
