@@ -10,7 +10,7 @@ function enemyInit(){
         add:function(startCoordX,startCoordY){
             enemy01.list[enemy01.list.length]= new enemy_01(startCoordX,startCoordY);
         },
-        findByCoord(x,y)
+        findByCoord(x,y) //vrne index polja enemy01.list za podane koordinate
         {
             for(var i=0;i<enemy01.list.length;i=i+1)
             {
@@ -33,15 +33,7 @@ function enemyInit(){
             enemy01.list=[];
 
         },
-        drawAll:function(){
-
-            for(var i=0;i<enemy01.list.length;i=i+1)
-            {
-                //    enemy01.list[i].draw(); 
-            }
-
-        },
-        patrolAll:function()
+       patrolAll:function() //funkcija gre cez polje enemy01.list in klice funkcijo enemy01.list[x].patrol() za vsako polje posebaj
         {
 
             for(var i=0;i<enemy01.list.length;i=i+1)
@@ -53,7 +45,7 @@ function enemyInit(){
 
         }
     };
-    function enemy_01(startCoordX,startCoordY)
+    function enemy_01(startCoordX,startCoordY) //struktura enemy01 objekta
     {
         this.startCoord=new coord(startCoordX,startCoordY);
         this.endCoord=new coord(startCoordX+enemy01.distance,startCoordY);
@@ -65,15 +57,16 @@ function enemyInit(){
         this.patrol.limit=new coord(startCoordX,startCoordY);
         this.dir='left';
     }
-    enemy_01.prototype.draw=function()
+   /* enemy_01.prototype.draw=function()
     {
         //  screen.drawImage(map.block['enemy01'], this.canvasCoord.x, this.canvasCoord.y);
-    }
-    enemy_01.prototype.clear=function()
+    }*/
+   /* enemy_01.prototype.clear=function()
     {
         screen.clearRect(this.canvasCoord.x, this.canvasCoord.y, map.blockSize, map.blockSize); //brisanje igralca narisanega na starem polozaju
-    }
-    enemy_01.prototype.move=function(dir)
+    }*/
+
+    enemy_01.prototype.move=function(dir) //premakne izbrani objekt tipa enemy01 v smer podano v parametru(string npr.: 'right')
     {
         //     game.clear();
         map.level[this.mapCoord.y][this.mapCoord.x]=0;
@@ -103,10 +96,10 @@ function enemyInit(){
 
         map.level[this.mapCoord.y][this.mapCoord.x]=11;
 
-        //       map.drawPlay();
+        
 
     }
-    enemy_01.prototype.canMove=function(dir)
+    enemy_01.prototype.canMove=function(dir) //vrne true, ce je naslednji blok v podani smeri prazen(ce je 0), drugace vrne false. Parameter je string(npr.: 'right')
     {
         var nextBlock=new coord(0,0); //tu so shranjeni koordinati naslednjega bloka, ki se bo preverjal
         switch(dir)
@@ -133,13 +126,13 @@ function enemyInit(){
         }
         //2 - wall  6 - keylock_2  8 - keylock_1
         if (map.level[nextBlock.y][nextBlock.x] ==0 || map.level[nextBlock.y][nextBlock.x] ==1 )
-            //ce naslednji blok ni zid, ali kljucavnica vrne true
+            //ce je naslednji blok prazen ali je na njem igralec
         {
             return true;   
         }
         return false;
     }
-    enemy_01.prototype.patrol=function()
+    enemy_01.prototype.patrol=function() //v tej funkciji je algoritem premikanje enemyja
     {
         if(this.mapCoord.x == this.endCoord.x )
         {

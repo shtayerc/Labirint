@@ -78,19 +78,19 @@ function mapInit()
             level:empty, //polje levela
             tick:10, //vsakih koliko ms se funkcija ponovi
             block:1, //kateri blok je izbran in se postavlja v mapo
-            blockNum:11,
+            blockNum:11, //stevilo blokov za izbiro v orodni vrstici pri kreiranju levela
             loop:true,
-            selStart:200,
-            selNum:3,
-            change:0,
-            curBlock:1,
+            selStart:200, //na koliko pikslih se narise prvi blok za izbiro
+            selNum:3, //stevilo blokov za izbiro
+            change:0, 
+            curBlock:1, //zaporedno stevilo izbranega bloka
             button:{
                 back:new text(0,625,'Back'),
                 clear:new text(70,625,'Clear'),
                 play:new text(320,625,'Play')
-              
+
             },
-            left:function()
+            left:function() //funkcija se izvede ko uporabnik pritisne puscico levo, ikone se premaknejo levo
             {
                 if(map.make.block>1)
                 {
@@ -98,7 +98,7 @@ function mapInit()
                     map.make.panel();
                 }
             },
-            right:function()
+            right:function() //funkcija se izvede ko uporabnik pritisne puscico desno, ikone se premaknejo desno
             {
                 if(map.make.block<map.make.blockNum-map.make.selNum)
                 {
@@ -107,9 +107,9 @@ function mapInit()
                 }
 
             },
-            panel:function()
+            panel:function() //narise orodno vrstico za kreiranje levela
             {
-                screen.clearRect(602,0,800,25);
+                screen.clearRect(0,602,800,25);
                 screen.beginPath();
                 screen.moveTo(0, 602);
                 screen.lineTo(800, 602);
@@ -193,7 +193,7 @@ function mapInit()
                     map.make.selStart+=map.blockSize/2;
                 }
             },
-            checkLevel:function()
+            checkLevel:function() //preveri ce je kreiran level korekten (mora biti le en player in en cilj)
             {
                 var mapa = new coord(1,1); //zacetna pozicija risanja v dvodimenzionalnem polju 
                 var limit = new coord(32,25); // meja polja po sirini, po visini
@@ -246,7 +246,7 @@ function mapInit()
                 return ok;
 
             },
-            newLevel:function()
+            newLevel:function() //funkcija se izvede ko uporabnik izbere create stage v osnovnem meniju 
             {
                 var newBlockSize=25;
                 var mapa=new coord(0,0);
@@ -257,46 +257,28 @@ function mapInit()
                 curPos.y = newBlockSize * (mapa.y - 1);
                 if ((mouse.canvasCoord.x >= 170 && mouse.canvasCoord.x <= 170 + 20) && (mouse.canvasCoord.y >= 602 && mouse.canvasCoord.y <= 627))
                 {
-                    mouse.click.timer = 10; //treba je nastavit na manj da se ob enem kliku blok ne spremeni veckrat
                     if (mouse.click.left == true)
                     {
                         map.make.left();
                         mouse.click.left=false;
-                        //map.make.block = map.make.block + 1;
                     }
-
-
-                    map.make.panel();
-                }else
-                {
-                    mouse.click.timer = 100;
                 }
                 if ((mouse.canvasCoord.x >= 285 && mouse.canvasCoord.x <= 285 + 20) && (mouse.canvasCoord.y >= 602 && mouse.canvasCoord.y <= 627))
                 {
-                    mouse.click.timer = 10; //treba je nastavit na manj da se ob enem kliku blok ne spremeni veckrat
                     if (mouse.click.left == true)
                     {
                         map.make.right();
                         mouse.click.left=false;
-                        //map.make.block = map.make.block + 1;
                     }
-
-
-                    map.make.panel();
-                }else
-                {
-                    mouse.click.timer = 100;
                 }
-
                 if ((mouse.canvasCoord.x >= 200 && mouse.canvasCoord.x <= 200 + newBlockSize) && (mouse.canvasCoord.y >= 602 && mouse.canvasCoord.y <= 627))
                 {
-                    //  mouse.click.timer = 10; //treba je nastavit na manj da se ob enem kliku blok ne spremeni veckrat
                     if (mouse.click.left == true)
                     {
                         map.make.curBlock=map.make.block + 0;
                         map.make.change=0;
                         mouse.click.left=false;
-                        //map.make.block = map.make.block + 1;
+
                     }
 
 
@@ -304,11 +286,10 @@ function mapInit()
                     {
                         map.make.block = 1;
                     }
-                    map.make.panel();
-                } 
+                }
+
                 if ((mouse.canvasCoord.x >= 225 && mouse.canvasCoord.x <= 225 + newBlockSize) && (mouse.canvasCoord.y >= 602 && mouse.canvasCoord.y <= 627))
                 {
-                    //               mouse.click.timer = 10; //treba je nastavit na manj da se ob enem kliku blok ne spremeni veckrat
                     if (mouse.click.left == true)
                     {
                         map.make.curBlock=map.make.block+1;
@@ -321,11 +302,9 @@ function mapInit()
                     {
                         map.make.block = 1;
                     }
-                    map.make.panel();
                 } 
                 if ((mouse.canvasCoord.x >= 250 && mouse.canvasCoord.x <= 250 + newBlockSize) && (mouse.canvasCoord.y >= 602 && mouse.canvasCoord.y <= 627))
                 {
-                    //             mouse.click.timer = 10; //treba je nastavit na manj da se ob enem kliku blok ne spremeni veckrat
                     if (mouse.click.left == true)
                     {
                         map.make.curBlock=map.make.block+2;
@@ -338,13 +317,13 @@ function mapInit()
                     {
                         map.make.block = 1;
                     }
-                    map.make.panel();
                 }
 
                 if (mouse.button.right == true)
                 {
                     if (mouse.canvasCoord.y < 600 && mapa.y <= 24)
                     {
+
                         switch(map.make.curBlock)
                         {
                             case 1:
@@ -411,6 +390,7 @@ function mapInit()
                     }
 
                 }
+                map.make.panel();
                 if(map.make.button.back.isClicked())
                 {
                     enemy01.resetAll();
@@ -460,9 +440,11 @@ function mapInit()
 
 
             }
+
         },
 
-        getBlock:function(x,y){
+        getBlock:function(x,y) //vrne ime polja map.block[] za podane koordinate(gleda polje map.level[]) 
+        {
             if(typeof(map.level[y]) != 'undefined' && typeof(map.level[y][x]) != 'undefined')
             {
                 switch(map.level[y][x]) //preverja polje map.level in narise ustrezen blok
@@ -478,7 +460,7 @@ function mapInit()
                     case 2:
                     return 'wall';
                     break;
-    
+
                     case 3:
                     return 'builder';
                     break;
@@ -517,7 +499,7 @@ function mapInit()
                 return 'blank';
             }
         },
-        drawPlay:function()
+        drawPlay:function() //narise 13 blokov, glede na koordinate igralca (ta funkcija se izvaja ko igralec miruje, ko se premika se izvaja player.drawMovingFrame)
         {
             var curPos=new coord(0,0); //current position
             var mapa= new coord(player.movingFrame.start.x,player.movingFrame.start.y);
@@ -535,7 +517,7 @@ function mapInit()
             var limit = new coord(13,13); // meja polja po sirini, po visini
             var column=1;
             var row=1;
-            var canLimit = new coord(601,551);
+            var canLimit = new coord(601,551); //meja v pikslih canvasa
             screen.drawImage(map.block['floorBig'], 0, 0);
             while(curPos.y<canLimit.y)
             {
@@ -547,18 +529,18 @@ function mapInit()
 
                     if(typeof(map.level[mapa.y]) != 'undefined' && typeof(map.level[mapa.y][mapa.x]) != 'undefined')
                     {
-                        if(map.getBlock(mapa.x,mapa.y)==11)
+                        if(map.getBlock(mapa.x,mapa.y)=='enemy01')
                         {
-                           screen.drawImage(enemy01.list[enemy01.findByCoord(mapa.x,mapa.y)].img, curPos.x, curPos.y);
+                            screen.drawImage(enemy01.list[enemy01.findByCoord(mapa.x,mapa.y)].img, curPos.x, curPos.y);
                         }else
                         {
                             screen.drawImage(map.block[map.getBlock(mapa.x,mapa.y)], curPos.x, curPos.y);
 
                         }
-                        
-                                         } else
+
+                    } else
                     {
-                    screen.drawImage(map.block['blank'], curPos.x, curPos.y);
+                        screen.drawImage(map.block['blank'], curPos.x, curPos.y);
 
                     }
 
@@ -572,14 +554,13 @@ function mapInit()
                 column=column+1;
                 curPos.y = curPos.y + map.blockSize;
 
-                enemy01.drawAll();
 
                 player.draw();
             }
 
 
         },
-        draw:function()
+        draw:function() //narise polje map.level v 25x25 velikosti blokov (uporablja se pri kreiranju levela)
         {
             enemy01.resetAll();
             var curPos=new coord(0,0); //current position
@@ -597,7 +578,7 @@ function mapInit()
                         case 2:
                         screen.drawImage(map.block['wall25'], curPos.x, curPos.y);
                         break;
-                        
+
                         case 3:
                         screen.drawImage(map.block['builder'], curPos.x, curPos.y);
                         break;
@@ -635,7 +616,6 @@ function mapInit()
                 }
                 mapa.y = mapa.y +1;
                 curPos.y = curPos.y + map.blockSize/2;
-                enemy01.drawAll();
             }
         },
         keys:{  //v tem objektu so podatki o pobranih klucih
@@ -721,7 +701,7 @@ function mapInit()
                 map.keys.key_2.taken=false;
             }
         },
-        drawPanel:function()
+        drawPanel:function() //narise orodno vrstico, ki se rise v meniju PLAY
         {
             player.drawHp();
             map.button.back.draw();
@@ -745,7 +725,7 @@ function mapInit()
             }                      
             map.block[name].src=url;
         },
-        loading:function()
+        loading:function() //funkcija se zacne izvajati, ko se stran nalozi in se izvaja dokler se ne nalozijo vse slike
         {
 
             if(map.imgLoaded!=Object.keys(map.block.length))
