@@ -31,7 +31,7 @@ window.onbeforeunload = function() {
     }
     console.log(map.levelIndex);
 
-    return false;
+    return undefined;
 }     
 
 
