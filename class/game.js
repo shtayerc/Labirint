@@ -50,6 +50,11 @@ function gameInit()
             },
             main:function()
             {
+                if(typeof progress != 'undefined')
+                {
+                map.levelIndex=progress;
+                
+                }
                 game.clear();
                 game.menu.button.play.draw();
                 game.menu.button.make.draw();
