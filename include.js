@@ -16,7 +16,7 @@ window.onbeforeunload = function() {
         var param="newprogress="+map.levelIndex;
         http.open("POST",url,true);
         http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        http.setRequestHeader("Content-length", params.length);
+        http.setRequestHeader("Content-length", param.length);
         http.setRequestHeader("Connection", "close");
 
         http.send(param);
