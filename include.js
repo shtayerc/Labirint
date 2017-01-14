@@ -7,12 +7,13 @@ function include(url)
     head.appendChild(script);
     console.log('Included: '+url);
 }
-include('./canvas.js');
-include('./main.js');
-include('./class/map.js');
-include('./class/player.js');
-include('./class/key.js');
-include('./class/game.js');
-include('./class/levels.js');
-include('./class/enemy01.js');
+var path="./";
+include(path+'canvas.js');
+include(path+'main.js');
+include(path+'class/map.js');
+include(path+'class/player.js');
+include(path+'class/key.js');
+include(path+'class/game.js');
+include(path+'class/levels.js');
+include(path+'class/enemy01.js');
 

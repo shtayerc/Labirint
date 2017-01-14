@@ -3,6 +3,41 @@ function gameInit()
     game={
         loop:true,
         tick:50,
+        console:
+            {
+                canvasCoord: new coord(675,623),
+                font:'10px Dejavu sans mono',
+                color:'#ffffff',
+                history:{
+                    text:['',''],
+                    add:function(text)
+                    {
+                        game.console.history.text[game.console.history.text.length]=text;
+
+                    }
+                },
+                out:function(text)
+                {
+                    game.console.history.add(text);
+                },
+                reset:function()
+                {
+                    game.console.history.text=['',''];
+                },
+                draw:function()
+                {
+                    game.console.clear();
+                    screen.font=game.console.font;
+                    screen.fillStyle=game.console.color;
+                    screen.fillText(game.console.history.text[game.console.history.text.length-2],game.console.canvasCoord.x,game.console.canvasCoord.y-10);
+                    screen.fillText(game.console.history.text[game.console.history.text.length-1],game.console.canvasCoord.x,game.console.canvasCoord.y);
+                },
+                clear:function()
+                {
+                    screen.clearRect(650, 603, 150, 25);
+
+                }
+            },
         menu:{
             font:'25px Arial',
             color:'#ffffff',
@@ -29,6 +64,7 @@ function gameInit()
                     map.drawPlay();
                     map.drawPanel();
                     enemy01.patrolAll();
+                    map.level[player.mapCoord.y][player.mapCoord.x]=0; //nastavi zacetno polje igralca na 0, da ne moti ostalih funkcij ki preverjajo
                     game.start();
                 }
                 if(game.menu.button.make.isClicked())
@@ -101,11 +137,11 @@ function gameInit()
                         map.level[player.mapCoord.y-1][player.mapCoord.x]=3;
                         break;
                     case 'down':
-                         map.level[player.mapCoord.y][player.mapCoord.x]=0;
+                        map.level[player.mapCoord.y][player.mapCoord.x]=0;
                         map.level[player.mapCoord.y+1][player.mapCoord.x]=3;
                         break;
                     case 'left':
-                         map.level[player.mapCoord.y][player.mapCoord.x]=0;
+                        map.level[player.mapCoord.y][player.mapCoord.x]=0;
                         map.level[player.mapCoord.y][player.mapCoord.x-1]=3;
                         break;
                     case 'right':
@@ -113,16 +149,16 @@ function gameInit()
                         map.level[player.mapCoord.y][player.mapCoord.x+1]=3;
 
                         break;
-                    
-                
+
+
                 }
-                console.log(map.level[player.mapCoord.y][player.mapCoord.x]);
-                
+                //               console.log(map.level[player.mapCoord.y][player.mapCoord.x]);
+
                 break;
                 case 5: //key_1
                 map.keys.key_1.pickUp();
                 break;
-                
+
                 case 7: //key_2
                 map.keys.key_2.pickUp();
                 break;
@@ -134,6 +170,12 @@ function gameInit()
                 case 6: //keylock_2
                 map.keys.key_2.unlock();
                 break;
+
+
+                //  case 11:
+                //  map.restart();
+                //  console.log('game.hit');
+                //  break;
 
                 case 10: //end
                 if(map.make.flag==false)
@@ -163,9 +205,10 @@ function gameInit()
                 map.clear();
                 map.drawPlay();
             }
+
             player.inventory.clear();
             player.inventory.draw();
-
+            game.console.draw();
             if(map.button.restart.isClicked())
             {
                 map.restart();           
@@ -203,11 +246,13 @@ function gameInit()
 
             if(player.isDead())
             {
+              //  game.loop=false;
                 player.hp=100;
                 map.restart();
                 player.drawHp();
 
             }
+
             if(game.loop != false)
             {
 

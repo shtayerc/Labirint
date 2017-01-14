@@ -136,7 +136,7 @@ function mapInit()
                 screen.lineTo(285,603);
                 screen.lineTo(285,627);
                 screen.fill();
-
+                game.console.draw();
                 for(var i=map.make.block;i<map.make.block+map.make.selNum;i=i+1)
                 {
                     switch(i)
@@ -224,22 +224,22 @@ function mapInit()
 
                 if(player==0)
                 {
-                    console.log('There is no player.');
+                    game.console.out('There is no player.');
                     ok=false;
                 }
                 if(player>1)
                 {
-                    console.log('There can only be one player.');
+                    game.console.out('One player allowed.');
                     ok=false;
                 }
                 if(end==0)
                 {
-                    console.log('There is no end.');
+                    game.console.out('There is no end.');
                     ok=false;
                 }
                 if(end>1)
                 {
-                    console.log('There can only be one end.');
+                    game.console.out('One end allowed.');
                     ok=false;
                 }
 
@@ -428,6 +428,7 @@ function mapInit()
                         map.drawPlay();
                         map.drawPanel();
                         enemy01.patrolAll();
+                        map.level[player.mapCoord.y][player.mapCoord.x]=0; //nastavi zacetno polje igralca na 0
                         game.start();
                     }            
 
@@ -740,28 +741,28 @@ function mapInit()
         },
         loadBlocks:function() //funkcija ki klice funkcijo map.loadImg in nalozi vse potrebne slike
         {
-            map.loadImg('player25','./textures/25x25/PlayerFront25x25.png');
-            map.loadImg('enemy01_25','./textures/25x25/Enemy01_Back25x25.png');
-            map.loadImg('wall','./textures/50x50/Pyramid_Walls.png');
-            map.loadImg('wall25','./textures/25x25/Pyramid_Walls25x25.png');
-            map.loadImg('key_1','./textures/50x50/Boss_Key.png');
-            map.loadImg('key_1_25','./textures/25x25/Boss_Key25x25.png');
-            map.loadImg('key_2','./textures/25x25/key_2.png');
-            map.loadImg('end','./textures/25x25/end.png');
-            map.loadImg('keylock_1','./textures/50x50/Boss_Keyhole.png');
-            map.loadImg('keylock_1_25','./textures/25x25/Boss_Keyhole25x25.png');
-            map.loadImg('keylock_2','./textures/25x25/keylock_2.png');
-            map.loadImg('playerDown1','./textures/50x50/Player_Front1.png');
-            map.loadImg('playerDown2','./textures/50x50/Player_Front2.png');
-            map.loadImg('playerUp1','./textures/50x50/Player_Back1.png');
-            map.loadImg('playerUp2','./textures/50x50/Player_Back2.png');
-            map.loadImg('enemy01L','./textures/50x50/Enemy01_Left.png');
-            map.loadImg('enemy01R','./textures/50x50/Enemy01_Right.png');
-            map.loadImg('enemy01','./textures/50x50/Enemy01_Left.png');
-            map.loadImg('floor','./textures/50x50/Floor_50.png');
-            map.loadImg('floorBig', './textures/background/Pyramid_Floor.png');
-            map.loadImg('blank','./textures/50x50/blank.png');
-            map.loadImg('builder','./textures/25x25/builder.png');
+            map.loadImg('player25',path+'textures/25x25/PlayerFront25x25.png');
+            map.loadImg('enemy01_25',path+'textures/25x25/Enemy01_Back25x25.png');
+            map.loadImg('wall',path+'textures/50x50/Pyramid_Walls.png');
+            map.loadImg('wall25',path+'textures/25x25/Pyramid_Walls25x25.png');
+            map.loadImg('key_1',path+'textures/50x50/Boss_Key.png');
+            map.loadImg('key_1_25',path+'textures/25x25/Boss_Key25x25.png');
+            map.loadImg('key_2',path+'textures/25x25/key_2.png');
+            map.loadImg('end',path+'textures/25x25/end.png');
+            map.loadImg('keylock_1',path+'textures/50x50/Boss_Keyhole.png');
+            map.loadImg('keylock_1_25',path+'textures/25x25/Boss_Keyhole25x25.png');
+            map.loadImg('keylock_2',path+'textures/25x25/keylock_2.png');
+            map.loadImg('playerDown1',path+'textures/50x50/Player_Front1.png');
+            map.loadImg('playerDown2',path+'textures/50x50/Player_Front2.png');
+            map.loadImg('playerUp1',path+'textures/50x50/Player_Back1.png');
+            map.loadImg('playerUp2',path+'textures/50x50/Player_Back2.png');
+            map.loadImg('enemy01L',path+'textures/50x50/Enemy01_Left.png');
+            map.loadImg('enemy01R',path+'textures/50x50/Enemy01_Right.png');
+            map.loadImg('enemy01',path+'textures/50x50/Enemy01_Left.png');
+            map.loadImg('floor',path+'textures/50x50/Floor_50.png');
+            map.loadImg('floorBig', path+'textures/background/Pyramid_Floor.png');
+            map.loadImg('blank',path+'textures/50x50/blank.png');
+            map.loadImg('builder',path+'textures/25x25/builder.png');
         }
 
 

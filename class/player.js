@@ -170,6 +170,34 @@ function playerInit()
             }
 
         },
+ /*       getMovedNum:function()
+        {
+        
+            switch(player.lastDir)
+            {
+                case 'up':
+                    console.log(player.canvasCoord);
+                    console.log(player.movingFrame.midLine);
+                    player.canvasCoord.y=player.canvasCoord.y-player.movingFrame.midLine;
+                    console.log(player.canvasCoord);
+                    break;
+
+                case 'down':
+                     player.canvasCoord=player.canvasCoord.y+player.movingFrame.midLine;
+
+                    break;
+                case 'left':
+                    break;
+                case 'right':
+                    break;
+            
+            }
+     //   console.log(50+player.movingFrame.midLine);
+            
+            
+            
+            
+        },*/
         getStartCoord:function()
         {
             var curPos=new coord(0,0); //current position
@@ -314,7 +342,7 @@ function playerInit()
             var curPos=new coord(0,0);
             var canLimit=new coord(601,551);
             var mapCoord=new coord(player.movingFrame.start.x,player.movingFrame.start.y);
-
+           // console.log(player.movingFrame.midLine);
             if(player.movingFrame.xCh!=0) //levo ali desno
             {
 
@@ -436,7 +464,7 @@ function playerInit()
         },
         draw:function()
         {
-            screen.drawImage(map.block['floor'], player.canvasCoord.x, player.canvasCoord.y);
+          //  screen.drawImage(map.block['floor'], player.canvasCoord.x, player.canvasCoord.y);
 
             screen.drawImage(player.img, player.canvasCoord.x, player.canvasCoord.y);
 
@@ -463,8 +491,28 @@ function playerInit()
             }
         },
         isHit:function()
-        {    
-            if(map.level[player.mapCoord.y][player.mapCoord.x]==11)
+        {   
+            var lastDir=new coord(player.mapCoord.x,player.mapCoord.y);
+           if(player.isMoving==true)
+            {
+            switch(player.lastDir)
+            {
+                case 'up':
+                    lastDir.y=lastDir.y+1;
+                    break;
+                case 'down':
+                    lastDir.y=lastDir.y-1;
+                    break;
+                case 'left':
+                    lastDir.x=lastDir.x+1;
+                    break;
+                case 'right':
+                    lastDir.x=lastDir.x-1;
+                    break;
+        
+            }
+             }    
+            if(map.level[lastDir.y][lastDir.x]==11)
             {
                 player.hp=player.hp-enemy01.dmg;
 
