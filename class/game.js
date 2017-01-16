@@ -44,6 +44,7 @@ function gameInit()
             loop:true,
             tick:100,
             button:{
+                
                 play:new text(250,250,'Play'),
                 make:new text(250,300,'Create stage')
 
@@ -53,10 +54,15 @@ function gameInit()
                 if(typeof progress != 'undefined')
                 {
                 map.levelIndex=progress;
-                
+                  game.console.out("Logged as "+ username);
+                 game.console.out("");
+
+                game.console.draw();
+                            
                 }
+              
                 game.clear();
-                game.menu.button.play.draw();
+               game.menu.button.play.draw();
                 game.menu.button.make.draw();
                 if(game.menu.button.play.isClicked())
                 {   
@@ -185,6 +191,7 @@ function gameInit()
                 case 10: //end
                 if(map.make.flag==false)
                 {
+                    clearInterval(player.animation.interval);
                     map.nextLevel();
                     game.clear();
                     map.keys.reset();
