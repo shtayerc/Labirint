@@ -21,7 +21,7 @@ window.onbeforeunload = function() {
         //simulacija post metode pri formi http://www.openjs.com/articles/ajax_xmlhttp_using_post.php
         var http=new XMLHttpRequest();
         var url="http://www2.scptuj.si/~murko.david1/Labirint/index.php";
-        var param="newprogress="+map.levelIndex;
+        var param="newprogress="+map.levelIndex+"&username="+username;
         http.open("POST",url,true);
         http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         http.setRequestHeader("Content-length", param.length);
