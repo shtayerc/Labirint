@@ -72,7 +72,11 @@ function gameInit()
                 {
                     if(username == 'undefined')
                     {
+                        
                     game.form.show();
+                    }else
+                    {
+                    game.form.hide();
                     }
                         //   console.log("true");
                     map.levelIndex=progress;
