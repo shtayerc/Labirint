@@ -70,8 +70,11 @@ function gameInit()
             {
                 if(typeof progress != 'undefined')
                 {
+                    if(username == 'undefined')
+                    {
                     game.form.show();
-                    //   console.log("true");
+                    }
+                        //   console.log("true");
                     map.levelIndex=progress;
                     game.console.out("Logged as "+ username);
                     game.console.out("");
