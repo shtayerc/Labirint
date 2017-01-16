@@ -3,6 +3,23 @@ function gameInit()
     game={
         loop:true,
         tick:50,
+        form:{
+            hide:function()
+            {
+                document.getElementsByTagName('form')[0].style.display='none'; 
+                document.getElementsByTagName('form')[1].style.display='none';
+
+            },
+            show:function()
+            {
+                document.getElementsByTagName('form')[0].style.display='block'; 
+                document.getElementsByTagName('form')[1].style.display='none';
+
+
+
+            }
+
+        },
         console:
             {
                 canvasCoord: new coord(675,623),
@@ -44,7 +61,7 @@ function gameInit()
             loop:true,
             tick:100,
             button:{
-                
+
                 play:new text(250,250,'Play'),
                 make:new text(250,300,'Create stage')
 
@@ -53,21 +70,23 @@ function gameInit()
             {
                 if(typeof progress != 'undefined')
                 {
-           //   console.log("true");
+                    game.form.show();
+                    //   console.log("true");
                     map.levelIndex=progress;
-                  game.console.out("Logged as "+ username);
-                 game.console.out("");
+                    game.console.out("Logged as "+ username);
+                    game.console.out("");
 
-                                        
+
                 }
-              
+
                 game.clear();
-                 game.console.draw();
+                game.console.draw();
 
                 game.menu.button.play.draw();
                 game.menu.button.make.draw();
                 if(game.menu.button.play.isClicked())
-                {   
+                {
+                    game.form.hide();   
                     game.menu.loop=false;
                     game.loop=true;
                     game.clear();
@@ -82,6 +101,7 @@ function gameInit()
                 }
                 if(game.menu.button.make.isClicked())
                 {
+                    game.form.hide();
                     game.menu.loop=false;
                     game.clear();
                     map.level=toArray(emptyTest);
@@ -232,6 +252,7 @@ function gameInit()
                 if(map.make.flag==true)
                 {
 
+
                     game.loop=false;
                     map.restart();
                     enemy01.resetAll();
@@ -247,7 +268,10 @@ function gameInit()
 
                 }else
                 {
-
+                if(typeof progress != 'undefined')
+                    {
+                    game.form.show();
+                    }
                     game.loop=false;
                     enemy01.resetAll();
                     player.lastDir="";
@@ -260,7 +284,7 @@ function gameInit()
 
             if(player.isDead())
             {
-              //  game.loop=false;
+                //  game.loop=false;
                 player.hp=100;
                 map.restart();
                 player.drawHp();

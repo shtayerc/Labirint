@@ -393,7 +393,11 @@ function mapInit()
                 map.make.panel();
                 if(map.make.button.back.isClicked())
                 {
-                    enemy01.resetAll();
+                                   if(typeof progress != 'undefined')
+                    {
+                    game.form.show();
+                    }
+                        enemy01.resetAll();
                     map.make.flag=false;
                     map.make.loop=false;
                     map.make.levelString=toMapString(map.make.level);
@@ -756,6 +760,8 @@ function mapInit()
             map.loadImg('playerDown2',path+'textures/50x50/Player_Front2.png');
             map.loadImg('playerUp1',path+'textures/50x50/Player_Back1.png');
             map.loadImg('playerUp2',path+'textures/50x50/Player_Back2.png');
+            map.loadImg('playerLeft2',path+'textures/50x50/Player_Left2.png');
+            map.loadImg('playerRight2',path+'textures/50x50/Player_Right2.png');
             map.loadImg('enemy01L',path+'textures/50x50/Enemy01_Left.png');
             map.loadImg('enemy01R',path+'textures/50x50/Enemy01_Right.png');
             map.loadImg('enemy01',path+'textures/50x50/Enemy01_Left.png');

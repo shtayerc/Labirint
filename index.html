@@ -1,16 +1,56 @@
 <!DOCTYPE html>
 <html>
     <head>
+       <style>
+input{
+    color:white;
+    background:black;
+    position:absolute;
+    border:none;
+    top:5px;
+    width:140px;
+
+}
+button{
+
+    color:white;
+    background:black;
+    position:absolute;
+    top:5px;
+    border:none;
+    width:80px;
+
+}
+
+        </style>
+
+
         <title>
             Labirint
         </title>
         <script src="include.js">
-  
-  </script>
-    <script src="main.js">
-  </script>
+
+        </script>
+        <script src="main.js">
+        </script>
     </head>
     <body onload="main()">
-    
+        <div style="position:relative;width:800px;height:627px">
+            <form method="post" action="" style="display:none;">           
+                <input type="text" name="username" pattern="[a-zA-Z0-9]{8,12}" placeholder="Insert username" style="left:5px;"required>
+                <input type="password" name="password" pattern="[a-zA-Z0-9]{8,12}" placeholder="Insert password" style="left:155px;" required>
+                <button type="submit" name="login" style="left:305px;">Login</button>
+                <button type="button" style="left:385px;"onclick="document.getElementsByTagName('form')[1].style.display='block'; 
+                                      document.getElementsByTagName('form')[0].style.display='none';">Register</button>
+            </form>
+            <form action="" method="post" style="display: none;">
+                <input type="text" name="username" pattern="[a-zA-Z0-9]{8,12}" placeholder="Insert username" style="left:5px;" required>
+                <input type="password" name="password" pattern="[a-zA-Z0-9]{8,12}" placeholder="Insert password" style="left:155px;"required>
+                <input type="password" name="password2" pattern="[a-zA-Z0-9]{8,12}" placeholder="Repeat password" style="left:305px;" required>
+                <button type="submit" name="register" style="left:460px;">Register</button>
+                <button type="button" onclick="document.getElementsByTagName('form')[0].style.display='block'; document.getElementsByTagName('form')[1].style.display='none';" style="left:540px;">Login</button>
+            </form>
+        </div>
+
     </body>
 </html>
