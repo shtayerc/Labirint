@@ -57,12 +57,13 @@ function gameInit()
                   game.console.out("Logged as "+ username);
                  game.console.out("");
 
-                game.console.draw();
-                            
+                                        
                 }
               
                 game.clear();
-               game.menu.button.play.draw();
+                 game.console.draw();
+
+                game.menu.button.play.draw();
                 game.menu.button.make.draw();
                 if(game.menu.button.play.isClicked())
                 {   
