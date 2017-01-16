@@ -53,7 +53,8 @@ function gameInit()
             {
                 if(typeof progress != 'undefined')
                 {
-                map.levelIndex=progress;
+              console.log("true");
+                    map.levelIndex=progress;
                   game.console.out("Logged as "+ username);
                  game.console.out("");
 
