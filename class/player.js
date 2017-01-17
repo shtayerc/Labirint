@@ -170,34 +170,6 @@ function playerInit()
             }
 
         },
- /*       getMovedNum:function()
-        {
-        
-            switch(player.lastDir)
-            {
-                case 'up':
-                    console.log(player.canvasCoord);
-                    console.log(player.movingFrame.midLine);
-                    player.canvasCoord.y=player.canvasCoord.y-player.movingFrame.midLine;
-                    console.log(player.canvasCoord);
-                    break;
-
-                case 'down':
-                     player.canvasCoord=player.canvasCoord.y+player.movingFrame.midLine;
-
-                    break;
-                case 'left':
-                    break;
-                case 'right':
-                    break;
-            
-            }
-     //   console.log(50+player.movingFrame.midLine);
-            
-            
-            
-            
-        },*/
         getStartCoord:function()
         {
             var curPos=new coord(0,0); //current position
@@ -267,7 +239,8 @@ function playerInit()
                 player.movingFrame.xCh=0;
             }
             if(dir=='down')
-            {   
+            {
+
                 player.animation.start(map.block['playerDown1'],map.block['playerDown2']);
                 player.movingFrame.yCh=+1;
                 if(player.lastDir=='right')
@@ -284,7 +257,7 @@ function playerInit()
             }
             if(dir=='left')
             {
-
+                player.animation.start(map.block['playerLeft1'],map.block['playerLeft2']);
                 player.movingFrame.xCh=-1;
                 if(player.lastDir=='down')
                 {
@@ -304,6 +277,8 @@ function playerInit()
             }
             if(dir== 'right')
             {
+                player.animation.start(map.block['playerRight1'],map.block['playerRight2']);
+
                 if(player.lastDir=='down')
                 {
                     player.movingFrame.start.y=player.movingFrame.start.y+1;
@@ -342,7 +317,7 @@ function playerInit()
             var curPos=new coord(0,0);
             var canLimit=new coord(601,551);
             var mapCoord=new coord(player.movingFrame.start.x,player.movingFrame.start.y);
-           // console.log(player.movingFrame.midLine);
+            // console.log(player.movingFrame.midLine);
             if(player.movingFrame.xCh!=0) //levo ali desno
             {
 
@@ -464,7 +439,7 @@ function playerInit()
         },
         draw:function()
         {
-          //  screen.drawImage(map.block['floor'], player.canvasCoord.x, player.canvasCoord.y);
+            //  screen.drawImage(map.block['floor'], player.canvasCoord.x, player.canvasCoord.y);
 
             screen.drawImage(player.img, player.canvasCoord.x, player.canvasCoord.y);
 
@@ -493,25 +468,25 @@ function playerInit()
         isHit:function()
         {   
             var lastDir=new coord(player.mapCoord.x,player.mapCoord.y);
-           if(player.isMoving==true)
+            if(player.isMoving==true)
             {
-            switch(player.lastDir)
-            {
-                case 'up':
-                    lastDir.y=lastDir.y+1;
-                    break;
-                case 'down':
-                    lastDir.y=lastDir.y-1;
-                    break;
-                case 'left':
-                    lastDir.x=lastDir.x+1;
-                    break;
-                case 'right':
-                    lastDir.x=lastDir.x-1;
-                    break;
-        
-            }
-             }    
+                switch(player.lastDir)
+                {
+                    case 'up':
+                        lastDir.y=lastDir.y+1;
+                        break;
+                    case 'down':
+                        lastDir.y=lastDir.y-1;
+                        break;
+                    case 'left':
+                        lastDir.x=lastDir.x+1;
+                        break;
+                    case 'right':
+                        lastDir.x=lastDir.x-1;
+                        break;
+
+                }
+            }    
             if(map.level[lastDir.y][lastDir.x]==11)
             {
                 player.hp=player.hp-enemy01.dmg;

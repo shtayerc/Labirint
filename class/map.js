@@ -163,7 +163,7 @@ function mapInit()
 
                         case 5:
                             screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
-                            screen.drawImage(map.block['keylock_2'], map.make.selStart, 602);
+                            screen.drawImage(map.block['keylock_2_25'], map.make.selStart, 602);
                             break;
 
                         case 6:
@@ -353,7 +353,7 @@ function mapInit()
                             case 5:
                                 map.make.level[mapa.y][mapa.x] = 6;
                                 screen.clearRect(curPos.x, curPos.y, newBlockSize, newBlockSize);
-                                screen.drawImage(map.block['keylock_2'], curPos.x, curPos.y);
+                                screen.drawImage(map.block['keylock_2_25'], curPos.x, curPos.y);
                                 break;
 
                             case 6:
@@ -393,11 +393,11 @@ function mapInit()
                 map.make.panel();
                 if(map.make.button.back.isClicked())
                 {
-                                   if(typeof progress != 'undefined')
+                    if(typeof progress != 'undefined')
                     {
-                    game.form.show();
+                        game.form.show();
                     }
-                        enemy01.resetAll();
+                    enemy01.resetAll();
                     map.make.flag=false;
                     map.make.loop=false;
                     map.make.levelString=toMapString(map.make.level);
@@ -600,7 +600,7 @@ function mapInit()
                         break;
 
                         case 6:
-                        screen.drawImage(map.block['keylock_2'], curPos.x, curPos.y);
+                        screen.drawImage(map.block['keylock_2_25'], curPos.x, curPos.y);
                         break;
 
                         case 10:
@@ -755,12 +755,15 @@ function mapInit()
             map.loadImg('end',path+'textures/25x25/end.png');
             map.loadImg('keylock_1',path+'textures/50x50/Boss_Keyhole.png');
             map.loadImg('keylock_1_25',path+'textures/25x25/Boss_Keyhole25x25.png');
-            map.loadImg('keylock_2',path+'textures/25x25/keylock_2.png');
+            map.loadImg('keylock_2_25',path+'textures/25x25/Keyhole25x25.png');
+            map.loadImg('keylock_2',path+'textures/50x50/Keyhole.png');
             map.loadImg('playerDown1',path+'textures/50x50/Player_Front1.png');
             map.loadImg('playerDown2',path+'textures/50x50/Player_Front2.png');
             map.loadImg('playerUp1',path+'textures/50x50/Player_Back1.png');
             map.loadImg('playerUp2',path+'textures/50x50/Player_Back2.png');
+            map.loadImg('playerLeft1',path+'textures/50x50/Player_Left1.png');
             map.loadImg('playerLeft2',path+'textures/50x50/Player_Left2.png');
+            map.loadImg('playerRight1',path+'textures/50x50/Player_Right1.png');
             map.loadImg('playerRight2',path+'textures/50x50/Player_Right2.png');
             map.loadImg('enemy01L',path+'textures/50x50/Enemy01_Left.png');
             map.loadImg('enemy01R',path+'textures/50x50/Enemy01_Right.png');
