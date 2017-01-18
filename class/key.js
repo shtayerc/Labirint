@@ -15,7 +15,7 @@ function keyInit()
             window.addEventListener('contextmenu', function (event) { //prepreci da bi se ob desnem kliku z misko pojavil meni
                 event.preventDefault();
             }, false);
-window.onbeforeunload = function() {
+/*window.onbeforeunload = function() {
     if(typeof progress!= 'undefined')
     {
         //simulacija post metode pri formi http://www.openjs.com/articles/ajax_xmlhttp_using_post.php
@@ -32,7 +32,7 @@ window.onbeforeunload = function() {
     console.log(map.levelIndex);
 
     return undefined;
-}     
+} */    
 
 
        },

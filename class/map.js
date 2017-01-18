@@ -56,6 +56,7 @@ function mapInit()
                 game.loop=false;
 
             }
+            
         },
         restart:function()
         {

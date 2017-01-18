@@ -3,6 +3,22 @@ function gameInit()
     game={
         loop:true,
         tick:50,
+        saveProgress:function()
+        {
+            if(typeof progress!= 'undefined')
+            {
+                //simulacija post metode pri formi http://www.openjs.com/articles/ajax_xmlhttp_using_post.php
+                var http=new XMLHttpRequest();
+                var url="http://www2.scptuj.si/~murko.david1/Labirint/index.php";
+                var param="newprogress="+map.levelIndex+"&username="+username;
+                http.open("POST",url,true);
+                http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                http.setRequestHeader("Content-length", param.length);
+                http.setRequestHeader("Connection", "close");
+
+                http.send(param);
+            }
+        },
         form:{
             hide:function()
             {
@@ -72,13 +88,13 @@ function gameInit()
                 {
                     if(username == 'undefined')
                     {
-                        
-                    game.form.show();
+
+                        game.form.show();
                     }else
                     {
-                    game.form.hide();
+                        game.form.hide();
                     }
-                        //   console.log("true");
+                    //   console.log("true");
                     map.levelIndex=progress;
                     game.console.out("Logged as "+ username);
                     game.console.out("");
@@ -222,6 +238,7 @@ function gameInit()
                 {
                     clearInterval(player.animation.interval);
                     map.nextLevel();
+                    game.saveProgress();
                     game.clear();
                     map.keys.reset();
                     enemy01.resetAll();
@@ -275,9 +292,9 @@ function gameInit()
 
                 }else
                 {
-                if(typeof progress != 'undefined')
+                    if(typeof progress != 'undefined')
                     {
-                    game.form.show();
+                        game.form.show();
                     }
                     game.loop=false;
                     enemy01.resetAll();
