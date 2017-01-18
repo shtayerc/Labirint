@@ -134,17 +134,7 @@ function enemyInit(){
     }
     enemy_01.prototype.patrol=function() //v tej funkciji je algoritem premikanje enemyja
     {
-        if(this.mapCoord.x == this.endCoord.x )
-        {
-            this.dir='left';
-        }
-        if(this.mapCoord.x==this.startCoord.x) 
-        {
-
-            this.dir='right';
-        }
-
-        if(this.canMove(this.dir))
+       if(this.canMove(this.dir))
         {
 
             this.move(this.dir);

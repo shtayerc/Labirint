@@ -11,6 +11,21 @@ function mapInit()
             restart: new text(70,625,'Restart')
 
         },
+        goToLevel:function(level)
+        {
+        
+                    clearInterval(player.animation.interval);
+                    map.levelIndex=level;
+            map.level=toArray(window['level_'+map.levelIndex]);
+                    game.clear();
+                    map.keys.reset();
+                    enemy01.resetAll();
+                    player.getStartCoord();
+                    map.drawPlay();
+                    enemy01.patrolAll();
+                    map.drawPanel();
+        
+        },
         clear:function()
         {
             screen.clearRect(0,0,650,600);
