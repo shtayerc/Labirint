@@ -173,7 +173,7 @@ function mapInit()
 
                         case  4:
                             screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
-                            screen.drawImage(map.block['key_2'], map.make.selStart, 602);
+                            screen.drawImage(map.block['key_2_25'], map.make.selStart, 602);
                             break;
 
                         case 5:
@@ -362,7 +362,7 @@ function mapInit()
                             case 4:
                                 map.make.level[mapa.y][mapa.x] = 7;
                                 screen.clearRect(curPos.x, curPos.y, newBlockSize, newBlockSize);
-                                screen.drawImage(map.block['key_2'], curPos.x, curPos.y);
+                                screen.drawImage(map.block['key_2_25'], curPos.x, curPos.y);
                                 break;
 
                             case 5:
@@ -607,7 +607,7 @@ function mapInit()
                         break;
 
                         case 7:
-                        screen.drawImage(map.block['key_2'], curPos.x, curPos.y);
+                        screen.drawImage(map.block['key_2_25'], curPos.x, curPos.y);
                         break;
 
                         case 8:
@@ -654,7 +654,7 @@ function mapInit()
                         this.taken = true;
                     }else
                     {
-                        player.inventory.update(player.inventory.getIndex('Boss_Key25x25.png'),map.keys.key_1.num);
+                        player.inventory.update(player.inventory.getIndex('Key01_25x25.ong'),map.keys.key_1.num);
 
                     }
                 },
@@ -665,11 +665,11 @@ function mapInit()
                     map.drawPanel();
                     if (this.num == 0)
                     {
-                        player.inventory.remove(player.inventory.getIndex('Boss_Key25x25.png'));
+                        player.inventory.remove(player.inventory.getIndex('Key01_25x25.png'));
                         this.taken = false;
                     }else
                     {
-                        player.inventory.update(player.inventory.getIndex('Boss_Key25x25.png'),map.keys.key_1.num);
+                        player.inventory.update(player.inventory.getIndex('Key01_25x25.png'),map.keys.key_1.num);
 
                     }
                 }
@@ -685,11 +685,11 @@ function mapInit()
                     if (this.num == 1)
                     {           
                         this.taken = true;
-                        player.inventory.add(map.block['key_2'],map.keys.key_2.num);
+                        player.inventory.add(map.block['key_2_25'],map.keys.key_2.num);
 
                     }else
                     {
-                        player.inventory.update(player.inventory.getIndex('key_2'),map.keys.key_2.num);
+                        player.inventory.update(player.inventory.getIndex('Key02_25x25.png'),map.keys.key_2.num);
 
                     }
                 },
@@ -700,13 +700,13 @@ function mapInit()
                     map.drawPanel();
                     if (this.num == 0)
                     {
-                        player.inventory.remove(player.inventory.getIndex('key_2'));
+                        player.inventory.remove(player.inventory.getIndex('Key02_25x25'));
 
                         // player.inventory.remove()
                         this.taken = false;
                     }else
                     {
-                        player.inventory.update(player.inventory.getIndex('key_2.png'),map.keys.key_2.num);
+                        player.inventory.update(player.inventory.getIndex('Key02_25x25.png'),map.keys.key_2.num);
 
 
                     }
@@ -760,18 +760,19 @@ function mapInit()
         },
         loadBlocks:function() //funkcija ki klice funkcijo map.loadImg in nalozi vse potrebne slike
         {
-            map.loadImg('player25',path+'textures/25x25/PlayerFront25x25.png');
-            map.loadImg('enemy01_25',path+'textures/25x25/Enemy01_Back25x25.png');
+            map.loadImg('player25',path+'textures/25x25/Player_Front_25x25.png');
+            map.loadImg('enemy01_25',path+'textures/25x25/Enemy01_25x25_r.png');
             map.loadImg('wall',path+'textures/50x50/Pyramid_Walls.png');
-            map.loadImg('wall25',path+'textures/25x25/Pyramid_Walls25x25.png');
-            map.loadImg('key_1',path+'textures/50x50/Boss_Key.png');
-            map.loadImg('key_1_25',path+'textures/25x25/Boss_Key25x25.png');
-            map.loadImg('key_2',path+'textures/25x25/key_2.png');
+            map.loadImg('wall25',path+'textures/25x25/Pyramid_Walls_25x25.png');
+            map.loadImg('key_1',path+'textures/50x50/Key01.png');
+            map.loadImg('key_1_25',path+'textures/25x25/Key01_25x25.png');
+            map.loadImg('key_2',path+'textures/50x50/Key02.png');
+            map.loadImg('key_2_25',path+'textures/25x25/Key02_25x25.png');
             map.loadImg('end',path+'textures/25x25/end.png');
-            map.loadImg('keylock_1',path+'textures/50x50/Boss_Keyhole.png');
-            map.loadImg('keylock_1_25',path+'textures/25x25/Boss_Keyhole25x25.png');
-            map.loadImg('keylock_2_25',path+'textures/25x25/Keyhole25x25.png');
-            map.loadImg('keylock_2',path+'textures/50x50/Keyhole.png');
+            map.loadImg('keylock_1',path+'textures/50x50/Keyhole01.png');
+            map.loadImg('keylock_1_25',path+'textures/25x25/Keyhole01_25x25.png');
+            map.loadImg('keylock_2_25',path+'textures/25x25/Keyhole02_25x25.png');
+            map.loadImg('keylock_2',path+'textures/50x50/Keyhole02.png');
             map.loadImg('playerDown1',path+'textures/50x50/Player_Front1.png');
             map.loadImg('playerDown2',path+'textures/50x50/Player_Front2.png');
             map.loadImg('playerUp1',path+'textures/50x50/Player_Back1.png');
@@ -783,7 +784,7 @@ function mapInit()
             map.loadImg('enemy01L',path+'textures/50x50/Enemy01_Left.png');
             map.loadImg('enemy01R',path+'textures/50x50/Enemy01_Right.png');
             map.loadImg('enemy01',path+'textures/50x50/Enemy01_Left.png');
-            map.loadImg('floor',path+'textures/50x50/Floor_50.png');
+            map.loadImg('floor',path+'textures/50x50/Floor.png');
             map.loadImg('floorBig', path+'textures/background/Pyramid_Floor.png');
             map.loadImg('blank',path+'textures/50x50/blank.png');
             map.loadImg('builder',path+'textures/25x25/builder.png');
