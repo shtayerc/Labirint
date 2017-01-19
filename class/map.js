@@ -97,66 +97,84 @@ function mapInit()
             blockNum:11, //stevilo blokov za izbiro v orodni vrstici pri kreiranju levela
             loop:true,
             selStart:200, //na koliko pikslih se narise prvi blok za izbiro
-            selNum:3, //stevilo blokov za izbiro
+            selNum:9, //stevilo blokov za izbiro
             change:0, 
             curBlock:1, //zaporedno stevilo izbranega bloka
-            button:{
-                back:new text(0,625,'Back'),
-                clear:new text(70,625,'Clear'),
-                play:new text(320,625,'Play')
-
+            select:{
+                xStart:200,
+                yStart:600,
+                blockSize:25,
+                num:9,
             },
-            left:function() //funkcija se izvede ko uporabnik pritisne puscico levo, ikone se premaknejo levo
+            drawCurBlock:function(x,y)
             {
-                if(map.make.block>1)
-                {
-                    map.make.block=map.make.block-1;
-                    map.make.panel();
-                }
+                screen.strokeStyle="red";
+                var size=25;
+                screen.rect(x,y,size,size);
+                     switch(map.make.curBlock)
+                        {
+                            case 1:
+                               screen.clearRect(x, y, size,size);
+                                screen.drawImage(map.block['wall25'], x, y);
+                                break;
+
+                            case 2:
+                                screen.clearRect(x, y, size, size);
+                                screen.drawImage(map.block['key_1_25'], x, y);
+                                break;
+
+                            case 3:
+                               screen.clearRect(x, y, size, size);
+                                screen.drawImage(map.block['keylock_1_25'], x, y);
+                                break;
+
+                            case 4:
+                                screen.clearRect(x, y, size, size);
+                                screen.drawImage(map.block['key_2_25'], x, y);
+                                break;
+
+                            case 5:
+                                screen.clearRect(x, y, size, size);
+                                screen.drawImage(map.block['keylock_2_25'], x, y);
+                                break;
+
+                            case 6:
+                                screen.clearRect(x, y, size, size);
+                                screen.drawImage(map.block['player25'], x, y);
+
+                                break;
+
+                            case 7:
+                                screen.clearRect(x, y, size, size);
+                                screen.drawImage(map.block['end'], x, y);
+                                break;
+
+                            case 8:
+                               screen.clearRect(x, y, size, size);
+                                screen.drawImage(map.block['enemy01_25'], x, y);
+                                break;
+
+                            case 9:
+                                screen.clearRect(x, y, size, size);
+                                screen.drawImage(map.block['builder'], x,y);
+                                break;
+
+
+
+                        }
+                screen.stroke(); 
             },
-            right:function() //funkcija se izvede ko uporabnik pritisne puscico desno, ikone se premaknejo desno
+            drawSelect:function()
             {
-                if(map.make.block<map.make.blockNum-map.make.selNum)
-                {
-                    map.make.block=map.make.block+1;
-                    map.make.panel();
-                }
-
-            },
-            panel:function() //narise orodno vrstico za kreiranje levela
-            {
-                screen.clearRect(0,602,800,25);
-                screen.beginPath();
-                screen.moveTo(0, 602);
-                screen.lineTo(800, 602);
-                screen.lineWidth = 2;
-                screen.strokeStyle = "grey";
-                screen.stroke();
-                map.make.button.back.draw();
-                map.make.button.clear.draw();
-                map.make.button.play.draw();
-                map.make.selStart=200;
-
-
-                screen.beginPath();
-                screen.fillStyle="white";
-                screen.moveTo(170,615);
-                screen.lineTo(190,603);
-                screen.lineTo(190,627);
-                screen.fill();
-
-
-                screen.beginPath();
-                screen.fillStyle="white";
-                screen.moveTo(305,615);
-                screen.lineTo(285,603);
-                screen.lineTo(285,627);
-                screen.fill();
-                game.console.draw();
                 for(var i=map.make.block;i<map.make.block+map.make.selNum;i=i+1)
                 {
                     switch(i)
                     {
+                        case 9:
+                            screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
+                            screen.drawImage(map.block['builder'], map.make.selStart, 602);
+                            break;
+
                         case 1:
                             screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
                             screen.drawImage(map.block['wall25'], map.make.selStart, 602);
@@ -195,20 +213,86 @@ function mapInit()
                         case 8:
                             screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
                             screen.drawImage(map.block['enemy01_25'], map.make.selStart, 602);
-
                             break;
-                        case 9:
-                            screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
-                            screen.drawImage(map.block['builder'], map.make.selStart, 602);
-                            break;
-
-                        case map.make.blockNum-1:
-                            screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
-                            break;
-                    }
+                      
+                   }
                     map.make.selStart+=map.blockSize/2;
                 }
+
+            
             },
+            checkSelect:function()
+            {
+                for(var i=0;i<map.make.select.num*map.make.select.blockSize;i=i+map.make.select.blockSize)
+                {   
+                    if ((mouse.canvasCoord.x >= map.make.select.xStart+i && 
+                        mouse.canvasCoord.x <= map.make.select.xStart + i + map.make.select.blockSize) && 
+                        (mouse.canvasCoord.y >= map.make.select.yStart && mouse.canvasCoord.y <= map.make.select.yStart+map.make.select.blockSize))
+                    {
+                        if (mouse.click.left == true)
+                        {
+                           mouse.click.left=false;
+                           map.make.curBlock=i/map.make.select.blockSize+1;
+                        }
+
+                    }
+                }
+           },
+            button:{
+                back:new text(0,625,'Back'),
+                clear:new text(70,625,'Clear'),
+                play:new text(500,625,'Play')
+
+            },
+            left:function() //funkcija se izvede ko uporabnik pritisne puscico levo, ikone se premaknejo levo
+            {
+                if(map.make.block>1)
+                {
+                    map.make.block=map.make.block-1;
+                    map.make.panel();
+                }
+            },
+            right:function() //funkcija se izvede ko uporabnik pritisne puscico desno, ikone se premaknejo desno
+            {
+                if(map.make.block<map.make.blockNum-map.make.selNum-1)
+                {
+                    map.make.block=map.make.block+1;
+                    map.make.panel();
+                }
+
+            },
+            panel:function() //narise orodno vrstico za kreiranje levela
+            {
+                screen.clearRect(0,602,800,25);
+                screen.beginPath();
+                screen.moveTo(0, 602);
+                screen.lineTo(800, 602);
+                screen.lineWidth = 2;
+                screen.strokeStyle = "grey";
+                screen.stroke();
+                map.make.button.back.draw();
+                map.make.button.clear.draw();
+                map.make.button.play.draw();
+                map.make.selStart=200;
+
+
+                screen.beginPath();
+                screen.fillStyle="white";
+                screen.moveTo(170,615);
+                screen.lineTo(190,603);
+                screen.lineTo(190,627);
+                screen.fill();
+
+
+                screen.beginPath();
+                screen.fillStyle="white";
+                screen.moveTo(480,615);
+                screen.lineTo(460,603);
+                screen.lineTo(460,627);
+                screen.fill();
+                game.console.draw();
+                map.make.drawSelect();
+           },
             checkLevel:function() //preveri ce je kreiran level korekten (mora biti le en player in en cilj)
             {
                 var mapa = new coord(1,1); //zacetna pozicija risanja v dvodimenzionalnem polju 
@@ -271,73 +355,23 @@ function mapInit()
                 mapa.y = ((mouse.canvasCoord.y / newBlockSize) + 1) | 0;
                 curPos.x = newBlockSize * (mapa.x - 1);
                 curPos.y = newBlockSize * (mapa.y - 1);
-                if ((mouse.canvasCoord.x >= 170 && mouse.canvasCoord.x <= 170 + 20) && (mouse.canvasCoord.y >= 602 && mouse.canvasCoord.y <= 627))
+                game.clear();
+                map.draw();
+                              map.make.checkSelect();
+             
+               
+                if (mouse.canvasCoord.y < 600 && mapa.y <= 24)
                 {
-                    if (mouse.click.left == true)
+                 map.make.drawCurBlock(curPos.x,curPos.y);
+
+                    document.body.style.cursor="none";
+                    if (mouse.button.right == true) //ce pritisnes desno tipko zbrise blok
                     {
-                        map.make.left();
-                        mouse.click.left=false;
-                    }
-                }
-                if ((mouse.canvasCoord.x >= 285 && mouse.canvasCoord.x <= 285 + 20) && (mouse.canvasCoord.y >= 602 && mouse.canvasCoord.y <= 627))
-                {
-                    if (mouse.click.left == true)
-                    {
-                        map.make.right();
-                        mouse.click.left=false;
-                    }
-                }
-                if ((mouse.canvasCoord.x >= 200 && mouse.canvasCoord.x <= 200 + newBlockSize) && (mouse.canvasCoord.y >= 602 && mouse.canvasCoord.y <= 627))
-                {
-                    if (mouse.click.left == true)
-                    {
-                        map.make.curBlock=map.make.block + 0;
-                        map.make.change=0;
-                        mouse.click.left=false;
+                        map.make.level[mapa.y][mapa.x] = 0;
+                        screen.clearRect(curPos.x, curPos.y, newBlockSize, newBlockSize);
+                    }    
 
-                    }
-
-
-                    if (map.make.block == map.make.blockNum)
-                    {
-                        map.make.block = 1;
-                    }
-                }
-
-                if ((mouse.canvasCoord.x >= 225 && mouse.canvasCoord.x <= 225 + newBlockSize) && (mouse.canvasCoord.y >= 602 && mouse.canvasCoord.y <= 627))
-                {
-                    if (mouse.click.left == true)
-                    {
-                        map.make.curBlock=map.make.block+1;
-                        map.make.change=1;
-                        mouse.click.left=false;       
-                    }
-
-
-                    if (map.make.block == map.make.blockNum)
-                    {
-                        map.make.block = 1;
-                    }
-                } 
-                if ((mouse.canvasCoord.x >= 250 && mouse.canvasCoord.x <= 250 + newBlockSize) && (mouse.canvasCoord.y >= 602 && mouse.canvasCoord.y <= 627))
-                {
-                    if (mouse.click.left == true)
-                    {
-                        map.make.curBlock=map.make.block+2;
-                        map.make.change=2;
-                        mouse.click.left=false;
-                    }
-
-
-                    if (map.make.block == map.make.blockNum)
-                    {
-                        map.make.block = 1;
-                    }
-                }
-
-                if (mouse.button.right == true)
-                {
-                    if (mouse.canvasCoord.y < 600 && mapa.y <= 24)
+                    if (mouse.button.left == true)
                     {
 
                         switch(map.make.curBlock)
@@ -387,7 +421,6 @@ function mapInit()
 
                             case 8:
                                 map.make.level[mapa.y][mapa.x]=11;
-
                                 screen.clearRect(curPos.x, curPos.y, newBlockSize, newBlockSize);
                                 screen.drawImage(map.block['enemy01_25'], curPos.x, curPos.y);
                                 break;
@@ -398,15 +431,17 @@ function mapInit()
                                 screen.drawImage(map.block['builder'], curPos.x, curPos.y);
                                 break;
 
-                            case map.make.blockNum-1:
-                                map.make.level[mapa.y][mapa.x] = 0;
-                                screen.clearRect(curPos.x, curPos.y, newBlockSize, newBlockSize);
-                                break;
+
+
                         }
                     }
-
+                }else
+                {
+                document.body.style.cursor="default";
+                
                 }
-                map.make.panel();
+                  map.make.panel();
+                map.level=map.make.level;
                 if(map.make.button.back.isClicked())
                 {
                     if(typeof progress != 'undefined')
