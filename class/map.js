@@ -485,10 +485,12 @@ function mapInit()
                 {
                     if(typeof progress != 'undefined')
                     {
-                           map.make.levelString=toMapString(map.make.level);    
-    
-                        map.make.saveLevel(username,'Test'); 
-                    }
+                        if(map.checkLevel())
+                        {
+                            map.make.levelString=toMapString(map.make.level);    
+                            map.make.saveLevel(username,'Test'); 
+                        }
+                        }
                     }
                 if(map.make.button.back.isClicked())
                 {
