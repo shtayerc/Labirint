@@ -485,7 +485,7 @@ function mapInit()
                 {
                     if(typeof progress != 'undefined')
                     {
-                        if(map.checkLevel())
+                        if(map.make.checkLevel())
                         {
                             map.make.levelString=toMapString(map.make.level);    
                             map.make.saveLevel(username,'Test'); 
