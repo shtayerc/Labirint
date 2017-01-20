@@ -273,7 +273,7 @@ function gameInit()
             }
             if(map.button.back.isClicked())
             {
-                map.getLevel('shtayerc');
+                console.log(map.getLevel('shtayerc',0));
 
                 if(map.make.flag==true)
                 {
