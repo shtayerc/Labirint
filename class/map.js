@@ -488,7 +488,11 @@ function mapInit()
                         if(map.make.checkLevel())
                         {
                             map.make.levelString=toMapString(map.make.level);    
-                            map.make.saveLevel(username,'Test'); 
+                            if(map.make.saveLevel(username,'Test'))
+                            {
+                            game.console.out('Level saved');
+                            
+                            } 
                         }
                         }
                     }
