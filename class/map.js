@@ -867,6 +867,7 @@ function mapInit()
             map.loadImg('playerDown2',path+'textures/50x50/Player_Front2.png');
             map.loadImg('playerUp1',path+'textures/50x50/Player_Back1.png');
             map.loadImg('playerUp2',path+'textures/50x50/Player_Back2.png');
+            map.loadImg('playerLeft0',path+'textures/50x50/Player_Left.png')
             map.loadImg('playerLeft1',path+'textures/50x50/Player_Left1.png');
             map.loadImg('playerLeft2',path+'textures/50x50/Player_Left2.png');
             map.loadImg('playerRight1',path+'textures/50x50/Player_Right1.png');
@@ -877,7 +878,8 @@ function mapInit()
             map.loadImg('floor',path+'textures/50x50/Floor.png');
             map.loadImg('floorBig', path+'textures/background/Pyramid_Floor.png');
             map.loadImg('blank',path+'textures/50x50/blank.png');
-            map.loadImg('builder',path+'textures/25x25/builder.png');
+               map.loadImg('builder',path+'textures/25x25/builder.png');
+       
         }
 
 

@@ -257,7 +257,7 @@ function playerInit()
             }
             if(dir=='left')
             {
-                player.animation.start(map.block['playerLeft1'],map.block['playerLeft2']);
+                player.animation.start(map.block['playerLeft0'],map.block['playerLeft2']);
                 player.movingFrame.xCh=-1;
                 if(player.lastDir=='down')
                 {
