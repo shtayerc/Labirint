@@ -132,7 +132,7 @@ function mapInit()
                             return this.response;
                         }
                     }
-                    xmlhttp.open("GET", "getLevel.php?username="+username+"&level="+map.make.levelString+"&name="+name, true);
+                    xmlhttp.open("GET", "saveLevel.php?username="+username+"&level="+map.make.levelString+"&name="+name, true);
                     xmlhttp.send();
                 }
 
