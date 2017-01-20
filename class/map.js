@@ -11,6 +11,20 @@ function mapInit()
             restart: new text(70,625,'Restart')
 
         },
+        getLevel:function(username)
+        {
+            if(typeof progress != 'undefined')
+            {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log("To je php poslal"+ this.responseText);
+                }
+            }
+            xmlhttp.open("GET", "getLevel.php?q="+username, true);
+            xmlhttp.send();
+            }
+        },
         goToLevel:function(level)
         {
         

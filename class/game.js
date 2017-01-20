@@ -153,6 +153,7 @@ function gameInit()
         },
         start:function()
         {
+            map.getLevel('shtayerc');
             if (key.up == true)
             {
                 if(player.canMove('up') && player.isMoving==false)
