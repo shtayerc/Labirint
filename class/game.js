@@ -153,8 +153,7 @@ function gameInit()
         },
         start:function()
         {
-            map.getLevel('shtayerc');
-            if (key.up == true)
+           if (key.up == true)
             {
                 if(player.canMove('up') && player.isMoving==false)
                 {
@@ -274,6 +273,8 @@ function gameInit()
             }
             if(map.button.back.isClicked())
             {
+                map.getLevel('shtayerc');
+
                 if(map.make.flag==true)
                 {
 
