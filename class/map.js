@@ -485,7 +485,7 @@ function mapInit()
                 {
                     if(typeof progress != 'undefined')
                     {
-                            map.saveLevel(username,'Test'); 
+                            map.make.saveLevel(username,'Test'); 
                     }
                     }
                 if(map.make.button.back.isClicked())
