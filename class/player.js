@@ -15,7 +15,8 @@ function playerInit()
             speed:160,
             interval:0,
             num:0,
-            start:function (img1,img2)
+            thirdImg:false,
+            start:function (img1,img2,img3)
             {
 
                 player.animation.num=0;  
@@ -26,28 +27,60 @@ function playerInit()
                 {
 
                     clearInterval(player.animation.interval);
+                    if(player.animation.thirdImg==true)
+                    {
+                    player.animation.thirdImg=false;
+                    }else
+                    {
+                     player.animation.thirdImg=true;
+
+                    }
                 }
-                player.animation.nextFrame(img1,img2); 
+                player.animation.nextFrame(img1,img2,img3); 
 
                 player.animation.interval=setInterval(function (){
-                    player.animation.nextFrame(img1,img2);
+                    player.animation.nextFrame(img1,img2,img3);
                 },player.animation.speed);
 
             },
-            nextFrame:function (img1,img2)
+            nextFrame:function (img1,img2,img3)
             {
                 if(player.animation.num%2==0)
                 {
-                    player.img=img1;
+                    if(player.animation.thirdImg==false)
+                    {
+                        player.img=img1;
+                    }else
+                    {
+                        player.img=img3;
+
+                    }
                 }else
                 {
 
                     player.img=img2;
                 }
+                if(player.animation.num==2)
+                {
+                player.img=img1;
+                             }
+              /*  if(player.animation.num==3)
+                {
+                 player.img=map.block['playerLeft1'];
+  
+                
+                }*/
                 player.animation.num+=1;
                 player.draw();
                 if(player.animation.num==3)
                 {
+                    if(player.animation.thirdImg==false)
+                    {
+                    player.animation.thirdImg=true;
+                    }else
+                    {
+                    player.animation.thirdImg=false;
+                    }
                     player.animation.num=0;
                     player.animation.isPlaying=false;
                     clearInterval(player.animation.interval);
@@ -215,7 +248,7 @@ function playerInit()
             }
             if(dir=='up')
             {
-                player.animation.start(map.block['playerUp1'],map.block['playerUp2']);
+                player.animation.start(map.block['playerUp1'],map.block['playerUp2'],map.block['playerUp1']);
 
                 if(player.lastDir=='right')
                 {
@@ -241,7 +274,7 @@ function playerInit()
             if(dir=='down')
             {
 
-                player.animation.start(map.block['playerDown1'],map.block['playerDown2']);
+                player.animation.start(map.block['playerDown1'],map.block['playerDown2'],map.block['playerDown1']);
                 player.movingFrame.yCh=+1;
                 if(player.lastDir=='right')
                 {
@@ -257,7 +290,7 @@ function playerInit()
             }
             if(dir=='left')
             {
-                player.animation.start(map.block['playerLeft0'],map.block['playerLeft2']);
+                player.animation.start(map.block['playerLeft0'],map.block['playerLeft2'],map.block['playerLeft1']);
                 player.movingFrame.xCh=-1;
                 if(player.lastDir=='down')
                 {
@@ -277,7 +310,7 @@ function playerInit()
             }
             if(dir== 'right')
             {
-                player.animation.start(map.block['playerRight1'],map.block['playerRight2']);
+                player.animation.start(map.block['playerRight1'],map.block['playerRight2'],map.block['playerRight1']);
 
                 if(player.lastDir=='down')
                 {
