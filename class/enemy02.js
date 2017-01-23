@@ -2,8 +2,6 @@ function enemy02Init(){
 
     enemy02={
         list:[],
-        //startCoord:new coord(8,1),
-        //distance:4,
         dmg:99,
         speed:200, //ms
         add:function(startCoordX,startCoordY){
@@ -17,7 +15,6 @@ function enemy02Init(){
                 {
                     return i;
                 }
-
             }
             console.log('enemy not found');
 
@@ -27,7 +24,6 @@ function enemy02Init(){
             for(var i=0;i<enemy02.list.length;i=i+1)
             {
                 clearInterval(enemy02.list[i].movingInterval);
-
             }
             enemy02.list=[];
 
@@ -46,50 +42,30 @@ function enemy02Init(){
     };
     function enemy_02(startCoordX,startCoordY) //struktura enemy02 objekta
     {
-        //this.startCoord=new coord(startCoordX,startCoordY);
-        //this.endCoord=new coord(startCoordX+enemy02.distance,startCoordY);
-        this.mapCoord=new coord(startCoordX,startCoordY);     //v new so koordinati dimenzionalnega polja
-        //this.canvasCoord=new coord((startCoordX-1)*map.blockSize,(startCoordY-1)*map.blockSize);   //na kerih pikslih je v canvasi, dejanska pozicija
-        this.img=map.block['enemy02R'];
-
+       this.mapCoord=new coord(startCoordX,startCoordY);     //v new so koordinati dimenzionalnega polja
+       this.img=map.block['enemy02R'];
         this.movingInterval=0;
-        //this.patrol.limit=new coord(startCoordX,startCoordY);
         this.dir='right';
     }
-   /* enemy_02.prototype.draw=function()
+     enemy_02.prototype.move=function(dir) //premakne izbrani objekt tipa enemy02 v smer podano v parametru(string npr.: 'right')
     {
-        //  screen.drawImage(map.block['enemy02'], this.canvasCoord.x, this.canvasCoord.y);
-    }*/
-   /* enemy_02.prototype.clear=function()
-    {
-        screen.clearRect(this.canvasCoord.x, this.canvasCoord.y, map.blockSize, map.blockSize); //brisanje igralca narisanega na starem polozaju
-    }*/
-
-    enemy_02.prototype.move=function(dir) //premakne izbrani objekt tipa enemy02 v smer podano v parametru(string npr.: 'right')
-    {
-        //     game.clear();
         map.level[this.mapCoord.y][this.mapCoord.x]=0;
         switch(dir)
         {
             case 'up':
-
                 this.mapCoord.y = this.mapCoord.y - 1; //koordinati igralca v polju map.level
-                this.canvasCoord.y = this.canvasCoord.y - map.blockSize; // kooordinate igralca v px na canvasu
                 break;
 
             case 'down':
                 this.mapCoord.y = this.mapCoord.y + 1;
-                this.canvasCoord.y = this.canvasCoord.y + map.blockSize;
-                break;
+               break;
 
             case 'left':
                 this.mapCoord.x = this.mapCoord.x - 1;
-                this.canvasCoord.x = this.canvasCoord.x - map.blockSize;
                 break;
 
             case 'right':
                 this.mapCoord.x = this.mapCoord.x + 1;
-                this.canvasCoord.x = this.canvasCoord.x + map.blockSize;
                 break;
         }
 

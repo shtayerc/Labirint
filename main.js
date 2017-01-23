@@ -8,7 +8,6 @@ function main()
     enemyInit();
     playerInit();
     gameInit();
-   // enemy01.add(9,2);
     map.loading();   
 
 }

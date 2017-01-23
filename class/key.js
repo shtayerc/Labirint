@@ -15,25 +15,6 @@ function keyInit()
             window.addEventListener('contextmenu', function (event) { //prepreci da bi se ob desnem kliku z misko pojavil meni
                 event.preventDefault();
             }, false);
-/*window.onbeforeunload = function() {
-    if(typeof progress!= 'undefined')
-    {
-        //simulacija post metode pri formi http://www.openjs.com/articles/ajax_xmlhttp_using_post.php
-        var http=new XMLHttpRequest();
-        var url="http://www2.scptuj.si/~murko.david1/Labirint/index.php";
-        var param="newprogress="+map.levelIndex+"&username="+username;
-        http.open("POST",url,true);
-        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        http.setRequestHeader("Content-length", param.length);
-        http.setRequestHeader("Connection", "close");
-
-        http.send(param);
-    }
-    console.log(map.levelIndex);
-
-    return undefined;
-} */    
-
 
        },
         removeEventListeners:function(){

@@ -8,6 +8,33 @@ function createCanvas() //funkcija ki naredi canvas element
     screen = canvas.getContext('2d');
     document.getElementsByTagName('BODY')[0].getElementsByTagName('div')[0].appendChild(canvas);
 }
+function ajaxSend(url,param)
+{
+    var http=new XMLHttpRequest();
+    //var url="http://www2.scptuj.si/~murko.david1/Labirint/index.php";
+   // var param="newprogress="+map.levelIndex+"&username="+username;
+    http.open("POST",url,true);
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.setRequestHeader("Content-length", param.length);
+    http.setRequestHeader("Connection", "close");
+
+    http.send(param);
+
+
+}
+function ajaxGet(url,param)
+{
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            return this.response;
+        }
+    }
+    xmlhttp.open("GET", url+'?'+param, true);
+    xmlhttp.send();
+
+
+}
 function coord(x,y) //za lazje shranjevanje koordinat, npr. start=new coord(2,10);
 {
     this.x=x;
