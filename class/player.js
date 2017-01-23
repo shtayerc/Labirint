@@ -23,76 +23,58 @@ function playerInit()
                 if(player.animation.isPlaying==false)
                 {  
                     player.animation.isPlaying=true;
-                }else
+               }else
                 {
 
                     clearInterval(player.animation.interval);
-                    if(player.animation.thirdImg==true)
+                 /*   if(player.animation.thirdImg==true)
                     {
                     player.animation.thirdImg=false;
                     }else
                     {
                      player.animation.thirdImg=true;
 
-                    }
+                    }*/
                 }
                 player.animation.nextFrame(img1,img2,img3); 
 
                 player.animation.interval=setInterval(function (){
                     player.animation.nextFrame(img1,img2,img3);
                 },player.animation.speed);
-
+                
             },
             nextFrame:function (img1,img2,img3)
             {
                 if(player.animation.num%2==0)
-                {
-                    if(player.animation.thirdImg==false)
+                {  //console.log(player.mapCoord.x+player.mapCoord.y);
+                    if((player.mapCoord.y+player.mapCoord.x)%2==0)
                     {
-                        player.img=img1;
+                      
+                     
+                        player.img=img3;
                     }else
                     {
-                        player.img=img3;
+                     
+                        player.img=img2;
 
                     }
                 }else
                 {
 
-                    player.img=img2;
+                    player.img=img1;
                 }
-                if(player.animation.num==2)
-                {
-                player.img=img1;
-                             }
-              /*  if(player.animation.num==3)
-                {
-                 player.img=map.block['playerLeft1'];
-  
-                
-                }*/
-                player.animation.num+=1;
+               player.animation.num+=1;
                 player.draw();
                 if(player.animation.num==3)
                 {
-                    if(player.animation.thirdImg==false)
-                    {
-                    player.animation.thirdImg=true;
-                    }else
-                    {
-                    player.animation.thirdImg=false;
-                    }
-                    player.animation.num=0;
+                   player.animation.num=0;
                     player.animation.isPlaying=false;
                     clearInterval(player.animation.interval);
 
-
                 }
 
-
-
             }
-
-        },
+            },
         movingFrame:{
             xCh:0, //x change
             yCh:0, //y change
@@ -310,7 +292,7 @@ function playerInit()
             }
             if(dir== 'right')
             {
-                player.animation.start(map.block['playerRight1'],map.block['playerRight2'],map.block['playerRight1']);
+                player.animation.start(map.block['playerRight0'],map.block['playerRight2'],map.block['playerRight1']);
 
                 if(player.lastDir=='down')
                 {

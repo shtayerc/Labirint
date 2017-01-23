@@ -592,7 +592,7 @@ function mapInit()
                     break;
 
                     case 10:
-                    return 'end';
+                    return 'end50';
                     break;
 
                     case 11:
@@ -858,7 +858,8 @@ function mapInit()
             map.loadImg('key_1_25',path+'textures/25x25/Key01_25x25.png');
             map.loadImg('key_2',path+'textures/50x50/Key02.png');
             map.loadImg('key_2_25',path+'textures/25x25/Key02_25x25.png');
-            map.loadImg('end',path+'textures/25x25/end.png');
+            map.loadImg('end',path+'textures/25x25/end_25x25.png');
+            map.loadImg('end50',path+'textures/50x50/end.png');
             map.loadImg('keylock_1',path+'textures/50x50/Keyhole01.png');
             map.loadImg('keylock_1_25',path+'textures/25x25/Keyhole01_25x25.png');
             map.loadImg('keylock_2_25',path+'textures/25x25/Keyhole02_25x25.png');
@@ -870,6 +871,7 @@ function mapInit()
             map.loadImg('playerLeft0',path+'textures/50x50/Player_Left.png')
             map.loadImg('playerLeft1',path+'textures/50x50/Player_Left1.png');
             map.loadImg('playerLeft2',path+'textures/50x50/Player_Left2.png');
+             map.loadImg('playerRight0',path+'textures/50x50/Player_Right.png');
             map.loadImg('playerRight1',path+'textures/50x50/Player_Right1.png');
             map.loadImg('playerRight2',path+'textures/50x50/Player_Right2.png');
             map.loadImg('enemy01L',path+'textures/50x50/Enemy01_Left.png');
@@ -878,7 +880,7 @@ function mapInit()
             map.loadImg('floor',path+'textures/50x50/Floor.png');
             map.loadImg('floorBig', path+'textures/background/Pyramid_Floor.png');
             map.loadImg('blank',path+'textures/50x50/blank.png');
-               map.loadImg('builder',path+'textures/25x25/builder.png');
+            map.loadImg('builder',path+'textures/25x25/boulder_25x25.png');
        
         }
 
