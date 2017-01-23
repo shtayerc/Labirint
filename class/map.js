@@ -16,7 +16,7 @@ function mapInit()
             if(typeof progress != 'undefined')
             {
                 return ajaxGet('getLevel.php','username='+username+'&num=0');
-             /*  var xmlhttp = new XMLHttpRequest();
+           /*    var xmlhttp = new XMLHttpRequest();
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         return this.response;
@@ -103,7 +103,7 @@ function mapInit()
         make:{
             levelString:'', //string levela(se ustvari iz polja)
             flag:false, //ce je true funkcija game.start uporablja level iz map.make.level in funkcijo map.make.newLevel 
-            level:empty, //polje levela
+            level:toArray(emptyLevel), //polje levela
             tick:10, //vsakih koliko ms se funkcija ponovi
             block:1, //kateri blok je izbran in se postavlja v mapo
             blockNum:11, //stevilo blokov za izbiro v orodni vrstici pri kreiranju levela
@@ -405,7 +405,7 @@ function mapInit()
 
                     if (mouse.button.left == true)
                     {
-
+                        
                         switch(map.make.curBlock)
                         {
                             case 1:
@@ -528,7 +528,7 @@ function mapInit()
                         map.level=map.make.level;
                         map.keys.reset();
                         player.getStartCoord();
-                        map.drawPlay();
+                        map.draw50();
                         map.drawPanel();
                         enemy01.patrolAll();
                         map.level[player.mapCoord.y][player.mapCoord.x]=0; //nastavi zacetno polje igralca na 0

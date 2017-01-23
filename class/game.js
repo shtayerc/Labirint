@@ -9,7 +9,7 @@ function gameInit()
             {
                 ajaxSend('http://www2.scptuj.si/~murko.david1/Labirint/index.php','newprogress='+map.levelIndex+'&username='+username);
                 //simulacija post metode pri formi http://www.openjs.com/articles/ajax_xmlhttp_using_post.php
-           /*     var http=new XMLHttpRequest();
+ /*                    var http=new XMLHttpRequest();
                 var url="http://www2.scptuj.si/~murko.david1/Labirint/index.php";
                 var param="newprogress="+map.levelIndex+"&username="+username;
                 http.open("POST",url,true);
@@ -95,7 +95,6 @@ function gameInit()
                     {
                         game.form.hide();
                     }
-                    //   console.log("true");
                     map.levelIndex=progress;
                     game.console.out("Logged as "+ username);
                     game.console.out("");
@@ -128,7 +127,7 @@ function gameInit()
                     game.form.hide();
                     game.menu.loop=false;
                     game.clear();
-                    map.level=toArray(empty);
+                    map.level=toArray(emptyLevel);
                     game.clear();
                     if(map.make.levelString!='')
                     {
@@ -154,7 +153,7 @@ function gameInit()
         },
         start:function()
         {
-           if (key.up == true)
+            if (key.up == true)
             {
                 if(player.canMove('up') && player.isMoving==false)
                 {
@@ -183,7 +182,7 @@ function gameInit()
                     player.move('right');
                 }
             }
-         
+
             switch(map.level[player.mapCoord.y][player.mapCoord.x]) //preverja trenutne koordinate v polju map.level
             {
                 case 3: //builder
@@ -193,24 +192,24 @@ function gameInit()
                         map.level[player.mapCoord.y][player.mapCoord.x]=0;
                         map.level[player.mapCoord.y-1][player.mapCoord.x]=3;
                         break;
-                    
+
                     case 'down':
                         map.level[player.mapCoord.y][player.mapCoord.x]=0;
                         map.level[player.mapCoord.y+1][player.mapCoord.x]=3;
                         break;
-                    
+
                     case 'left':
                         map.level[player.mapCoord.y][player.mapCoord.x]=0;
                         map.level[player.mapCoord.y][player.mapCoord.x-1]=3;
                         break;
-                    
+
                     case 'right':
                         map.level[player.mapCoord.y][player.mapCoord.x]=0;
                         map.level[player.mapCoord.y][player.mapCoord.x+1]=3;
                         break;
                 }
                 break;
-                
+
                 case 5: //key_1
                 map.keys.key_1.pickUp();
                 break;
