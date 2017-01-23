@@ -23,11 +23,11 @@ function playerInit()
                 if(player.animation.isPlaying==false)
                 {  
                     player.animation.isPlaying=true;
-               }else
+                }else
                 {
 
                     clearInterval(player.animation.interval);
-                 /*   if(player.animation.thirdImg==true)
+                    /*   if(player.animation.thirdImg==true)
                     {
                     player.animation.thirdImg=false;
                     }else
@@ -41,40 +41,42 @@ function playerInit()
                 player.animation.interval=setInterval(function (){
                     player.animation.nextFrame(img1,img2,img3);
                 },player.animation.speed);
-                
+
             },
             nextFrame:function (img1,img2,img3)
             {
                 if(player.animation.num%2==0)
-                {  //console.log(player.mapCoord.x+player.mapCoord.y);
-                    if((player.mapCoord.y+player.mapCoord.x)%2==0)
-                    {
-                      
-                     
-                        player.img=img3;
-                    }else
-                    {
-                     
-                        player.img=img2;
-
-                    }
-                }else
                 {
 
                     player.img=img1;
+                }else
+
+
+                { 
+                    if((player.mapCoord.y+player.mapCoord.x)%2==0)
+                    {
+
+
+                        player.img=img3;
+                    }else
+                    {
+
+                        player.img=img2;
+
+                    }
                 }
-               player.animation.num+=1;
+                player.animation.num+=1;
                 player.draw();
                 if(player.animation.num==3)
                 {
-                   player.animation.num=0;
+                    player.animation.num=0;
                     player.animation.isPlaying=false;
                     clearInterval(player.animation.interval);
 
                 }
 
             }
-            },
+        },
         movingFrame:{
             xCh:0, //x change
             yCh:0, //y change
