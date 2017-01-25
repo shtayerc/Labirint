@@ -16,14 +16,6 @@ function mapInit()
             if(typeof progress != 'undefined')
             {
                 return ajaxGet('getLevel.php','username='+username+'&num=0');
-           /*    var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        return this.response;
-                    }
-                }
-                xmlhttp.open("GET", "getLevel.php?username="+username+"&num=0", true);
-                xmlhttp.send();*/
             }
         },
         goToLevel:function(level)
@@ -108,15 +100,66 @@ function mapInit()
             block:1, //kateri blok je izbran in se postavlja v mapo
             blockNum:11, //stevilo blokov za izbiro v orodni vrstici pri kreiranju levela
             loop:true,
-            selStart:200, //na koliko pikslih se narise prvi blok za izbiro
+            selStart:150, //na koliko pikslih se narise prvi blok za izbiro
             selNum:9, //stevilo blokov za izbiro
             change:0, 
             curBlock:1, //zaporedno stevilo izbranega bloka
             select:{
-                xStart:200,
+                xStart:150,
                 yStart:600,
                 blockSize:25,
                 num:9,
+            },
+            saveInFile:function(filename,text)
+            {                   //https://jsfiddle.net/rce6nn3z/
+            
+                  var element = document.createElement('a');
+                  element.setAttribute('href', 'data:text/maps;charset=utf-8,' + encodeURIComponent(text));
+                  element.setAttribute('download', filename);
+
+                  element.style.display = 'none';
+                  document.body.appendChild(element);
+
+                  element.click();
+
+                  document.body.removeChild(element);
+            
+            },
+            loadFromFile:function()
+            {
+                x = document.createElement("INPUT");
+                x.id="filed";
+                x.type="file";
+                x.accept=".maps";
+                x.click();
+                x.onchange=function (){
+                    var reader= new FileReader();
+                    reader.onloadend = function(evt) {
+                        if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+                            map.make.loadLevel(evt.target.result);
+
+                        }
+                    };
+                    var test=x.files[0].slice(0,x.files[0].size);
+                    reader.readAsBinaryString(test);
+
+
+
+
+                };
+
+
+            },
+            loadLevel:function(level)
+            {
+                game.clear();
+                game.menu.loop=false;
+                map.make.level=toArray(level);
+                map.level=toArray(level);
+                map.draw25();
+                map.make.loop=true;
+                map.make.panel();
+                map.make.newLevel();
             },
             saveLevel:function(username,name)
             {
@@ -194,7 +237,7 @@ function mapInit()
             {
                 for(var i=map.make.block;i<map.make.block+map.make.selNum;i=i+1)
                 {
-                    switch(i)
+                   switch(i)
                     {
                         case 9:
                             screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
@@ -249,11 +292,13 @@ function mapInit()
             },
             checkSelect:function()
             {
+                var xDiff=11;
+                var yDiff=11;
                 for(var i=0;i<map.make.select.num*map.make.select.blockSize;i=i+map.make.select.blockSize)
                 {   
-                    if ((mouse.canvasCoord.x >= map.make.select.xStart+i && 
-                        mouse.canvasCoord.x <= map.make.select.xStart + i + map.make.select.blockSize) && 
-                            (mouse.canvasCoord.y >= map.make.select.yStart && mouse.canvasCoord.y <= map.make.select.yStart+map.make.select.blockSize))
+                    if ((mouse.canvasCoord.x >= map.make.select.xStart+i+xDiff && 
+                        mouse.canvasCoord.x <= map.make.select.xStart + i + map.make.select.blockSize+xDiff) && 
+                            (mouse.canvasCoord.y >= map.make.select.yStart+yDiff && mouse.canvasCoord.y <= map.make.select.yStart+map.make.select.blockSize+yDiff))
                     {
                         if (mouse.click.left == true)
                         {
@@ -266,9 +311,10 @@ function mapInit()
             },
             button:{
                 back:new text(0,625,'Back'),
-                clear:new text(70,625,'Clear'),
-                play:new text(500,625,'Play'),
-                save:new text(560,625,'Save')
+                clear:new text(60,625,'Clear'),
+                play:new text(427,625,'Play'),
+                 saveF:new text(480,625,'SaveFile'),
+                 save:new text(580,625,'SaveDb')
 
 
             },
@@ -305,22 +351,23 @@ function mapInit()
                 {
                     map.make.button.save.draw();
                 }
-                map.make.selStart=200;
+                map.make.button.saveF.draw();
+                map.make.selStart=150;
 
 
                 screen.beginPath();
                 screen.fillStyle="white";
-                screen.moveTo(170,615);
-                screen.lineTo(190,603);
-                screen.lineTo(190,627);
+                screen.moveTo(125,615);
+                screen.lineTo(145,603);
+                screen.lineTo(145,627);
                 screen.fill();
 
 
                 screen.beginPath();
                 screen.fillStyle="white";
-                screen.moveTo(480,615);
-                screen.lineTo(460,603);
-                screen.lineTo(460,627);
+                screen.moveTo(425,615);
+                screen.lineTo(405,603);
+                screen.lineTo(405,627);
                 screen.fill();
                 game.console.draw();
                 map.make.drawSelect();
@@ -405,7 +452,7 @@ function mapInit()
 
                     if (mouse.button.left == true)
                     {
-                        
+
                         switch(map.make.curBlock)
                         {
                             case 1:
@@ -474,10 +521,10 @@ function mapInit()
                 }
                 map.make.panel();
                 map.level=map.make.level;
-
-                if(map.make.button.save.isClicked())
+                if(typeof progress != 'undefined')
                 {
-                    if(typeof progress != 'undefined')
+
+                    if(map.make.button.save.isClicked())
                     {
                         if(map.make.checkLevel())
                         {
@@ -488,7 +535,14 @@ function mapInit()
 
                             } 
                         }
+
                     }
+                }
+                if(map.make.button.saveF.isClicked())
+                {
+                    map.make.levelString=toMapString(map.level);
+                map.make.saveInFile('newLevel.maps',map.make.levelString);
+                
                 }
                 if(map.make.button.back.isClicked())
                 {
@@ -510,7 +564,7 @@ function mapInit()
                 {
                     enemy01.resetAll();
                     game.clear();
-                    map.make.level=toArray(emptyTest);
+                    map.make.level=toArray(emptyLevel);
                     map.make.panel();
 
                 }
@@ -547,7 +601,7 @@ function mapInit()
 
         },
         getBlock25:function(x,y)
-            {
+        {
             if(typeof(map.level[y]) != 'undefined' && typeof(map.level[y][x]) != 'undefined')
             {
                 switch(map.level[y][x]) //preverja polje map.level in narise ustrezen blok
@@ -602,7 +656,7 @@ function mapInit()
                 return false;
             }
         },
-        
+
         getBlock50:function(x,y) //vrne ime polja map.block[] za podane koordinate(gleda polje map.level[]) 
         {
             if(typeof(map.level[y]) != 'undefined' && typeof(map.level[y][x]) != 'undefined')
@@ -735,9 +789,9 @@ function mapInit()
                 {
                     if(map.getBlock25(mapa.x,mapa.y)!=false)
                     {
-                       screen.drawImage(map.block[map.getBlock25(mapa.x,mapa.y)], curPos.x,curPos.y);
+                        screen.drawImage(map.block[map.getBlock25(mapa.x,mapa.y)], curPos.x,curPos.y);
                     }
-                   mapa.x = mapa.x + 1;
+                    mapa.x = mapa.x + 1;
                     curPos.x = curPos.x + map.blockSize/2;
                 }
                 mapa.y = mapa.y +1;
@@ -752,7 +806,7 @@ function mapInit()
                 {
                     map.level[player.mapCoord.y][player.mapCoord.x] = 0;
                     this.num = this.num + 1;
-                    map.drawPanel();
+                  //  map.drawPanel();
                     if (this.num == 1)
                     {
                         player.inventory.add(map.block['key_1_25'],map.keys.key_1.num);
@@ -760,7 +814,7 @@ function mapInit()
                         this.taken = true;
                     }else
                     {
-                        player.inventory.update(player.inventory.getIndex('Key01_25x25.ong'),map.keys.key_1.num);
+                        player.inventory.update(player.inventory.getIndex('Key01_25x25.png'),map.keys.key_1.num);
 
                     }
                 },
@@ -787,7 +841,7 @@ function mapInit()
                 {
                     map.level[player.mapCoord.y][player.mapCoord.x] = 0;
                     this.num = this.num + 1;
-                    map.drawPanel();
+                  //  map.drawPanel();
                     if (this.num == 1)
                     {           
                         this.taken = true;

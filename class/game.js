@@ -8,16 +8,6 @@ function gameInit()
             if(typeof progress!= 'undefined')
             {
                 ajaxSend('http://www2.scptuj.si/~murko.david1/Labirint/index.php','newprogress='+map.levelIndex+'&username='+username);
-                //simulacija post metode pri formi http://www.openjs.com/articles/ajax_xmlhttp_using_post.php
- /*                    var http=new XMLHttpRequest();
-                var url="http://www2.scptuj.si/~murko.david1/Labirint/index.php";
-                var param="newprogress="+map.levelIndex+"&username="+username;
-                http.open("POST",url,true);
-                http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                http.setRequestHeader("Content-length", param.length);
-                http.setRequestHeader("Connection", "close");
-
-                http.send(param);*/
             }
         },
         form:{
@@ -68,19 +58,85 @@ function gameInit()
                 },
                 clear:function()
                 {
-                    screen.clearRect(650, 603, 150, 25);
+                    screen.clearRect(675, 603, 150, 25);
 
                 }
             },
+        load:{
+            font:'25px Arial',
+            color:'#ffffff',
+            loop:true,
+            tick:10,
+            levels:{
+                check:function()
+                {
+                    for(var i=0;i<game.load.levels.num;i=i+1)
+                    {
+                        if(game.load.levels.list[i].isClicked())
+                        {
+                            console.log(i);
+                        }
+                    }
+
+                },
+                makeButtons:function()
+                {
+                    for(var i=0;i<game.load.levels.num;i=i+1)
+                    {
+                        game.load.levels.list[i]=new text(250,i*50+50,'Level '+(i+1));    
+                    }
+
+                },
+                draw:function()
+                {
+                    for(var i=0;i<game.load.levels.num;i=i+1)
+                    {
+                        game.load.levels.list[i].draw();
+                    }
+
+                },
+                num:10,
+                list:[]
+
+            },
+            button:{
+                back:new text(0,627,'Back')
+            },
+            main:function()
+            {
+                game.clear();
+                game.console.draw();
+                game.load.button.back.draw();
+                game.load.levels.draw();
+                game.load.levels.check();
+                if(game.load.button.back.isClicked())
+                {
+                    game.load.loop=false;
+                    game.clear();
+                    game.menu.loop=true;
+                    game.menu.main();
+                }
+                if(game.load.loop!=false)
+                {
+                    setTimeout(game.load.main,game.load.tick);
+                }
+
+
+            }
+
+
+        },
         menu:{
             font:'25px Arial',
             color:'#ffffff',
             loop:true,
-            tick:100,
+            tick:10,
             button:{
 
                 play:new text(250,250,'Play'),
-                make:new text(250,300,'Create stage')
+                make:new text(250,300,'Create stage'),
+                loadF:new text(250,350,'Load from file'),
+                load:new text(250,400,'Load level')
 
             },
             main:function()
@@ -104,9 +160,27 @@ function gameInit()
 
                 game.clear();
                 game.console.draw();
-
                 game.menu.button.play.draw();
                 game.menu.button.make.draw();
+                 game.menu.button.loadF.draw();
+
+                if(typeof progress != 'undefined')
+                {
+                    game.menu.button.load.draw();
+
+                    if(game.menu.button.load.isClicked())
+                    {
+                        game.form.hide();
+                        game.menu.loop=false;
+                        game.load.loop=true;
+                        game.clear();
+                        console.log(ajaxGet('countUserLevels.php','username='+username));
+                        game.load.levels.makeButtons();
+                        game.load.main();
+
+                    }
+
+                }
                 if(game.menu.button.play.isClicked())
                 {
                     game.form.hide();   
@@ -138,6 +212,11 @@ function gameInit()
                     map.make.loop=true;
                     map.make.panel();
                     map.make.newLevel();
+                }
+                if(game.menu.button.loadF.isClicked())
+                {
+                    map.make.loadFromFile();
+                
                 }
                 if(game.menu.loop!=false)
                 {

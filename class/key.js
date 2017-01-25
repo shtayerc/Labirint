@@ -110,6 +110,8 @@ function keyInit()
 
             mouse.canvasCoord.x = event.clientX - (canvas.offsetLeft - window.pageXOffset);
             mouse.canvasCoord.y = event.clientY - (canvas.offsetTop - window.pageYOffset);
+         //   game.console.out(mouse.canvasCoord.x+" "+mouse.canvasCoord.y);
+         //   game.console.out('');
 
         }
     };

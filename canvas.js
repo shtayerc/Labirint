@@ -46,7 +46,8 @@ function text(x,y,txt) //ustvari besedilo na katerega lahko kliknes, metoda obje
     this.txt=txt;
     this.x=x;
     this.y=y;
-
+    var xDiff=10;
+    var yDiff=10;
     this.isClicked=function()
 
     {
@@ -55,9 +56,10 @@ function text(x,y,txt) //ustvari besedilo na katerega lahko kliknes, metoda obje
         var width=screen.measureText(txt).width; //izracuna dolzino besedila v pikslih
         var height=screen.measureText('M').width; //sirina velikega M je priblizno visina fonta
 
-        if((mouse.canvasCoord.x >= this.x && mouse.canvasCoord.x <= this.x+width) && 
-            (mouse.canvasCoord.y >= this.y-height && mouse.canvasCoord.y <= this.y))
+        if((mouse.canvasCoord.x >= this.x+xDiff && mouse.canvasCoord.x <= this.x+width+xDiff) && 
+            (mouse.canvasCoord.y >= this.y-height+yDiff && mouse.canvasCoord.y <= this.y+yDiff))
         {
+            
             if(mouse.click.left==true)
             {
                 mouse.click.left=false;
