@@ -165,17 +165,23 @@ function mapInit()
             {
                 if(typeof progress != 'undefined')
                 {
-
-                    var xmlhttp = new XMLHttpRequest();
-                    xmlhttp.onreadystatechange = function() {
-                        if (this.readyState == 4 && this.status == 200) {
-                            return this.response;
+                    if(game.load.levels.num<9)
+                    {
+                        var xmlhttp = new XMLHttpRequest();
+                        xmlhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+                                return this.response;
+                            }
                         }
+                        xmlhttp.open("GET", "saveLevel.php?username="+username+"&level="+map.make.levelString+"&name="+name, true);
+                        xmlhttp.send();
                     }
-                    xmlhttp.open("GET", "saveLevel.php?username="+username+"&level="+map.make.levelString+"&name="+name, true);
-                    xmlhttp.send();
-                }
+                    else
+                    {
 
+                        game.console.out('10 levels max');
+                    }
+                }
 
             },
             drawCurBlock:function(x,y)

@@ -97,7 +97,7 @@ function gameInit()
                     }
 
                 },
-                num:10,
+                num:0,
                 list:[]
 
             },
@@ -208,6 +208,11 @@ function gameInit()
                     if(map.make.levelString!='')
                     {
                         map.level=toArray(map.make.levelString);
+
+                    }
+                    if(typeof progress != 'undefined')
+                    {
+                    ajaxGet(function (num){game.load.levels.num=num;},'countUserLevels.php','username='+username);
 
                     }
                     map.draw25();
