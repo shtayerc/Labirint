@@ -97,7 +97,7 @@ function gameInit()
                     }
 
                 },
-                num:0,
+                num:10,
                 list:[]
 
             },
