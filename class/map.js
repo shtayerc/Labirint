@@ -15,7 +15,7 @@ function mapInit()
         {
             if(typeof progress != 'undefined')
             {
-                ajaxGet(function (level){console.log(level)},'getLevel.php','username='+username+'&num='+num);
+                ajaxGet(function (level){map.make.loadLevel(level);},'getLevel.php','username='+username+'&num='+num);
             }
         },
         goToLevel:function(level)
