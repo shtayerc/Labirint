@@ -11,11 +11,11 @@ function mapInit()
             restart: new text(70,625,'Restart')
 
         },
-        getLevel:function(username)
+        getLevel:function(username,num)
         {
             if(typeof progress != 'undefined')
             {
-                ajaxGet(function (level){console.log(level)},'getLevel.php','username='+username+'&num=0');
+                ajaxGet(function (level){console.log(level)},'getLevel.php','username='+username+'&num='+num);
             }
         },
         goToLevel:function(level)
