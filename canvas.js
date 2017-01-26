@@ -22,12 +22,13 @@ function ajaxSend(url,param)
 
 
 }
-function ajaxGet(url,param)
-{
+function ajaxGet(callThis,url,param)
+{ 
+    //http://stackoverflow.com/questions/12111277/return-parent-function-from-child-function-on-click
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            return this.response;
+            callThis(this.response);
         }
     }
     xmlhttp.open("GET", url+'?'+param, true);
