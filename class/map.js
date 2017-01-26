@@ -163,7 +163,7 @@ function mapInit()
             },
             saveLevel:function(username,name)
             {
-                var tmp;
+                
                 if(typeof progress != 'undefined')
                 {
                     if(game.load.levels.num<10)
@@ -175,12 +175,11 @@ function mapInit()
                                 return this.response;
                             }
                         }
-                        tmp=game.load.levels.num+1;
-                        xmlhttp.open("GET", "saveLevel.php?username="+username+"&level="+map.make.levelString+"&name=Level "+tmp, true);
+                       xmlhttp.open("GET", "saveLevel.php?username="+username+"&level="+map.make.levelString+"&name=Level "+parseInt(game.load.levels.num)+1, true);
                         xmlhttp.send();
                                 game.console.out('Level saved as');
 
-                                game.console.out('Level '+tmp);
+                                game.console.out('Level '+parseInt(game.load.levels.num)+1);
                        ajaxGet(function (num){game.load.levels.num=num;},'countUserLevels.php','username='+username);
                         
                     }
