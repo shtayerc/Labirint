@@ -177,7 +177,7 @@ function mapInit()
                         xmlhttp.open("GET", "saveLevel.php?username="+username+"&level="+map.make.levelString+"&name=Level "+game.load.levels.num+1, true);
                         xmlhttp.send();
                                 game.console.out('Level saved as');
-                                game.cosole.out('Level '+game.load.levels.num+1);
+                                game.console.out('Level '+game.load.levels.num+1);
                        ajaxGet(function (num){game.load.levels.num=num;},'countUserLevels.php','username='+username);
                         
                     }
