@@ -74,6 +74,7 @@ function gameInit()
                     {
                         if(game.load.levels.list[i].isClicked())
                         {
+                            game.load.loop=false;
                             map.getLevel(username,i);
                             
                         }
