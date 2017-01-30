@@ -175,11 +175,11 @@ function mapInit()
                                 return this.response;
                             }
                         }
-                       xmlhttp.open("GET", "saveLevel.php?username="+username+"&level="+map.make.levelString+"&name=Level "+parseInt(game.load.levels.num)+1, true);
+                       xmlhttp.open("GET", "saveLevel.php?username="+username+"&level="+map.make.levelString+"&name=Level "game.load.levels.num, true);
                         xmlhttp.send();
                                 game.console.out('Level saved as');
 
-                                game.console.out('Level '+parseInt(game.load.levels.num)+1);
+                                game.console.out('Level '+game.load.levels.num);
                        ajaxGet(function (num){game.load.levels.num=num;},'countUserLevels.php','username='+username);
                         
                     }

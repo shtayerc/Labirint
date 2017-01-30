@@ -187,6 +187,7 @@ function gameInit()
                 {
                     game.form.hide();   
                     game.menu.loop=false;
+                    map.make.loop=false;
                     game.loop=true;
                     game.clear();
                     map.level=toArray(window['level_'+map.levelIndex]);
