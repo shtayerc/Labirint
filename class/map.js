@@ -175,7 +175,7 @@ function mapInit()
                                 return this.response;
                             }
                         }
-                       xmlhttp.open("GET", "saveLevel.php?username="+username+"&level="+map.make.levelString+"&name=Level "game.load.levels.num, true);
+                       xmlhttp.open("GET", "saveLevel.php?username="+username+"&level="+map.make.levelString+"&name=Level "+game.load.levels.num, true);
                         xmlhttp.send();
                                 game.console.out('Level saved as');
 
