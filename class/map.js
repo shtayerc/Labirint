@@ -150,6 +150,30 @@ function mapInit()
 
 
             },
+            deleteLevel:function(username,num)
+            {
+                if(typeof progress != 'undefined')
+                {
+
+                    var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+
+                            return this.response;
+                        }
+                    }
+                    xmlhttp.open("GET", "deleteLevel.php?username="+username+"&num="+num, true);
+                    xmlhttp.send();
+
+
+
+                    ajaxGet(function (num){game.load.levels.num=num;},'countUserLevels.php','username='+username);
+
+
+                }
+
+
+            },
             loadLevel:function(level)
             {
                 game.clear();

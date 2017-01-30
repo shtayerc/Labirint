@@ -3,6 +3,17 @@ function gameInit()
     game={
         loop:true,
         tick:50,
+         reset:function()
+            {
+                game.load.loop=false;
+                map.make.loop=false;
+                game.menu.loop=false;
+                enemy01.resetAll();
+                map.keys.reset();
+
+            
+            },
+           
         saveProgress:function()
         {
             if(typeof progress!= 'undefined')
@@ -72,12 +83,17 @@ function gameInit()
                 {
                     for(var i=0;i<game.load.levels.num;i=i+1)
                     {
-                        if(game.load.levels.list[i].isClicked())
+                        if(game.load.levels.list[i].lvl.isClicked())
                         {
                             game.load.loop=false;
                             map.getLevel(username,i);
                             
                         }
+                    if(game.load.levels.list[i].del.isClicked())
+                        {
+                            map.make.deleteLevel(username,i);                       
+                        }
+                        
                     }
 
                 },
@@ -85,7 +101,7 @@ function gameInit()
                 {
                     for(var i=0;i<game.load.levels.num;i=i+1)
                     {
-                        game.load.levels.list[i]=new text(250,i*50+50,'Level '+(i+1));    
+                        game.load.levels.list[i]={lvl:new text(250,i*50+50,'Level '+(i)), del:new text(350,i*50+50,'Delete')};    
                     }
 
                 },
@@ -93,7 +109,8 @@ function gameInit()
                 {
                     for(var i=0;i<game.load.levels.num;i=i+1)
                     {
-                        game.load.levels.list[i].draw();
+                        game.load.levels.list[i].lvl.draw();
+                     game.load.levels.list[i].del.draw();
                     }
 
                 },
@@ -129,6 +146,7 @@ function gameInit()
 
         },
         menu:{
+           
             font:'25px Arial',
             color:'#ffffff',
             loop:true,
@@ -141,7 +159,7 @@ function gameInit()
                 load:new text(250,400,'Load level')
 
             },
-            main:function()
+           main:function()
             {
                 if(typeof progress != 'undefined')
                 {
