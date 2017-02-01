@@ -8,6 +8,7 @@ function main()
     enemyInit();
     playerInit();
     gameInit();
+    game.session.checkServer();
     map.loading();   
 
 }
