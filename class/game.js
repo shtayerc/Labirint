@@ -9,7 +9,7 @@ function gameInit()
             serverUp:false,
             isActive:function()
             {
-                if(game.session.username!='' && game.session.progress!='' && serverUp!=false)
+                if(game.session.username!='' && game.session.progress!='' && game.session.serverUp!=false)
                 {
                     return true;
                 }
