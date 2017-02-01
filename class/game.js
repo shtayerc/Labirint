@@ -3,17 +3,52 @@ function gameInit()
     game={
         loop:true,
         tick:50,
-         reset:function()
+        session:{
+           username:'',
+            progress:'',
+            serverUp:false,
+            isActive:function()
             {
-                game.load.loop=false;
-                map.make.loop=false;
-                game.menu.loop=false;
-                enemy01.resetAll();
-                map.keys.reset();
-
-            
+                if(game.session.username!='' && game.session.progress!='' && serverUp!=false)
+                {
+                    return true;
+                }
+                return false;
+            },
+            checkServer:function()
+            {
+            if(document.getElementById('online')!=null)
+                {
+                    game.session.serverUp=true;
+                }
             },
            
+            login:function(username)
+            {
+
+            },
+            logout:function()
+            {
+                game.saveProgress();
+                game.session.username='';
+                game.session.progress='';
+
+            }
+        },
+        reset:function()
+        {
+            enemy01.resetAll();
+            map.keys.reset();
+            player.lastDir="";
+
+        },
+        init:function()
+        {
+            enemy01.patrolAll();
+            player.getStartCoord();
+            map.level[player.mapCoord.y][player.mapCoord.x]=0; //nastavi zacetno polje igralca na 0, da ne moti ostalih funkcij ki preverjajo
+
+        },
         saveProgress:function()
         {
             if(typeof progress!= 'undefined')
@@ -87,18 +122,20 @@ function gameInit()
                         {
                             game.load.loop=false;
                             map.getLevel(username,i);
-                            
+
                         }
-                    if(game.load.levels.list[i].del.isClicked())
+                        if(game.load.levels.list[i].del.isClicked())
                         {
-                            map.make.deleteLevel(username,i);                       
+                            map.make.deleteLevel(username,i); 
+                            game.load.makeButtons();                     
                         }
-                        
+
                     }
 
                 },
                 makeButtons:function()
                 {
+                    game.load.levels.list[i]=[];
                     for(var i=0;i<game.load.levels.num;i=i+1)
                     {
                         game.load.levels.list[i]={lvl:new text(250,i*50+50,'Level '+(i)), del:new text(350,i*50+50,'Delete')};    
@@ -110,7 +147,7 @@ function gameInit()
                     for(var i=0;i<game.load.levels.num;i=i+1)
                     {
                         game.load.levels.list[i].lvl.draw();
-                     game.load.levels.list[i].del.draw();
+                        game.load.levels.list[i].del.draw();
                     }
 
                 },
@@ -146,7 +183,7 @@ function gameInit()
 
         },
         menu:{
-           
+
             font:'25px Arial',
             color:'#ffffff',
             loop:true,
@@ -156,13 +193,14 @@ function gameInit()
                 play:new text(250,250,'Play'),
                 make:new text(250,300,'Create stage'),
                 loadF:new text(250,350,'Load from file'),
-                load:new text(250,400,'Load level')
-
+                load:new text(250,400,'Load level'),
+                logout:new text(250,450,'Logout')
             },
-           main:function()
+            main:function()
             {
-                if(typeof progress != 'undefined')
+                if(game.session.serverUp==true)
                 {
+                    game.form.show();
                     if(username == 'undefined')
                     {
 
@@ -182,7 +220,8 @@ function gameInit()
                 game.console.draw();
                 game.menu.button.play.draw();
                 game.menu.button.make.draw();
-                 game.menu.button.loadF.draw();
+                game.menu.button.loadF.draw();
+                game.menu.button.logout.draw();
 
                 if(typeof progress != 'undefined')
                 {
@@ -204,22 +243,25 @@ function gameInit()
                 if(game.menu.button.play.isClicked())
                 {
                     game.form.hide();   
+                    game.reset();
                     game.menu.loop=false;
                     map.make.loop=false;
                     game.loop=true;
                     game.clear();
                     map.level=toArray(window['level_'+map.levelIndex]);
-                    map.keys.reset();
-                    player.getStartCoord();
+                    //   map.keys.reset();
+                    //  player.getStartCoord();
                     map.draw50();
                     map.drawPanel();
-                    enemy01.patrolAll();
-                    map.level[player.mapCoord.y][player.mapCoord.x]=0; //nastavi zacetno polje igralca na 0, da ne moti ostalih funkcij ki preverjajo
+                    //    enemy01.patrolAll();
+                    //    map.level[player.mapCoord.y][player.mapCoord.x]=0; //nastavi zacetno polje igralca na 0, da ne moti ostalih funkcij ki preverjajo
+                    game.init();
                     game.start();
                 }
                 if(game.menu.button.make.isClicked())
                 {
                     game.form.hide();
+                    game.reset();
                     game.menu.loop=false;
                     game.clear();
                     map.level=toArray(emptyLevel);
@@ -231,7 +273,7 @@ function gameInit()
                     }
                     if(typeof progress != 'undefined')
                     {
-                    ajaxGet(function (num){game.load.levels.num=num;},'countUserLevels.php','username='+username);
+                        ajaxGet(function (num){game.load.levels.num=num;},'countUserLevels.php','username='+username);
 
                     }
                     map.draw25();
@@ -242,7 +284,7 @@ function gameInit()
                 if(game.menu.button.loadF.isClicked())
                 {
                     map.make.loadFromFile();
-                
+
                 }
                 if(game.menu.loop!=false)
                 {
@@ -258,6 +300,125 @@ function gameInit()
         },
         start:function()
         {
+            switch(map.level[player.mapCoord.y][player.mapCoord.x]) //preverja trenutne koordinate v polju map.level
+            {
+                case 3: //builder
+                switch(player.lastDir)
+                {
+                    case 'up':
+                        map.level[player.mapCoord.y][player.mapCoord.x]=0;
+                        map.level[player.mapCoord.y-1][player.mapCoord.x]=3;
+                        break;
+
+                    case 'down':
+                        map.level[player.mapCoord.y][player.mapCoord.x]=0;
+                        map.level[player.mapCoord.y+1][player.mapCoord.x]=3;
+                        break;
+
+                    case 'left':
+                        map.level[player.mapCoord.y][player.mapCoord.x]=0;
+                        map.level[player.mapCoord.y][player.mapCoord.x-1]=3;
+                        break;
+
+                    case 'right':
+                        map.level[player.mapCoord.y][player.mapCoord.x]=0;
+                        map.level[player.mapCoord.y][player.mapCoord.x+1]=3;
+                        break;
+                }
+                break;
+
+                case 4: //ice
+                if(player.canMove(player.lastDir)&&player.isMoving==false)
+                {
+                    player.slide(player.lastDir);
+                }
+                break;
+
+                case 5: //key_1
+                map.keys.key_1.pickUp();
+                break;
+
+                case 7: //key_2
+                map.keys.key_2.pickUp();
+                break;
+
+                case 8: //keylock_1
+                map.keys.key_1.unlock();
+                break;
+
+                case 6: //keylock_2
+                map.keys.key_2.unlock();
+                break;
+
+                case 99:
+                map.restart();
+                break;
+
+                case 10: //end
+                if(map.make.flag==false)
+                {
+                    clearInterval(player.animation.interval);
+                    map.nextLevel();
+                    game.saveProgress();
+                    game.clear();
+                    game.reset();
+                    //map.keys.reset();
+                    //enemy01.resetAll();
+                    player.getStartCoord();
+                    map.draw50();
+                    enemy01.patrolAll();
+                    map.drawPanel();
+                }else
+                {
+                    map.restart();
+                }         
+                break;
+
+
+            } 
+            switch(player.lastDir)
+            {
+                case 'up':
+                    if(map.level[player.mapCoord.y+1][player.mapCoord.x]==9)
+                    {
+                        map.level[player.mapCoord.y+1][player.mapCoord.x]=99;
+
+
+                    }
+                    break;
+
+                case 'down':
+                    if(map.level[player.mapCoord.y-1][player.mapCoord.x]==9)
+                    {
+                        map.level[player.mapCoord.y-1][player.mapCoord.x]=99;
+
+
+                    }
+
+                    break;
+
+                case 'left':
+                    if(map.level[player.mapCoord.y][player.mapCoord.x+1]==9)
+                    {
+                        map.level[player.mapCoord.y][player.mapCoord.x+1]=99;
+
+
+                    }
+
+                    break;
+
+                case 'right':
+                    if(map.level[player.mapCoord.y][player.mapCoord.x-1]==9)
+                    {
+                        map.level[player.mapCoord.y][player.mapCoord.x-1]=99;
+
+
+                    }
+
+                    break;
+
+
+            }
             if (key.up == true)
             {
                 if(player.canMove('up') && player.isMoving==false)
@@ -288,70 +449,7 @@ function gameInit()
                 }
             }
 
-            switch(map.level[player.mapCoord.y][player.mapCoord.x]) //preverja trenutne koordinate v polju map.level
-            {
-                case 3: //builder
-                switch(player.lastDir)
-                {
-                    case 'up':
-                        map.level[player.mapCoord.y][player.mapCoord.x]=0;
-                        map.level[player.mapCoord.y-1][player.mapCoord.x]=3;
-                        break;
 
-                    case 'down':
-                        map.level[player.mapCoord.y][player.mapCoord.x]=0;
-                        map.level[player.mapCoord.y+1][player.mapCoord.x]=3;
-                        break;
-
-                    case 'left':
-                        map.level[player.mapCoord.y][player.mapCoord.x]=0;
-                        map.level[player.mapCoord.y][player.mapCoord.x-1]=3;
-                        break;
-
-                    case 'right':
-                        map.level[player.mapCoord.y][player.mapCoord.x]=0;
-                        map.level[player.mapCoord.y][player.mapCoord.x+1]=3;
-                        break;
-                }
-                break;
-
-                case 5: //key_1
-                map.keys.key_1.pickUp();
-                break;
-
-                case 7: //key_2
-                map.keys.key_2.pickUp();
-                break;
-
-                case 8: //keylock_1
-                map.keys.key_1.unlock();
-                break;
-
-                case 6: //keylock_2
-                map.keys.key_2.unlock();
-                break;
-
-                case 10: //end
-                if(map.make.flag==false)
-                {
-                    clearInterval(player.animation.interval);
-                    map.nextLevel();
-                    game.saveProgress();
-                    game.clear();
-                    map.keys.reset();
-                    enemy01.resetAll();
-                    player.getStartCoord();
-                    map.draw50();
-                    enemy01.patrolAll();
-                    map.drawPanel();
-                }else
-                {
-                    map.restart();
-                }         
-                break;
-
-
-            }           
             if(player.isMoving==true)
             {
                 player.drawMovingFrame();
@@ -371,13 +469,14 @@ function gameInit()
             }
             if(map.button.back.isClicked())
             {
-             //   console.log(map.getLevel('shtayerc',0));
+                //   console.log(map.getLevel('shtayerc',0));
 
                 if(map.make.flag==true)
                 {
+                    game.reset();
                     game.loop=false;
                     map.restart();
-                    enemy01.resetAll();
+                    // enemy01.resetAll();
                     game.clear();
                     map.level=toArray(map.make.levelString);
                     map.make.level=  toArray(map.make.levelString);
@@ -392,9 +491,10 @@ function gameInit()
                     {
                         game.form.show();
                     }
+                    game.reset();
                     game.loop=false;
-                    enemy01.resetAll();
-                    player.lastDir="";
+                    //  enemy01.resetAll();
+                    //   player.lastDir="";
                     game.menu.loop=true;
                     game.clear();
                     game.menu.main();

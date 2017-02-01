@@ -7,6 +7,7 @@ function playerInit()
         speed:5,
         img:map.block['playerDown1'],
         movingInterval:0,
+        state:0,
         isMoving:false,
         dir:'',
         lastDir:'',
@@ -208,6 +209,126 @@ function playerInit()
             }
 
 
+        },
+        slide:function(dir)
+        {
+             player.isMoving=true;
+                clearInterval(player.animation.interval);
+           if(player.lastDir==dir)
+            {
+                player.movingFrame.start.y=player.movingFrame.start.y+player.movingFrame.yCh;
+                player.movingFrame.start.x=player.movingFrame.start.x+player.movingFrame.xCh;
+            }
+            if(dir=='up')
+            {
+                player.img=map.block['playerUp1'];
+         //       player.animation.start(map.block['playerUp1'],map.block['playerUp2'],map.block['playerUp1']);
+
+                if(player.lastDir=='right')
+                {
+                    player.movingFrame.start.y=player.movingFrame.start.y-1;
+                    player.movingFrame.start.x=player.movingFrame.start.x+1;
+                }
+                if(player.lastDir=='left')
+                {
+
+                    player.movingFrame.start.y=player.movingFrame.start.y-1;
+                }
+                if(player.lastDir=='')
+                {
+                    player.movingFrame.start.y=player.movingFrame.start.y-1;
+                }
+                player.lastDir='up';
+                player.movingFrame.lastLine=0;
+                player.movingFrame.midLine=0;
+                player.movingFrame.firstLine=50;
+                player.movingFrame.yCh=-1;
+                player.movingFrame.xCh=0;
+            }
+            if(dir=='down')
+            {
+                player.img=map.block['playerDown1'];
+           //     player.animation.start(map.block['playerDown1'],map.block['playerDown2'],map.block['playerDown1']);
+                player.movingFrame.yCh=+1;
+                if(player.lastDir=='right')
+                {
+                    player.movingFrame.start.x=player.movingFrame.start.x+1;
+                }
+
+
+                player.lastDir='down';
+                player.movingFrame.lastLine=-50;
+                player.movingFrame.midLine=-50;
+                player.movingFrame.firstLine=0;
+                player.movingFrame.xCh=0;
+            }
+            if(dir=='left')
+            {
+             player.img=map.block['playerLeft1'];
+                //   player.animation.start(map.block['playerLeft0'],map.block['playerLeft2'],map.block['playerLeft1']);
+                player.movingFrame.xCh=-1;
+                if(player.lastDir=='down')
+                {
+                    player.movingFrame.start.y=player.movingFrame.start.y+1;
+
+                }
+                if(player.lastDir!='left' && player.lastDir!='right')
+                {
+                    player.movingFrame.start.x=player.movingFrame.start.x+player.movingFrame.xCh;
+
+                }
+                player.lastDir='left';
+                player.movingFrame.midLine=0;
+                player.movingFrame.firstLine=50; 
+                player.movingFrame.lastLine=0;    
+                player.movingFrame.yCh=0;
+            }
+            if(dir== 'right')
+            {
+                player.img=map.block['playerRight1'];
+              //  player.animation.start(map.block['playerRight0'],map.block['playerRight2'],map.block['playerRight1']);
+
+                if(player.lastDir=='down')
+                {
+                    player.movingFrame.start.y=player.movingFrame.start.y+1;
+
+                }
+                player.lastDir='right';
+                player.movingFrame.firstLine=0;
+                player.movingFrame.midLine=-50;
+                player.movingFrame.lastLine=-50;
+                player.movingFrame.xCh=1;
+                player.movingFrame.yCh=0;
+            }
+            player.movingFrame.exitCount=0;
+            player.mapCoord.x=player.mapCoord.x+player.movingFrame.xCh;
+            player.mapCoord.y=player.mapCoord.y+player.movingFrame.yCh; 
+            player.isMoving=true;          
+            player.movingFrame.interval=setInterval(function (){
+
+                if(player.movingFrame.exitCount>=map.blockSize){
+                    player.isMoving=false;
+                    switch(player.lastDir)
+                    {
+                        case 'left':
+                            player.img=map.block['playerLeft0'];
+                            break;
+                        case 'right':
+                         player.img=map.block['playerRight0'];
+                            break;
+
+                    }
+                    clearInterval(player.movingFrame.interval);
+
+                }
+                player.movingFrame.firstLine=player.movingFrame.firstLine+player.movingFrame.yCh+player.movingFrame.xCh;
+                player.movingFrame.lastLine=player.movingFrame.lastLine+player.movingFrame.yCh+player.movingFrame.xCh; 
+                player.movingFrame.midLine=player.movingFrame.midLine+player.movingFrame.yCh+player.movingFrame.xCh;     
+                player.movingFrame.exitCount+=1;
+            },player.speed);
+
+
+        
         },
         move:function(dir)
         {   
