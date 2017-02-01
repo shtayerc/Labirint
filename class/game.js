@@ -215,7 +215,7 @@ function gameInit()
                     {
                         game.form.hide();
                         map.levelIndex=game.session.progress;
-                        game.console.out("Logged as "+ username);
+                        game.console.out("Logged as "+ game.session.username);
                         game.console.out("");
                     }else
                     {
@@ -239,7 +239,7 @@ function gameInit()
                     }
                 
                 }
-                if(typeof progress != 'undefined')
+                if(game.session.isActive())
                 {
                     game.menu.button.load.draw();
 
@@ -249,7 +249,7 @@ function gameInit()
                         game.menu.loop=false;
                         game.load.loop=true;
                         game.clear();
-                        ajaxGet(function (num){game.load.levels.num=num;},'countUserLevels.php','username='+username);
+                        ajaxGet(function (num){game.load.levels.num=num;},'countUserLevels.php','username='+game.session.username);
                         game.load.levels.makeButtons();
                         game.load.main();
 
@@ -287,9 +287,9 @@ function gameInit()
                         map.level=toArray(map.make.levelString);
 
                     }
-                    if(typeof progress != 'undefined')
+                    if(game.session.isActive())
                     {
-                        ajaxGet(function (num){game.load.levels.num=num;},'countUserLevels.php','username='+username);
+                        ajaxGet(function (num){game.load.levels.num=num;},'countUserLevels.php','username='+game.session.username);
 
                     }
                     map.draw25();
@@ -503,10 +503,10 @@ function gameInit()
                     map.make.newLevel();
                 }else
                 {
-                    if(typeof progress != 'undefined')
-                    {
-                        game.form.show();
-                    }
+                   // if()
+                   // {
+                  //      game.form.show();
+                  //  }
                     game.reset();
                     game.loop=false;
                     //  enemy01.resetAll();

@@ -63,7 +63,7 @@ function mapInit()
 
             }else
             {
-                console.log('Konec');
+                game.console.out('The end');
                 game.loop=false;
             }
 
@@ -428,7 +428,7 @@ function mapInit()
                 map.make.button.back.draw();
                 map.make.button.clear.draw();
                 map.make.button.play.draw();
-                if(typeof progress != 'undefined')
+                if(game.session.isActive())
                 {
                     map.make.button.save.draw();
                 }
@@ -613,7 +613,7 @@ function mapInit()
                 }
                 map.make.panel();
                 map.level=map.make.level;
-                if(typeof progress != 'undefined')
+                if(game.session.isActive())
                 {
 
                     if(map.make.button.save.isClicked())
@@ -621,7 +621,7 @@ function mapInit()
                         if(map.make.checkLevel())
                         {
                             map.make.levelString=toMapString(map.make.level);    
-                            if(map.make.saveLevel(username,'Test'))
+                            if(map.make.saveLevel(game.session.username,'Test'))
                             {
                                 game.console.out('Level saved');
 
@@ -663,10 +663,10 @@ function mapInit()
 
                 if(map.make.button.back.isClicked())
                 {
-                    if(typeof progress != 'undefined')
-                    {
-                        game.form.show();
-                    }
+                    //if(typeof progress != 'undefined')
+                   // {
+                   //     game.form.show();
+                   // }
                     game.reset();
                     //  enemy01.resetAll();
                     map.make.flag=false;
