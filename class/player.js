@@ -339,7 +339,7 @@ function playerInit()
             }
             if(dir=='up')
             {
-                player.animation.start(map.block['playerUp1'],map.block['playerUp2'],map.block['playerUp1']);
+                player.animation.start(map.block['playerUp0'],map.block['playerUp2'],map.block['playerUp1']);
 
                 if(player.lastDir=='right')
                 {
@@ -365,7 +365,7 @@ function playerInit()
             if(dir=='down')
             {
 
-                player.animation.start(map.block['playerDown1'],map.block['playerDown2'],map.block['playerDown1']);
+                player.animation.start(map.block['playerDown0'],map.block['playerDown2'],map.block['playerDown1']);
                 player.movingFrame.yCh=+1;
                 if(player.lastDir=='right')
                 {

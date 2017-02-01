@@ -1059,11 +1059,11 @@ function mapInit()
         },
         loadBlocks:function() //funkcija ki klice funkcijo map.loadImg in nalozi vse potrebne slike
         {
-            map.loadImg('crack1_50',path+'textures/50x50/crack1_50.png');
-            map.loadImg('crack2_50',path+'textures/50x50/crack2_50.png');
-            map.loadImg('crack1_25',path+'textures/25x25/crack1_25.png');
-            map.loadImg('ice25',path+'textures/25x25/ice_25.png');
-            map.loadImg('ice50',path+'textures/50x50/ice_50.png');
+            map.loadImg('crack1_50',path+'textures/50x50/Crack.png');
+            map.loadImg('crack2_50',path+'textures/50x50/Crack1.png');
+            map.loadImg('crack1_25',path+'textures/25x25/Crack_25x25.png');
+            map.loadImg('ice25',path+'textures/25x25/Ice_25x25.png');
+            map.loadImg('ice50',path+'textures/50x50/Ice.png');
             map.loadImg('player25',path+'textures/25x25/Player_Front_25x25.png');
             map.loadImg('enemy01_25',path+'textures/25x25/Enemy01_25x25_r.png');
             map.loadImg('wall',path+'textures/50x50/Pyramid_Walls.png');
@@ -1078,8 +1078,10 @@ function mapInit()
             map.loadImg('keylock_1_25',path+'textures/25x25/Keyhole01_25x25.png');
             map.loadImg('keylock_2_25',path+'textures/25x25/Keyhole02_25x25.png');
             map.loadImg('keylock_2',path+'textures/50x50/Keyhole02.png');
+            map.loadImg('playerDown0',path+'textures/50x50/Player_Front.png');
             map.loadImg('playerDown1',path+'textures/50x50/Player_Front1.png');
             map.loadImg('playerDown2',path+'textures/50x50/Player_Front2.png');
+            map.loadImg('playerUp0',path+'textures/50x50/Player_Back.png');
             map.loadImg('playerUp1',path+'textures/50x50/Player_Back1.png');
             map.loadImg('playerUp2',path+'textures/50x50/Player_Back2.png');
             map.loadImg('playerLeft0',path+'textures/50x50/Player_Left.png')
