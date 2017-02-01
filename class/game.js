@@ -23,8 +23,10 @@ function gameInit()
                 }
             },
            
-            login:function(username)
+            login:function(username,progress)
             {
+                    game.session.username=username;
+                    game.session.progress=progress;
 
             },
             logout:function()
@@ -200,19 +202,25 @@ function gameInit()
             {
                 if(game.session.serverUp==true)
                 {
-                    game.form.show();
-                    if(username == 'undefined')
+                    
+                  /*  if(username == 'undefined')
                     {
 
                         game.form.show();
                     }else
                     {
                         game.form.hide();
-                    }
+                    }*/
+                    if(game.session.isActive())
+                    {
+                        game.form.hide();
                     map.levelIndex=progress;
                     game.console.out("Logged as "+ username);
                     game.console.out("");
-
+                    }else
+                    {
+                    game.form.show();
+                    }
 
                 }
 
