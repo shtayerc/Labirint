@@ -4,7 +4,7 @@ function gameInit()
         loop:true,
         tick:50,
         session:{
-           username:'',
+            username:'',
             progress:'',
             serverUp:false,
             isActive:function()
@@ -17,16 +17,16 @@ function gameInit()
             },
             checkServer:function()
             {
-            if(document.getElementById('online')!=null)
+                if(document.getElementById('online')!=null)
                 {
                     game.session.serverUp=true;
                 }
             },
-           
+
             login:function(username,progress)
             {
-                    game.session.username=username;
-                    game.session.progress=progress;
+                game.session.username=username;
+                game.session.progress=progress;
 
             },
             logout:function()
@@ -202,8 +202,8 @@ function gameInit()
             {
                 if(game.session.serverUp==true)
                 {
-                    
-                  /*  if(username == 'undefined')
+
+                    /*  if(username == 'undefined')
                     {
 
                         game.form.show();
@@ -214,12 +214,12 @@ function gameInit()
                     if(game.session.isActive())
                     {
                         game.form.hide();
-                    map.levelIndex=progress;
-                    game.console.out("Logged as "+ username);
-                    game.console.out("");
+                        map.levelIndex=game.session.progress;
+                        game.console.out("Logged as "+ username);
+                        game.console.out("");
                     }else
                     {
-                    game.form.show();
+                        game.form.show();
                     }
 
                 }
@@ -229,8 +229,16 @@ function gameInit()
                 game.menu.button.play.draw();
                 game.menu.button.make.draw();
                 game.menu.button.loadF.draw();
+                if(game.session.isActive())
+                {
                 game.menu.button.logout.draw();
-
+                if(game.menu.button.isClicked())
+                    {
+                    game.session.logout();
+                    
+                    }
+                
+                }
                 if(typeof progress != 'undefined')
                 {
                     game.menu.button.load.draw();
