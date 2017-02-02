@@ -232,7 +232,7 @@ function gameInit()
                 if(game.session.isActive())
                 {
                 game.menu.button.logout.draw();
-                if(game.menu.button.isClicked())
+                if(game.menu.button.logout.isClicked())
                     {
                     game.session.logout();
                     
