@@ -13,7 +13,7 @@ function mapInit()
         },
         getLevel:function(username,num)
         {
-            if(typeof progress != 'undefined')
+            if(game.session.isActive())
             {
                 ajaxGet(function (level){
 
@@ -146,7 +146,7 @@ function mapInit()
             },
             deleteLevel:function(username,num)
             {
-                if(typeof progress != 'undefined')
+                if(game.session.isActive())
                 {
 
                     /*          var xmlhttp = new XMLHttpRequest();
