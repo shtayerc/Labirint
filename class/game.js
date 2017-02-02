@@ -34,6 +34,8 @@ function gameInit()
                 game.saveProgress();
                 game.session.username='';
                 game.session.progress='';
+                game.console.out('');
+                game.console.out('');
 
             }
         },
@@ -46,8 +48,9 @@ function gameInit()
         },
         init:function()
         {
-            enemy01.patrolAll();
-            player.getStartCoord();
+                    player.getStartCoord();
+             enemy01.patrolAll();
+
             map.level[player.mapCoord.y][player.mapCoord.x]=0; //nastavi zacetno polje igralca na 0, da ne moti ostalih funkcij ki preverjajo
 
         },
@@ -123,12 +126,12 @@ function gameInit()
                         if(game.load.levels.list[i].lvl.isClicked())
                         {
                             game.load.loop=false;
-                            map.getLevel(username,i);
+                            map.getLevel(game.session.username,i);
 
                         }
                         if(game.load.levels.list[i].del.isClicked())
                         {
-                            map.make.deleteLevel(username,i); 
+                            map.make.deleteLevel(game.session.username,i); 
                             game.load.makeButtons();                     
                         }
 
