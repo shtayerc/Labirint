@@ -147,7 +147,7 @@ function gameInit()
                         if(game.load.levels.list[i].del.isClicked())
                         {
                             map.make.deleteLevel(game.session.username,i); 
-                            game.load.makeButtons();                     
+                            //game.load.levels.makeButtons();                     
                         }
 
                     }

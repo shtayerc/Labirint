@@ -162,7 +162,7 @@ function mapInit()
 */
                     ajaxSend('deleteLevel.php','username='+username+'&num='+num);
 
-                    ajaxGet(function (num){game.load.levels.num=num;},'countUserLevels.php','username='+username);
+                    ajaxGet(function (num){game.load.levels.num=num;game.load.levels.makeButtons();},'countUserLevels.php','username='+username);
 
 
                 }
