@@ -267,9 +267,11 @@ function gameInit()
                         game.menu.loop=false;
                         game.load.loop=true;
                         game.clear();
-                        ajaxGet(function (num){game.load.levels.num=num;},'countUserLevels.php','username='+game.session.username);
-                        game.load.levels.makeButtons();
+                        ajaxGet(function (num){game.load.levels.num=num;
+                          game.load.levels.makeButtons();
                         game.load.main();
+                        },'countUserLevels.php','username='+game.session.username);
+                      
 
                     }
 
