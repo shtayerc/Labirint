@@ -62,6 +62,8 @@ function gameInit()
             }
         },
         form:{
+            login:'block',
+            register:'none',
             hide:function()
             {
                 document.getElementsByTagName('form')[0].style.display='none'; 
@@ -70,8 +72,8 @@ function gameInit()
             },
             show:function()
             {
-                document.getElementsByTagName('form')[0].style.display='block'; 
-                document.getElementsByTagName('form')[1].style.display='none';
+                document.getElementsByTagName('form')[0].style.display=game.form.login; 
+                document.getElementsByTagName('form')[1].style.display=game.form.register;
 
 
 
@@ -267,8 +269,9 @@ function gameInit()
                     map.make.loop=false;
                     game.loop=true;
                     game.clear();
-                    game.init();
+                    
                     map.level=toArray(window['level_'+map.levelIndex]);
+                   game.init();
                     //   map.keys.reset();
                     //  player.getStartCoord();
                     map.draw50();
