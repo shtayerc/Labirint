@@ -267,6 +267,7 @@ function gameInit()
                     map.make.loop=false;
                     game.loop=true;
                     game.clear();
+                    game.init();
                     map.level=toArray(window['level_'+map.levelIndex]);
                     //   map.keys.reset();
                     //  player.getStartCoord();
@@ -274,8 +275,7 @@ function gameInit()
                     map.drawPanel();
                     //    enemy01.patrolAll();
                     //    map.level[player.mapCoord.y][player.mapCoord.x]=0; //nastavi zacetno polje igralca na 0, da ne moti ostalih funkcij ki preverjajo
-                    game.init();
-                    game.start();
+                   game.start();
                 }
                 if(game.menu.button.make.isClicked())
                 {
