@@ -37,6 +37,13 @@ function gameInit()
                 map.levelIndex='00';
                 game.console.out('');
                 game.console.out('');
+                document.getElementsByName('username')[0].value='';                        
+                document.getElementsByName('password')[0].value='';
+                document.getElementsByName('username')[1].value='';                        
+                document.getElementsByName('password')[1].value='';                       
+                document.getElementsByName('password2')[0].value='';
+
+
 
             }
         },
@@ -49,8 +56,8 @@ function gameInit()
         },
         init:function()
         {
-                    player.getStartCoord();
-             enemy01.patrolAll();
+            player.getStartCoord();
+            enemy01.patrolAll();
 
             map.level[player.mapCoord.y][player.mapCoord.x]=0; //nastavi zacetno polje igralca na 0, da ne moti ostalih funkcij ki preverjajo
 
@@ -67,7 +74,7 @@ function gameInit()
             {
                 document.getElementsByName('username')[0].value='';
                 document.getElementsByName('password')[0].value=''; 
-           },
+            },
             login:'block',
             register:'none',
             hide:function()
@@ -242,13 +249,13 @@ function gameInit()
                 game.menu.button.loadF.draw();
                 if(game.session.isActive())
                 {
-                game.menu.button.logout.draw();
-                if(game.menu.button.logout.isClicked())
+                    game.menu.button.logout.draw();
+                    if(game.menu.button.logout.isClicked())
                     {
-                    game.session.logout();
-                    
+                        game.session.logout();
+
                     }
-                
+
                 }
                 if(game.session.isActive())
                 {
@@ -275,7 +282,7 @@ function gameInit()
                     map.make.loop=false;
                     game.loop=true;
                     game.clear();
-                    
+
                     map.level=toArray(window['level_'+map.levelIndex]);
                     game.init();
                     //   map.keys.reset();
@@ -284,7 +291,7 @@ function gameInit()
                     map.drawPanel();
                     //    enemy01.patrolAll();
                     //    map.level[player.mapCoord.y][player.mapCoord.x]=0; //nastavi zacetno polje igralca na 0, da ne moti ostalih funkcij ki preverjajo
-                   game.start();
+                    game.start();
                 }
                 if(game.menu.button.make.isClicked())
                 {
@@ -504,7 +511,7 @@ function gameInit()
                 {
                     game.reset();
                     game.loop=false;
-                  //  map.restart();
+                    //  map.restart();
                     // enemy01.resetAll();
                     game.clear();
                     map.level=toArray(map.make.levelString);
@@ -516,10 +523,10 @@ function gameInit()
                     map.make.newLevel();
                 }else
                 {
-                   // if()
-                   // {
-                  //      game.form.show();
-                  //  }
+                    // if()
+                    // {
+                    //      game.form.show();
+                    //  }
                     game.reset();
                     game.loop=false;
                     //  enemy01.resetAll();
