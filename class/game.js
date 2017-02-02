@@ -34,6 +34,7 @@ function gameInit()
                 game.saveProgress();
                 game.session.username='';
                 game.session.progress='';
+                map.levelIndex='00';
                 game.console.out('');
                 game.console.out('');
 
@@ -62,6 +63,11 @@ function gameInit()
             }
         },
         form:{
+            reset:function()
+            {
+                document.getElementsByName('username')[0].value='';
+                document.getElementsByName('password')[0].value=''; 
+           },
             login:'block',
             register:'none',
             hide:function()
@@ -271,7 +277,7 @@ function gameInit()
                     game.clear();
                     
                     map.level=toArray(window['level_'+map.levelIndex]);
-                   game.init();
+                    game.init();
                     //   map.keys.reset();
                     //  player.getStartCoord();
                     map.draw50();
@@ -305,6 +311,7 @@ function gameInit()
                 }
                 if(game.menu.button.loadF.isClicked())
                 {
+                    game.form.hide();
                     map.make.loadFromFile();
 
                 }
@@ -497,7 +504,7 @@ function gameInit()
                 {
                     game.reset();
                     game.loop=false;
-                    map.restart();
+                  //  map.restart();
                     // enemy01.resetAll();
                     game.clear();
                     map.level=toArray(map.make.levelString);

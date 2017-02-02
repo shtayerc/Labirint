@@ -48,7 +48,7 @@ function enemyInit(){
         this.mapCoord=new coord(startCoordX,startCoordY);     //v new so koordinati dimenzionalnega polja
         this.img=map.block['enemy01R'];
         this.movingInterval=0;
-        this.dir='left';
+        this.dir='right';
     }
     enemy_01.prototype.move=function(dir) //premakne izbrani objekt tipa enemy01 v smer podano v parametru(string npr.: 'right')
     {

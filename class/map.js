@@ -75,23 +75,15 @@ function mapInit()
                 map.level=toArray(map.make.levelString);
                 game.clear();
                 game.reset();
-                //   player.getStartCoord();
-                map.draw50();
-                map.drawPanel();
-                //  game.start();
-
             }else
             {   
                 map.level=toArray(window['level_'+map.levelIndex]);
                 game.clear();
                 game.reset();
-                //     player.getStartCoord();
-                map.draw50();
-                map.drawPanel();
             }
             game.init();
-            // enemy01.patrolAll();
-
+            map.draw50();
+            map.drawPanel();
         },
         make:{
             levelString:'', //string levela(se ustvari iz polja)
@@ -157,7 +149,7 @@ function mapInit()
                 if(typeof progress != 'undefined')
                 {
 
-          /*          var xmlhttp = new XMLHttpRequest();
+                    /*          var xmlhttp = new XMLHttpRequest();
                     xmlhttp.onreadystatechange = function() {
                         if (this.readyState == 4 && this.status == 200) {
 
@@ -188,10 +180,10 @@ function mapInit()
                 map.make.panel();
                 map.make.newLevel();
             },
-            saveLevel:function(username,name)
+            saveLevel:function(username)
             {
 
-                if(typeof progress != 'undefined')
+                if(game.session.isActive())
                 {
                     if(game.load.levels.num<10)
                     {
@@ -621,11 +613,13 @@ function mapInit()
                         if(map.make.checkLevel())
                         {
                             map.make.levelString=toMapString(map.make.level);    
-                            if(map.make.saveLevel(game.session.username,'Test'))
+
+                            if(map.make.saveLevel(game.session.username))
                             {
                                 game.console.out('Level saved');
 
                             } 
+
                         }
 
                     }
@@ -664,10 +658,11 @@ function mapInit()
                 if(map.make.button.back.isClicked())
                 {
                     //if(typeof progress != 'undefined')
-                   // {
-                   //     game.form.show();
-                   // }
+                    // {
+                    //     game.form.show();
+                    // }
                     game.reset();
+                    //  console.log('ja');
                     //  enemy01.resetAll();
                     map.make.flag=false;
                     map.make.loop=false;
@@ -805,7 +800,7 @@ function mapInit()
                     break;
 
                     case 3:
-                    return 'builder';
+                    return 'builder50';
                     break;
 
                     case 4:
@@ -976,42 +971,42 @@ function mapInit()
                     }
                 }
             },
-                key_2:{
-                    taken:false,
-                        num:0,
-                        pickUp:function()
+            key_2:{
+                taken:false,
+                num:0,
+                pickUp:function()
+                {
+                    map.level[player.mapCoord.y][player.mapCoord.x] = 0;
+                    this.num = this.num + 1;
+                    if (this.num == 1)
+                    {           
+                        this.taken = true;
+                        player.inventory.add(map.block['key_2_25'],map.keys.key_2.num);
+
+                    }else
                     {
-                        map.level[player.mapCoord.y][player.mapCoord.x] = 0;
-                        this.num = this.num + 1;
-                        if (this.num == 1)
-                        {           
-                            this.taken = true;
-                            player.inventory.add(map.block['key_2_25'],map.keys.key_2.num);
+                        player.inventory.update(player.inventory.getIndex('Key02_25x25.png'),map.keys.key_2.num);
 
-                        }else
-                        {
-                            player.inventory.update(player.inventory.getIndex('Key02_25x25.png'),map.keys.key_2.num);
-
-                        }
-                    },
-                        unlock:function()
-                    {
-                        map.level[player.mapCoord.y][player.mapCoord.x] = 0;
-                        this.num = this.num - 1;
-                        if (this.num == 0)
-                        {
-                            player.inventory.remove(player.inventory.getIndex('Key02_25x25'));
-
-                            // player.inventory.remove()
-                            this.taken = false;
-                        }else
-                        {
-                            player.inventory.update(player.inventory.getIndex('Key02_25x25.png'),map.keys.key_2.num);
-
-
-                        }
                     }
                 },
+                unlock:function()
+                {
+                    map.level[player.mapCoord.y][player.mapCoord.x] = 0;
+                    this.num = this.num - 1;
+                    if (this.num == 0)
+                    {
+                        player.inventory.remove(player.inventory.getIndex('Key02_25x25'));
+
+                        // player.inventory.remove()
+                        this.taken = false;
+                    }else
+                    {
+                        player.inventory.update(player.inventory.getIndex('Key02_25x25.png'),map.keys.key_2.num);
+
+
+                    }
+                }
+            },
             reset:function()
             {
                 player.inventory.slot=[];
@@ -1097,6 +1092,7 @@ function mapInit()
             map.loadImg('floorBig', path+'textures/background/Pyramid_Floor.png');
             map.loadImg('blank',path+'textures/50x50/blank.png');
             map.loadImg('builder',path+'textures/25x25/boulder_25x25.png');
+            map.loadImg('builder50',path+'textures/50x50/boulder.png');
 
         }
 
