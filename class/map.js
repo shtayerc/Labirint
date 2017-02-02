@@ -161,8 +161,8 @@ function mapInit()
 
 */
                     ajaxSend('deleteLevel.php','username='+username+'&num='+num);
-
-                    ajaxGet(function (num){game.load.levels.num=num;game.load.levels.makeButtons();},'countUserLevels.php','username='+username);
+                    game.load.levels.num=game.load.levels.num-1;
+                    ajaxGet(function (num){game.load.levels.num=num;},'countUserLevels.php','username='+username);
 
 
                 }
@@ -199,6 +199,7 @@ function mapInit()
                         game.console.out('Level saved as');
 
                         game.console.out('Level '+game.load.levels.num);
+                        game.load.levels.num=game.load.levels.num+1;
                         ajaxGet(function (num){game.load.levels.num=num;},'countUserLevels.php','username='+username);
 
                     }
