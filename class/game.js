@@ -2,6 +2,7 @@ function gameInit()
 {
     game={
         loop:true,
+        tickCount:0,
         tick:50,
         session:{
             username:'',
@@ -57,7 +58,7 @@ function gameInit()
         init:function()
         {
             player.getStartCoord();
-            enemy01.patrolAll();
+            // enemy01.patrolAll();
 
             map.level[player.mapCoord.y][player.mapCoord.x]=0; //nastavi zacetno polje igralca na 0, da ne moti ostalih funkcij ki preverjajo
 
@@ -268,10 +269,10 @@ function gameInit()
                         game.load.loop=true;
                         game.clear();
                         ajaxGet(function (num){game.load.levels.num=num;
-                          game.load.levels.makeButtons();
-                        game.load.main();
+                            game.load.levels.makeButtons();
+                            game.load.main();
                         },'countUserLevels.php','username='+game.session.username);
-                      
+
 
                     }
 
@@ -287,13 +288,9 @@ function gameInit()
 
                     map.level=toArray(window['level_'+map.levelIndex]);
                     game.init();
-                    //   map.keys.reset();
-                    //  player.getStartCoord();
-                    map.draw50();
+                   map.draw50();
                     map.drawPanel();
-                    //    enemy01.patrolAll();
-                    //    map.level[player.mapCoord.y][player.mapCoord.x]=0; //nastavi zacetno polje igralca na 0, da ne moti ostalih funkcij ki preverjajo
-                    game.start();
+                   game.start();
                 }
                 if(game.menu.button.make.isClicked())
                 {
@@ -400,8 +397,6 @@ function gameInit()
                     game.saveProgress();
                     game.clear();
                     game.reset();
-                    //map.keys.reset();
-                    //enemy01.resetAll();
                     player.getStartCoord();
                     map.draw50();
                     enemy01.patrolAll();
@@ -420,8 +415,6 @@ function gameInit()
                     if(map.level[player.mapCoord.y+1][player.mapCoord.x]==9)
                     {
                         map.level[player.mapCoord.y+1][player.mapCoord.x]=99;
-
-
                     }
                     break;
 
@@ -429,30 +422,21 @@ function gameInit()
                     if(map.level[player.mapCoord.y-1][player.mapCoord.x]==9)
                     {
                         map.level[player.mapCoord.y-1][player.mapCoord.x]=99;
-
-
                     }
-
                     break;
 
                 case 'left':
                     if(map.level[player.mapCoord.y][player.mapCoord.x+1]==9)
                     {
                         map.level[player.mapCoord.y][player.mapCoord.x+1]=99;
-
-
                     }
-
                     break;
 
                 case 'right':
                     if(map.level[player.mapCoord.y][player.mapCoord.x-1]==9)
                     {
                         map.level[player.mapCoord.y][player.mapCoord.x-1]=99;
-
-
                     }
-
                     break;
 
 
@@ -525,15 +509,9 @@ function gameInit()
                     map.make.newLevel();
                 }else
                 {
-                    // if()
-                    // {
-                    //      game.form.show();
-                    //  }
-                    game.reset();
+                   game.reset();
                     game.loop=false;
-                    //  enemy01.resetAll();
-                    //   player.lastDir="";
-                    game.menu.loop=true;
+                   game.menu.loop=true;
                     game.clear();
                     game.menu.main();
                 }
@@ -546,7 +524,18 @@ function gameInit()
                 map.restart();
                 player.drawHp();
             }
-
+            if(game.tickCount%enemy01.speed==0)
+            {
+                for(var i=0;i<enemy01.list.length;i=i+1)
+                {
+                    enemy01.list[i].patrol();
+                }
+            }
+            game.tickCount=game.tickCount+game.tick;
+            if(game.tickCount>30000)
+            {
+                game.tickCount=0;
+            }
             if(game.loop != false)
             {
                 setTimeout(game.start, game.tick);

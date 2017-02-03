@@ -3,7 +3,7 @@ function enemyInit(){
     enemy01={
         list:[],
         dmg:100,
-        speed:200, //ms
+        speed:200, //ms, more bit deljivo z game.tick
         add:function(startCoordX,startCoordY){
             enemy01.list[enemy01.list.length]= new enemy_01(startCoordX,startCoordY);
         },
