@@ -191,6 +191,10 @@ function playerInit()
                         case 11:
                         enemy01.add(mapa.x,mapa.y);
                         break;
+                        
+                        case 12:
+                        enemy02.add(mapa.x,mapa.y);
+                        break;
 
                         case 1:
                         player.canvasCoord.x=6* map.blockSize;
@@ -447,7 +451,14 @@ function playerInit()
 
                 for(curPos.y=0;curPos.y<canLimit.y;curPos.y=curPos.y+map.blockSize)//leva vrsta
                 {
-                    if(map.getBlock50(mapCoord.x,mapCoord.y)=='enemy01')
+                    if(map.getBlock50(mapCoord.x,mapCoord.y)=='enemy02')
+                    {
+                
+                        screen.drawImage( enemy02.list[enemy02.findByCoord(mapCoord.x,mapCoord.y)].img,player.movingFrame.firstLine,
+                            0,map.blockSize, map.blockSize, 0, curPos.y, map.blockSize, map.blockSize);
+
+
+                    }else if(map.getBlock50(mapCoord.x,mapCoord.y)=='enemy01')
                     {
                         screen.drawImage( enemy01.list[enemy01.findByCoord(mapCoord.x,mapCoord.y)].img,player.movingFrame.firstLine,
                             0,map.blockSize, map.blockSize, 0, curPos.y, map.blockSize, map.blockSize);
@@ -468,7 +479,13 @@ function playerInit()
                     mapCoord.y=player.movingFrame.start.y;
                     for(curPos.y=0;curPos.y<canLimit.y;curPos.y=curPos.y+map.blockSize)//ostali bloki vmes
                     {
-                        if(map.getBlock50(mapCoord.x,mapCoord.y)=='enemy01')
+                       if(map.getBlock50(mapCoord.x,mapCoord.y)=='enemy02')
+                    {
+                        screen.drawImage( enemy02.list[enemy02.findByCoord(mapCoord.x,mapCoord.y)].img,0,0
+                    ,map.blockSize, map.blockSize, curPos.x+player.movingFrame.midLine*-1, curPos.y, map.blockSize, map.blockSize);
+
+
+                    }else if(map.getBlock50(mapCoord.x,mapCoord.y)=='enemy01')
                         {
                             screen.drawImage( enemy01.list[enemy01.findByCoord(mapCoord.x,mapCoord.y)].img,0,
                                 0,map.blockSize, map.blockSize, curPos.x+player.movingFrame.midLine*-1, curPos.y, map.blockSize, map.blockSize);
@@ -484,7 +501,13 @@ function playerInit()
                 mapCoord.y=player.movingFrame.start.y;
                 for(curPos.y=0;curPos.y<canLimit.y;curPos.y=curPos.y+map.blockSize)//desna vrsta
                 {
-                    if(map.getBlock50(mapCoord.x,mapCoord.y)=='enemy01')
+                    if(map.getBlock50(mapCoord.x,mapCoord.y)=='enemy02')
+                    {
+                        screen.drawImage( enemy02.list[enemy02.findByCoord(mapCoord.x,mapCoord.y)].img,player.movingFrame.lastLine,
+                            0,map.blockSize, map.blockSize, 600, curPos.y, map.blockSize, map.blockSize);
+
+
+                    }else if(map.getBlock50(mapCoord.x,mapCoord.y)=='enemy01')
                     {
                         screen.drawImage(enemy01.list[enemy01.findByCoord(mapCoord.x,mapCoord.y)].img,player.movingFrame.lastLine,
                             0,map.blockSize,map.blockSize,600,curPos.y,map.blockSize,map.blockSize); 
@@ -504,8 +527,12 @@ function playerInit()
 
                 for(curPos.x=0;curPos.x<canLimit.x;curPos.x=curPos.x+map.blockSize)//zgornja vrsta
                 {
+                    if(map.getBlock50(mapCoord.x,mapCoord.y)=='enemy02')
+                    {
+                        screen.drawImage( enemy02.list[enemy02.findByCoord(mapCoord.x,mapCoord.y)].img,0,
+                            player.movingFrame.firstLine,map.blockSize, map.blockSize, curPos.x, 0, map.blockSize, map.blockSize);
 
-                    if(map.getBlock50(mapCoord.x,mapCoord.y)=='enemy01')
+                    }else if(map.getBlock50(mapCoord.x,mapCoord.y)=='enemy01')
                     {
                         screen.drawImage(enemy01.list[enemy01.findByCoord(mapCoord.x,mapCoord.y)].img,0,
                             player.movingFrame.firstLine, map.blockSize, map.blockSize, curPos.x, 0, map.blockSize, map.blockSize); 
@@ -522,7 +549,13 @@ function playerInit()
                     mapCoord.x=player.movingFrame.start.x;
                     for(curPos.x=0;curPos.x<canLimit.x;curPos.x=curPos.x+map.blockSize)//ostali bloki vmes
                     {
-                        if(map.getBlock50(mapCoord.x,mapCoord.y)=='enemy01')
+                    if(map.getBlock50(mapCoord.x,mapCoord.y)=='enemy02')
+                    {
+                        screen.drawImage( enemy02.list[enemy02.findByCoord(mapCoord.x,mapCoord.y)].img,0,0,
+                                map.blockSize, map.blockSize, curPos.x, curPos.y+player.movingFrame.midLine*-1, map.blockSize, map.blockSize);
+
+
+                    }else if(map.getBlock50(mapCoord.x,mapCoord.y)=='enemy01')
                         {
                             screen.drawImage(enemy01.list[enemy01.findByCoord(mapCoord.x,mapCoord.y)].img,0,0,
                                 map.blockSize, map.blockSize, curPos.x, curPos.y+player.movingFrame.midLine*-1, map.blockSize, map.blockSize);
@@ -540,7 +573,13 @@ function playerInit()
                 mapCoord.x=player.movingFrame.start.x;
                 for(curPos.x=0;curPos.x<canLimit.x;curPos.x=curPos.x+map.blockSize)//spodnja vrsta
                 {
-                    if(map.getBlock50(mapCoord.x,mapCoord.y)=='enemy01')
+                         if(map.getBlock50(mapCoord.x,mapCoord.y)=='enemy02')
+                    {
+                        screen.drawImage( enemy02.list[enemy02.findByCoord(mapCoord.x,mapCoord.y)].img,0,
+                            player.movingFrame.lastLine,map.blockSize, map.blockSize, curPos.x, 550, map.blockSize, map.blockSize);
+
+
+                    }else if(map.getBlock50(mapCoord.x,mapCoord.y)=='enemy01')
                     {
                         screen.drawImage(enemy01.list[enemy01.findByCoord(mapCoord.x,mapCoord.y)].img,0,
                             player.movingFrame.lastLine,map.blockSize,map.blockSize,curPos.x,550,map.blockSize,map.blockSize);
@@ -610,6 +649,13 @@ function playerInit()
 
                 }
             }    
+          
+             if(map.level[lastDir.y][lastDir.x]==12)
+            {
+                player.hp=player.hp-enemy01.dmg;
+
+            }
+
             if(map.level[lastDir.y][lastDir.x]==11)
             {
                 player.hp=player.hp-enemy01.dmg;

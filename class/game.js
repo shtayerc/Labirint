@@ -51,6 +51,7 @@ function gameInit()
         reset:function()
         {
             enemy01.resetAll();
+            enemy02.resetAll();
             map.keys.reset();
             player.lastDir="";
 
@@ -135,6 +136,7 @@ function gameInit()
             loop:true,
             tick:10,
             levels:{
+                name:[],
                 check:function()
                 {
                     for(var i=0;i<game.load.levels.num;i=i+1)
@@ -159,7 +161,7 @@ function gameInit()
                     game.load.levels.list[i]=[];
                     for(var i=0;i<game.load.levels.num;i=i+1)
                     {
-                        game.load.levels.list[i]={lvl:new text(250,i*50+50,'Level '+(i)), del:new text(350,i*50+50,'Delete')};    
+                        game.load.levels.list[i]={lvl:new text(250,i*50+50,game.load.levels.name[i]), del:new text(350,i*50+50,'Delete')};    
                     }
 
                 },
@@ -531,6 +533,14 @@ function gameInit()
                     enemy01.list[i].patrol();
                 }
             }
+            if(game.tickCount%enemy02.speed==0)
+            {
+                for(var i=0;i<enemy02.list.length;i=i+1)
+                {
+                    enemy02.list[i].patrol();
+                }
+            }
+
             game.tickCount=game.tickCount+game.tick;
             if(game.tickCount>30000)
             {

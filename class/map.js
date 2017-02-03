@@ -91,7 +91,7 @@ function mapInit()
             level:toArray(emptyLevel), //polje levela
             tick:10, //vsakih koliko ms se funkcija ponovi
             block:1, //kateri blok je izbran in se postavlja v mapo
-            blockNum:11, //stevilo blokov za izbiro v orodni vrstici pri kreiranju levela
+            blockNum:12, //stevilo blokov za izbiro v orodni vrstici pri kreiranju levela
             loop:true,
             selStart:150, //na koliko pikslih se narise prvi blok za izbiro
             selNum:10, //stevilo blokov za izbiro
@@ -260,17 +260,30 @@ function mapInit()
                         break;
 
                     case 9:
+                         screen.clearRect(x, y, size, size);
+                        screen.drawImage(map.block['enemy02_25'], x, y);
+                        break;
+
+                    case 10:
                         screen.clearRect(x, y, size, size);
                         screen.drawImage(map.block['builder'], x,y);
                         break;
-                    case 10:
+
+                    case 11:
                         screen.clearRect(x, y, size, size);
                         screen.drawImage(map.block['ice25'], x,y);
                         break;
-                    case 11:
+                    
+                    case 12:
                         screen.clearRect(x, y, size, size);
                         screen.drawImage(map.block['crack1_25'], x,y);
                         break;
+                    
+                    case 13:
+                        screen.clearRect(x, y, size, size);
+                        screen.drawImage(map.block['crack2_25'], x,y);
+                        break;
+
 
 
                 }
@@ -291,12 +304,18 @@ function mapInit()
                 {
                     switch(i)
                     {
-                        case 11:
+                        case 12:
                             screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
                             screen.drawImage(map.block['crack1_25'], map.make.selStart, 602);
 
                             break;
-                        case 9:
+                         case 13:
+                            screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
+                            screen.drawImage(map.block['crack2_25'], map.make.selStart, 602);
+
+                            break;
+                       
+                        case 10:
                             screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
                             screen.drawImage(map.block['builder'], map.make.selStart, 602);
                             break;
@@ -340,7 +359,13 @@ function mapInit()
                             screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
                             screen.drawImage(map.block['enemy01_25'], map.make.selStart, 602);
                             break;
-                        case 10:
+
+                        case 9:
+                            screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
+                            screen.drawImage(map.block['enemy02_25'], map.make.selStart, 602);
+                            break;
+                        
+                        case 11:
                             screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
                             screen.drawImage(map.block['ice25'], map.make.selStart, 602);
                             break;
@@ -579,20 +604,34 @@ function mapInit()
                                 break;
 
                             case 9:
+                                map.make.level[mapa.y][mapa.x]=12;
+                                screen.clearRect(curPos.x,curPos.y, newBlockSize, newBlockSize);
+                                screen.drawImage(map.block['enemy02_25'],curPos.x,curPos.y);
+                                break;
+
+                            case 10:
                                 map.make.level[mapa.y][mapa.x] = 3;
                                 screen.clearRect(curPos.x, curPos.y, newBlockSize, newBlockSize);
                                 screen.drawImage(map.block['builder'], curPos.x, curPos.y);
                                 break;
-                            case 10:
+                            
+                            case 11:
                                 map.make.level[mapa.y][mapa.x] = 4;
                                 screen.clearRect(curPos.x, curPos.y, newBlockSize, newBlockSize);
                                 screen.drawImage(map.block['ice25'], curPos.x, curPos.y);
                                 break;
-                            case 11:
+                            
+                            case 12:
                                 map.make.level[mapa.y][mapa.x] = 9;
                                 screen.clearRect(curPos.x, curPos.y, newBlockSize, newBlockSize);
                                 screen.drawImage(map.block['crack1_25'], curPos.x, curPos.y);
                                 break;
+                            case 13:
+                                map.make.level[mapa.y][mapa.x] = 99;
+                                screen.clearRect(curPos.x, curPos.y, newBlockSize, newBlockSize);
+                                screen.drawImage(map.block['crack2_25'], curPos.x, curPos.y);
+                                break;
+
 
 
 
@@ -645,9 +684,10 @@ function mapInit()
                 if((mouse.canvasCoord.x >= 410 && mouse.canvasCoord.x <= 435) && 
                     (mouse.canvasCoord.y >= 602+10 && mouse.canvasCoord.y <= 626+10))
                 {
-
+                   
                     if(mouse.click.left==true)
                     {
+            
                         mouse.click.left=false;
                         map.make.select.page=2;
                     }
@@ -763,6 +803,10 @@ function mapInit()
                     return 'crack1_25';
                     break;
 
+                    case 99:
+                    return 'crack2_25';
+                    break;
+
                     case 10:
                     return 'end';
                     break;
@@ -770,6 +814,10 @@ function mapInit()
                     case 11:
                     return 'enemy01_25';
                     break;
+                    
+                    case 12: 
+                    return 'enemy02_25';
+                    break; 
 
                     default:
                     return false;
@@ -816,8 +864,6 @@ function mapInit()
                     return 'keylock_2';
                     break;
 
-
-
                     case 7:
                     return 'key_2';
                     break;
@@ -840,6 +886,10 @@ function mapInit()
 
                     case 11:
                     return 'enemy01';
+                    break;
+
+                    case 12:
+                    return 'enemy02';
                     break;
 
                     default:
@@ -882,7 +932,11 @@ function mapInit()
 
                     if(typeof(map.level[mapa.y]) != 'undefined' && typeof(map.level[mapa.y][mapa.x]) != 'undefined')
                     {
-                        if(map.getBlock50(mapa.x,mapa.y)=='enemy01')
+                         if(map.getBlock50(mapa.x,mapa.y)=='enemy02')
+                        {
+                             screen.drawImage(enemy02.list[enemy02.findByCoord(mapa.x,mapa.y)].img, curPos.x, curPos.y);
+
+                        }else if(map.getBlock50(mapa.x,mapa.y)=='enemy01')
                         {
                             screen.drawImage(enemy01.list[enemy01.findByCoord(mapa.x,mapa.y)].img, curPos.x, curPos.y);
                         }else
@@ -1058,10 +1112,12 @@ function mapInit()
             map.loadImg('crack1_50',path+'textures/50x50/Crack.png');
             map.loadImg('crack2_50',path+'textures/50x50/Crack1.png');
             map.loadImg('crack1_25',path+'textures/25x25/Crack_25x25.png');
+            map.loadImg('crack2_25',path+'textures/25x25/Crack1_25x25.png');
             map.loadImg('ice25',path+'textures/25x25/Ice_25x25.png');
             map.loadImg('ice50',path+'textures/50x50/Ice.png');
             map.loadImg('player25',path+'textures/25x25/Player_Front_25x25.png');
             map.loadImg('enemy01_25',path+'textures/25x25/Enemy01_25x25_r.png');
+             map.loadImg('enemy02_25',path+'textures/25x25/Enemy01_25x25.png');
             map.loadImg('wall',path+'textures/50x50/Pyramid_Walls.png');
             map.loadImg('wall25',path+'textures/25x25/Pyramid_Walls_25x25.png');
             map.loadImg('key_1',path+'textures/50x50/Key01.png');
@@ -1086,6 +1142,8 @@ function mapInit()
             map.loadImg('playerRight0',path+'textures/50x50/Player_Right.png');
             map.loadImg('playerRight1',path+'textures/50x50/Player_Right1.png');
             map.loadImg('playerRight2',path+'textures/50x50/Player_Right2.png');
+            map.loadImg('enemy01D',path+'textures/50x50/Enemy01_Front.png');
+            map.loadImg('enemy01U',path+'textures/50x50/Enemy01_Back.png');
             map.loadImg('enemy01L',path+'textures/50x50/Enemy01_Left.png');
             map.loadImg('enemy01R',path+'textures/50x50/Enemy01_Right.png');
             map.loadImg('enemy01',path+'textures/50x50/Enemy01_Left.png');

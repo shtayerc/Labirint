@@ -6,6 +6,7 @@ function main()
     mapInit();
     map.loadBlocks();   
     enemyInit();
+    enemy02Init();
     playerInit();
     gameInit();
     game.session.checkServer();

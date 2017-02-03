@@ -2,12 +2,12 @@ function enemy02Init(){
 
     enemy02={
         list:[],
-        dmg:99,
-        speed:200, //ms
+        dmg:100,
+        speed:200, //ms, more bit deljivo z game.tick
         add:function(startCoordX,startCoordY){
             enemy02.list[enemy02.list.length]= new enemy_02(startCoordX,startCoordY);
         },
-        findByCoord(x,y) //vrne index polja enemy02.list za podane koordinate
+        findByCoord(x,y) //vrne index polja enemy01.list za podane koordinate
         {
             for(var i=0;i<enemy02.list.length;i=i+1)
             {
@@ -15,6 +15,7 @@ function enemy02Init(){
                 {
                     return i;
                 }
+
             }
             console.log('enemy not found');
 
@@ -24,41 +25,44 @@ function enemy02Init(){
             for(var i=0;i<enemy02.list.length;i=i+1)
             {
                 clearInterval(enemy02.list[i].movingInterval);
+
             }
             enemy02.list=[];
 
         },
-       patrolAll:function() //funkcija gre cez polje enemy02.list in klice funkcijo enemy02.list[x].patrol() za vsako polje posebaj
+        patrolAll:function() //funkcija gre cez polje enemy01.list in klice funkcijo enemy01.list[x].patrol() za vsako polje posebaj
         {
 
-            for(var i=0;i<enemy02.list.length;i=i+1)
+            for(var i=0;i<enemy01.list.length;i=i+1)
             {
-                enemy02.list[i].movingInterval=setInterval(function (i){enemy02.list[i].patrol();
+                enemy01.list[i].movingInterval=setInterval(function (i){enemy01.list[i].patrol();
 
                 },enemy02.speed,i);
             }
 
         }
     };
-    function enemy_02(startCoordX,startCoordY) //struktura enemy02 objekta
+    function enemy_02(startCoordX,startCoordY) //struktura enemy01 objekta
     {
-       this.mapCoord=new coord(startCoordX,startCoordY);     //v new so koordinati dimenzionalnega polja
-       this.img=map.block['enemy02R'];
+        this.startCoord=new coord(startCoordX,startCoordY);
+        this.mapCoord=new coord(startCoordX,startCoordY);     //v new so koordinati dimenzionalnega polja
+        this.img=map.block['enemy01U'];
         this.movingInterval=0;
-        this.dir='right';
+        this.dir='up';
     }
-     enemy_02.prototype.move=function(dir) //premakne izbrani objekt tipa enemy02 v smer podano v parametru(string npr.: 'right')
+    enemy_02.prototype.move=function(dir) //premakne izbrani objekt tipa enemy01 v smer podano v parametru(string npr.: 'right')
     {
         map.level[this.mapCoord.y][this.mapCoord.x]=0;
         switch(dir)
         {
             case 'up':
+
                 this.mapCoord.y = this.mapCoord.y - 1; //koordinati igralca v polju map.level
                 break;
 
             case 'down':
                 this.mapCoord.y = this.mapCoord.y + 1;
-               break;
+                break;
 
             case 'left':
                 this.mapCoord.x = this.mapCoord.x - 1;
@@ -71,7 +75,7 @@ function enemy02Init(){
 
         map.level[this.mapCoord.y][this.mapCoord.x]=12;
 
-        
+
 
     }
     enemy_02.prototype.canMove=function(dir) //vrne true, ce je naslednji blok v podani smeri prazen(ce je 0), drugace vrne false. Parameter je string(npr.: 'right')
@@ -109,16 +113,6 @@ function enemy02Init(){
     }
     enemy_02.prototype.patrol=function() //v tej funkciji je algoritem premikanje enemyja
     {
-     if(this.mapCoord.x == this.endCoord.x )
-        {
-            this.dir='left';
-        }
-        if(this.mapCoord.x==this.startCoord.x) 
-        {
-
-            this.dir='right';
-        }
-
         if(this.canMove(this.dir))
         {
 
@@ -132,18 +126,17 @@ function enemy02Init(){
                 this.move(this.dir);
             }
         }
-        if(this.dir=='right')
+        if(this.dir=='up')
         {
-            this.img=map.block['enemy02R'];
+            this.img=map.block['enemy01U'];
 
         }
-        if(this.dir=='left')
+        if(this.dir=='down')
         {
 
-            this.img=map.block['enemy02L'];
+            this.img=map.block['enemy01D'];
 
         }
     }
-   
-    }
+
 }
