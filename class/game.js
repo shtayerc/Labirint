@@ -169,7 +169,7 @@ function gameInit()
                                  },
                 draw:function()
                 {
-                    for(var i=0;i<game.load.levels.num;i=i+1)
+                    for(var i=0;i<game.load.levels.name.length;i=i+1)
                     {
                         game.load.levels.list[i].lvl.draw();
                         game.load.levels.list[i].del.draw();
