@@ -158,7 +158,7 @@ function gameInit()
                 },
                 makeButtons:function()
                 {
-                    game.load.levels.list[i]=[];
+                    game.load.levels.list=[];
                     ajaxGet(function (data){
                         game.load,levels.name=data.split('|');
                       for(var i=0;i<game.load.levels.num;i=i+1)
