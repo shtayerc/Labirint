@@ -200,7 +200,9 @@ function mapInit()
                         game.console.out('Level saved as');
 
                         game.console.out('Level '+game.load.levels.num);
+                         game.load.levels.name[game.load.levels.length]='Level '+game.load.levels.num;
                         game.load.levels.num=game.load.levels.num+1;
+
                         ajaxGet(function (num){game.load.levels.num=num;},'countUserLevels.php','username='+username);
 
                     }
