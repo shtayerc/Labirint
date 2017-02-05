@@ -159,15 +159,13 @@ function gameInit()
                 makeButtons:function()
                 {
                     game.load.levels.list=[];
-                    ajaxGet(function (data){
-                        game.load,levels.name=data.split('|');
-                      for(var i=0;i<game.load.levels.num;i=i+1)
+                     for(var i=0;i<game.load.levels.num;i=i+1)
                     {
                         game.load.levels.list[i]={lvl:new text(250,i*50+50,game.load.levels.name[i]), del:new text(350,i*50+50,'Delete')};    
                     }
 
 
-                    },'getLevelName.php','username='+game.session.username);
+                    //},'getLevelName.php','username='+game.session.username);
                                  },
                 draw:function()
                 {
@@ -274,10 +272,15 @@ function gameInit()
                         game.menu.loop=false;
                         game.load.loop=true;
                         game.clear();
-                        ajaxGet(function (num){game.load.levels.num=num;
+                
+
+                        ajaxGet(function (data){
+                        game.load.levels.name=data.split('|');
+                
                             game.load.levels.makeButtons();
                             game.load.main();
-                        },'countUserLevels.php','username='+game.session.username);
+                    },'getLevelName.php','username='+game.session.username);
+
 
 
                     }
