@@ -8,6 +8,7 @@ function main()
     enemyInit();
     enemy02Init();
     enemy03Init();
+    soundInit();
     playerInit();
     gameInit();
     game.session.checkServer();

@@ -52,6 +52,7 @@ function gameInit()
         {
             enemy01.resetAll();
             enemy02.resetAll();
+            enemy03.resetAll();
             map.keys.reset();
             player.lastDir="";
 

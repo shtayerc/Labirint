@@ -8,7 +8,7 @@ function enemy03Init(){
         add:function(startCoordX,startCoordY){
             enemy03.list[enemy03.list.length]= new enemy_03(startCoordX,startCoordY);
         },
-        findByCoord(x,y) //vrne index polja enemy02.list za podane koordinate
+               findByCoord(x,y) //vrne index polja enemy02.list za podane koordinate
         {
             for(var i=0;i<enemy03.list.length;i=i+1)
             {
@@ -26,7 +26,7 @@ function enemy03Init(){
             {
                 clearInterval(enemy03.list[i].movingInterval);
             }
-            enemy02.list=[];
+            enemy03.list=[];
 
         },
         patrolAll:function() //funkcija gre cez polje enemy02.list in klice funkcijo enemy02.list[x].patrol() za vsako polje posebaj
@@ -48,6 +48,118 @@ function enemy03Init(){
         this.img=map.block['enemy03F1'];
         this.movingInterval=0;
         this.dir='right';
+      //  this.animation={
+             this.isPlaying=false;
+           this.speed=160;
+            this.interval=0;
+            this.num=0;
+           /*this.start=function (img1,img2,img3)
+            {
+
+                this.num=0;  
+                if(this.isPlaying==false)
+                {  
+                    this.isPlaying=true;
+                }else
+                {
+
+                    clearInterval(this.interval);
+               }
+                this.nextFrame(img1,img2,img3); 
+
+                this.interval=setInterval(function (callThis){
+                   
+                    callThis(img1,img2,img3);
+                },this.speed,this.nextFrame);
+
+            },
+           this.nextFrame=function(img1,img2,img3)
+            {
+                console.log(this.num);
+                if(this.num%2==0)
+                {
+                    console.log('tu');
+                    this.img=img1;
+                }else
+                { 
+                   // if((this.mapCoord.y+this.mapCoord.x)%2==0)
+                   // {
+                     console.log('ti');
+                        this.img=img3;
+                  //  }else
+                  //  {
+                    //    this.img=img2;
+
+                  //  }
+                }
+                this.num+=1;
+                console.log(this.num);
+                //.draw();
+                if(this.num==2)
+                {
+                    this.num=0;
+                    this.isPlaying=false;
+                    clearInterval(this.interval);
+
+                }
+
+            }
+      //  };
+       
+*/
+    }
+    enemy_03.prototype.nextFrame=function(img1,img2,img3)
+    {
+           console.log(this.num);
+                if(this.num%2==0)
+                {
+                    console.log('tu');
+                    this.img=img1;
+                }else
+                { 
+                   // if((this.mapCoord.y+this.mapCoord.x)%2==0)
+                   // {
+                     console.log('ti');
+                        this.img=img3;
+                  //  }else
+                  //  {
+                    //    this.img=img2;
+
+                  //  }
+                }
+                this.num+=1;
+                console.log(this.num);
+                //.draw();
+                if(this.num==2)
+                {
+                    this.num=0;
+                    this.isPlaying=false;
+                    clearInterval(this.interval);
+
+                }
+
+
+    }
+    enemy_03.prototype.start=function (img1,img2,img3)
+    {
+
+                this.num=0;  
+                if(this.isPlaying==false)
+                {  
+                    this.isPlaying=true;
+                }else
+                {
+
+                    clearInterval(this.interval);
+               }
+                this.nextFrame(img1,img2,img3); 
+
+                this.interval=setInterval(function (callThis){
+                   
+                    callThis(img1,img2,img3);
+                },this.speed,this.nextFrame);
+
+
     }
     enemy_03.prototype.move=function(dir) //premakne izbrani objekt tipa enemy02 v smer podano v parametru(string npr.: 'right')
     {
@@ -55,7 +167,7 @@ function enemy03Init(){
         switch(dir)
         {
             case 'up':
-                this.mapCoord.y = this.mapCoord.y - 1; //koordinati igralca v polju map.level
+               this.mapCoord.y = this.mapCoord.y - 1; //koordinati igralca v polju map.level
                 break;
 
             case 'down':
@@ -112,7 +224,7 @@ function enemy03Init(){
     enemy_03.prototype.patrol=function() //v tej funkciji je algoritem premikanje enemyja
        {
 
-var dir='';
+        var dir='';
 
       if(player.mapCoord.x < this.mapCoord.x)
       {
@@ -129,6 +241,10 @@ var dir='';
       }else if(player.mapCoord.y > this.mapCoord.y){
         if(this.canMove('down')){
         this.move('down');}}
+       
+
+
+
 
       
 
