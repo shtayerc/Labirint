@@ -1112,6 +1112,18 @@ function mapInit()
         },
         loadBlocks:function() //funkcija ki klice funkcijo map.loadImg in nalozi vse potrebne slike
         {
+			map.loadImg('enemy03B0',path+'textures/50x50/Enemy03_Back0.png');
+			map.loadImg('enemy03B1',path+'textures/50x50/Enemy03_Back1.png');       
+			map.loadImg('enemy03B2',path+'textures/50x50/Enemy03_Back3.png');
+			map.loadImg('enemy03F0',path+'textures/50x50/Enemy03_Front0.png');     
+			map.loadImg('enemy03F1',path+'textures/50x50/Enemy03_Front1.png');  
+			map.loadImg('enemy03F2',path+'textures/50x50/Enemy03_Front3.png');   
+			map.loadImg('enemy03L0',path+'textures/50x50/Enemy03_Left0.png');         
+			map.loadImg('enemy03L1',path+'textures/50x50/Enemy03_Left1.png');  
+			map.loadImg('enemy03L2',path+'textures/50x50/Enemy03_Left3.png');      
+			map.loadImg('enemy03R0',path+'textures/50x50/Enemy03_Right0.png');                                                      
+			map.loadImg('enemy03R1',path+'textures/50x50/Enemy03_Right1.png');                                                      
+			map.loadImg('enemy03R2',path+'textures/50x50/Enemy03_Right3.png');                                                                                                      
             map.loadImg('crack1_50',path+'textures/50x50/Crack.png');
             map.loadImg('crack2_50',path+'textures/50x50/Crack1.png');
             map.loadImg('crack1_25',path+'textures/25x25/Crack_25x25.png');
