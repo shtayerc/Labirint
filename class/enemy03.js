@@ -110,32 +110,29 @@ function enemy03Init(){
         return false;
     }
     enemy_03.prototype.patrol=function() //v tej funkciji je algoritem premikanje enemyja
-    {
-        if(this.canMove(this.dir))
-        {
+       {
 
-            this.move(this.dir);
-        }else
-        {
-            this.dir=oppositeDir(this.dir);
+var dir='';
 
-            if(this.canMove(this.dir))
-            {
-                this.move(this.dir);
-            }
-        }
-        /*   if(this.dir=='right')
-        {
-            this.img=map.block['enemy02R'];
+      if(player.mapCoord.x < this.mapCoord.x)
+      {
+        if(this.canMove('left')){
+        this.move('left');}
+      }else if(player.mapCoord.x > this.mapCoord.x){
+        if(this.canMove('right')){
+        this.move('right');}}
 
-        }
-        if(this.dir=='left')
-        {
+     if(player.mapCoord.y < this.mapCoord.y)
+      {
+        if(this.canMove('up')){
+        this.move('up');}
+      }else if(player.mapCoord.y > this.mapCoord.y){
+        if(this.canMove('down')){
+        this.move('down');}}
 
-            this.img=map.block['enemy02L'];
+      
 
-        }*/
-    }
-
+      
+}
 
 }
