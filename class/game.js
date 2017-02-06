@@ -408,7 +408,7 @@ function gameInit()
                     game.reset();
                     player.getStartCoord();
                     map.draw50();
-                    enemy01.patrolAll();
+                   // enemy01.patrolAll();
                     map.drawPanel();
                 }else
                 {
