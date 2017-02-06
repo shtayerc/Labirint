@@ -3,6 +3,7 @@ function enemyInit(){
     enemy01={
         list:[],
         dmg:100,
+        mapNum:11,
         speed:200, //ms, more bit deljivo z game.tick
         add:function(startCoordX,startCoordY){
             enemy01.list[enemy01.list.length]= new enemy_01(startCoordX,startCoordY);
@@ -33,11 +34,14 @@ function enemyInit(){
         patrolAll:function() //funkcija gre cez polje enemy01.list in klice funkcijo enemy01.list[x].patrol() za vsako polje posebaj
         {
 
+            if(game.tickCount%enemy01.speed==0)
+            {
             for(var i=0;i<enemy01.list.length;i=i+1)
             {
-                enemy01.list[i].movingInterval=setInterval(function (i){enemy01.list[i].patrol();
+                enemy01.list[i].patrol();
 
-                },enemy01.speed,i);
+                
+            }
             }
 
         }
@@ -73,7 +77,7 @@ function enemyInit(){
                 break;
         }
 
-        map.level[this.mapCoord.y][this.mapCoord.x]=11;
+        map.level[this.mapCoord.y][this.mapCoord.x]=enemy01.mapNum;
 
 
 

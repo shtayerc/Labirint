@@ -17,3 +17,4 @@ include(path+'class/game.js');
 include(path+'class/levels.js');
 include(path+'class/enemy01.js');
 include(path+'class/enemy02.js');
+include(path+'class/enemy03.js');

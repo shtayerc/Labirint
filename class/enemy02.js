@@ -3,6 +3,7 @@ function enemy02Init(){
     enemy02={
         list:[],
         dmg:100,
+        mapNum:12,
         speed:200, //ms, more bit deljivo z game.tick
         add:function(startCoordX,startCoordY){
             enemy02.list[enemy02.list.length]= new enemy_02(startCoordX,startCoordY);
@@ -32,14 +33,14 @@ function enemy02Init(){
         },
         patrolAll:function() //funkcija gre cez polje enemy01.list in klice funkcijo enemy01.list[x].patrol() za vsako polje posebaj
         {
-
-            for(var i=0;i<enemy01.list.length;i=i+1)
+            if(game.tickCount%enemy02.speed==0)
             {
-                enemy01.list[i].movingInterval=setInterval(function (i){enemy01.list[i].patrol();
+            for(var i=0;i<enemy02.list.length;i=i+1)
+            {
+            enemy02.list[i].patrol();
 
-                },enemy02.speed,i);
+           }
             }
-
         }
     };
     function enemy_02(startCoordX,startCoordY) //struktura enemy01 objekta
@@ -73,7 +74,7 @@ function enemy02Init(){
                 break;
         }
 
-        map.level[this.mapCoord.y][this.mapCoord.x]=12;
+        map.level[this.mapCoord.y][this.mapCoord.x]=enemy02.mapNum;
 
 
 

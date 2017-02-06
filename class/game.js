@@ -159,14 +159,14 @@ function gameInit()
                 makeButtons:function()
                 {
                     game.load.levels.list=[];
-                     for(var i=0;i<game.load.levels.num;i=i+1)
+                    for(var i=0;i<game.load.levels.name.length;i=i+1)
                     {
                         game.load.levels.list[i]={lvl:new text(250,i*50+50,game.load.levels.name[i]), del:new text(350,i*50+50,'Delete')};    
                     }
 
 
                     //},'getLevelName.php','username='+game.session.username);
-                                 },
+                },
                 draw:function()
                 {
                     for(var i=0;i<game.load.levels.name.length;i=i+1)
@@ -272,14 +272,14 @@ function gameInit()
                         game.menu.loop=false;
                         game.load.loop=true;
                         game.clear();
-                
+
 
                         ajaxGet(function (data){
-                        game.load.levels.name=data.split('|');
-                
+                            game.load.levels.name=data.split('|');
+
                             game.load.levels.makeButtons();
                             game.load.main();
-                    },'getLevelName.php','username='+game.session.username);
+                        },'getLevelName.php','username='+game.session.username);
 
 
 
@@ -297,9 +297,9 @@ function gameInit()
 
                     map.level=toArray(window['level_'+map.levelIndex]);
                     game.init();
-                   map.draw50();
+                    map.draw50();
                     map.drawPanel();
-                   game.start();
+                    game.start();
                 }
                 if(game.menu.button.make.isClicked())
                 {
@@ -408,7 +408,7 @@ function gameInit()
                     game.reset();
                     player.getStartCoord();
                     map.draw50();
-                   // enemy01.patrolAll();
+                    // enemy01.patrolAll();
                     map.drawPanel();
                 }else
                 {
@@ -518,9 +518,9 @@ function gameInit()
                     map.make.newLevel();
                 }else
                 {
-                   game.reset();
+                    game.reset();
                     game.loop=false;
-                   game.menu.loop=true;
+                    game.menu.loop=true;
                     game.clear();
                     game.menu.main();
                 }
@@ -533,21 +533,17 @@ function gameInit()
                 map.restart();
                 player.drawHp();
             }
-            if(game.tickCount%enemy01.speed==0)
-            {
-                for(var i=0;i<enemy01.list.length;i=i+1)
-                {
-                    enemy01.list[i].patrol();
-                }
-            }
-            if(game.tickCount%enemy02.speed==0)
+            enemy01.patrolAll();
+            enemy02.patrolAll();   
+            enemy03.patrolAll();
+            /*    if(game.tickCount%enemy02.speed==0)
             {
                 for(var i=0;i<enemy02.list.length;i=i+1)
                 {
                     enemy02.list[i].patrol();
                 }
             }
-
+            */
             game.tickCount=game.tickCount+game.tick;
             if(game.tickCount>30000)
             {

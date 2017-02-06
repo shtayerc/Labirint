@@ -894,6 +894,10 @@ function mapInit()
                     case 12:
                     return 'enemy02';
                     break;
+                    
+                    case 13:
+                    return 'enemy03';
+                    break;
 
                     default:
                     return 'blank';
@@ -935,7 +939,11 @@ function mapInit()
 
                     if(typeof(map.level[mapa.y]) != 'undefined' && typeof(map.level[mapa.y][mapa.x]) != 'undefined')
                     {
-                         if(map.getBlock50(mapa.x,mapa.y)=='enemy02')
+                         if(map.getBlock50(mapa.x,mapa.y)=='enemy03')
+                        {
+                             screen.drawImage(enemy03.list[enemy03.findByCoord(mapa.x,mapa.y)].img, curPos.x, curPos.y);
+
+                        }else if(map.getBlock50(mapa.x,mapa.y)=='enemy02')
                         {
                              screen.drawImage(enemy02.list[enemy02.findByCoord(mapa.x,mapa.y)].img, curPos.x, curPos.y);
 
@@ -1123,7 +1131,7 @@ function mapInit()
 			map.loadImg('enemy03L2',path+'textures/50x50/Enemy03_Left3.png');      
 			map.loadImg('enemy03R0',path+'textures/50x50/Enemy03_Right0.png');                                                      
 			map.loadImg('enemy03R1',path+'textures/50x50/Enemy03_Right1.png');                                                      
-			map.loadImg('enemy03R2',path+'textures/50x50/Enemy03_Right3.png');                                                                                                      
+			map.loadImg('enemy03R2',path+'textures/50x50/Enemy03_Right3.png');                                                                                   
             map.loadImg('crack1_50',path+'textures/50x50/Crack.png');
             map.loadImg('crack2_50',path+'textures/50x50/Crack1.png');
             map.loadImg('crack1_25',path+'textures/25x25/Crack_25x25.png');
