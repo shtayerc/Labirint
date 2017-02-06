@@ -250,6 +250,8 @@ function gameInit()
 
                 game.clear();
                 game.console.draw();
+                sound.drawButton();
+                sound.checkButton();
                 game.menu.button.play.draw();
                 game.menu.button.make.draw();
                 game.menu.button.loadF.draw();
@@ -495,6 +497,9 @@ function gameInit()
             player.inventory.clear();
             player.inventory.draw();
             game.console.draw();
+               sound.drawButton();
+                sound.checkButton();
+             
             if(map.button.restart.isClicked())
             {
                 map.restart();           

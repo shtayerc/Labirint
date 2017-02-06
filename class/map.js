@@ -163,7 +163,7 @@ function mapInit()
                     ajaxSend('deleteLevel.php','username='+username+'&num='+num);
                     game.load.levels.name.splice(num,1);
                     game.load.levels.makeButtons();
- //                   ajaxGet(function (num){game.load.levels.num=num;},'countUserLevels.php','username='+username);
+                    //                   ajaxGet(function (num){game.load.levels.num=num;},'countUserLevels.php','username='+username);
 
 
                 }
@@ -200,8 +200,8 @@ function mapInit()
                         game.console.out('Level saved as');
 
                         game.console.out('Level '+game.load.levels.num);
-                    //     game.load.levels.name[game.load.levels.length]='Level '+game.load.levels.num;
-                     //   game.load.levels.num=game.load.levels.num+1;
+                        //     game.load.levels.name[game.load.levels.length]='Level '+game.load.levels.num;
+                        //   game.load.levels.num=game.load.levels.num+1;
 
                         ajaxGet(function (num){game.load.levels.num=num;},'countUserLevels.php','username='+username);
 
@@ -263,7 +263,7 @@ function mapInit()
                         break;
 
                     case 9:
-                         screen.clearRect(x, y, size, size);
+                        screen.clearRect(x, y, size, size);
                         screen.drawImage(map.block['enemy02_25'], x, y);
                         break;
 
@@ -276,12 +276,12 @@ function mapInit()
                         screen.clearRect(x, y, size, size);
                         screen.drawImage(map.block['ice25'], x,y);
                         break;
-                    
+
                     case 12:
                         screen.clearRect(x, y, size, size);
                         screen.drawImage(map.block['crack1_25'], x,y);
                         break;
-                    
+
                     case 13:
                         screen.clearRect(x, y, size, size);
                         screen.drawImage(map.block['crack2_25'], x,y);
@@ -312,12 +312,12 @@ function mapInit()
                             screen.drawImage(map.block['crack1_25'], map.make.selStart, 602);
 
                             break;
-                         case 13:
+                        case 13:
                             screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
                             screen.drawImage(map.block['crack2_25'], map.make.selStart, 602);
 
                             break;
-                       
+
                         case 10:
                             screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
                             screen.drawImage(map.block['builder'], map.make.selStart, 602);
@@ -367,7 +367,7 @@ function mapInit()
                             screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
                             screen.drawImage(map.block['enemy02_25'], map.make.selStart, 602);
                             break;
-                        
+
                         case 11:
                             screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
                             screen.drawImage(map.block['ice25'], map.make.selStart, 602);
@@ -617,13 +617,13 @@ function mapInit()
                                 screen.clearRect(curPos.x, curPos.y, newBlockSize, newBlockSize);
                                 screen.drawImage(map.block['builder'], curPos.x, curPos.y);
                                 break;
-                            
+
                             case 11:
                                 map.make.level[mapa.y][mapa.x] = 4;
                                 screen.clearRect(curPos.x, curPos.y, newBlockSize, newBlockSize);
                                 screen.drawImage(map.block['ice25'], curPos.x, curPos.y);
                                 break;
-                            
+
                             case 12:
                                 map.make.level[mapa.y][mapa.x] = 9;
                                 screen.clearRect(curPos.x, curPos.y, newBlockSize, newBlockSize);
@@ -687,10 +687,10 @@ function mapInit()
                 if((mouse.canvasCoord.x >= 410 && mouse.canvasCoord.x <= 435) && 
                     (mouse.canvasCoord.y >= 602+10 && mouse.canvasCoord.y <= 626+10))
                 {
-                   
+
                     if(mouse.click.left==true)
                     {
-            
+
                         mouse.click.left=false;
                         map.make.select.page=2;
                     }
@@ -817,7 +817,7 @@ function mapInit()
                     case 11:
                     return 'enemy01_25';
                     break;
-                    
+
                     case 12: 
                     return 'enemy02_25';
                     break; 
@@ -894,7 +894,7 @@ function mapInit()
                     case 12:
                     return 'enemy02';
                     break;
-                    
+
                     case 13:
                     return 'enemy03';
                     break;
@@ -939,13 +939,13 @@ function mapInit()
 
                     if(typeof(map.level[mapa.y]) != 'undefined' && typeof(map.level[mapa.y][mapa.x]) != 'undefined')
                     {
-                         if(map.getBlock50(mapa.x,mapa.y)=='enemy03')
+                        if(map.getBlock50(mapa.x,mapa.y)=='enemy03')
                         {
-                             screen.drawImage(enemy03.list[enemy03.findByCoord(mapa.x,mapa.y)].img, curPos.x, curPos.y);
+                            screen.drawImage(enemy03.list[enemy03.findByCoord(mapa.x,mapa.y)].img, curPos.x, curPos.y);
 
                         }else if(map.getBlock50(mapa.x,mapa.y)=='enemy02')
                         {
-                             screen.drawImage(enemy02.list[enemy02.findByCoord(mapa.x,mapa.y)].img, curPos.x, curPos.y);
+                            screen.drawImage(enemy02.list[enemy02.findByCoord(mapa.x,mapa.y)].img, curPos.x, curPos.y);
 
                         }else if(map.getBlock50(mapa.x,mapa.y)=='enemy01')
                         {
@@ -1120,18 +1120,20 @@ function mapInit()
         },
         loadBlocks:function() //funkcija ki klice funkcijo map.loadImg in nalozi vse potrebne slike
         {
-			map.loadImg('enemy03B0',path+'textures/50x50/Enemy03_Back0.png');
-			map.loadImg('enemy03B1',path+'textures/50x50/Enemy03_Back1.png');       
-			map.loadImg('enemy03B2',path+'textures/50x50/Enemy03_Back3.png');
-			map.loadImg('enemy03F0',path+'textures/50x50/Enemy03_Front0.png');     
-			map.loadImg('enemy03F1',path+'textures/50x50/Enemy03_Front1.png');  
-			map.loadImg('enemy03F2',path+'textures/50x50/Enemy03_Front3.png');   
-			map.loadImg('enemy03L0',path+'textures/50x50/Enemy03_Left0.png');         
-			map.loadImg('enemy03L1',path+'textures/50x50/Enemy03_Left1.png');  
-			map.loadImg('enemy03L2',path+'textures/50x50/Enemy03_Left3.png');      
-			map.loadImg('enemy03R0',path+'textures/50x50/Enemy03_Right0.png');                                                      
-			map.loadImg('enemy03R1',path+'textures/50x50/Enemy03_Right1.png');                                                      
-			map.loadImg('enemy03R2',path+'textures/50x50/Enemy03_Right3.png');                                                                                   
+            map.loadImg('mute',path+'textures/Interface/Mute.png');
+            map.loadImg('sound',path+'textures/Interface/Sound.png');
+            map.loadImg('enemy03B0',path+'textures/50x50/Enemy03_Back0.png');
+            map.loadImg('enemy03B1',path+'textures/50x50/Enemy03_Back1.png');       
+            map.loadImg('enemy03B2',path+'textures/50x50/Enemy03_Back3.png');
+            map.loadImg('enemy03F0',path+'textures/50x50/Enemy03_Front0.png');     
+            map.loadImg('enemy03F1',path+'textures/50x50/Enemy03_Front1.png');  
+            map.loadImg('enemy03F2',path+'textures/50x50/Enemy03_Front3.png');   
+            map.loadImg('enemy03L0',path+'textures/50x50/Enemy03_Left0.png');         
+            map.loadImg('enemy03L1',path+'textures/50x50/Enemy03_Left1.png');  
+            map.loadImg('enemy03L2',path+'textures/50x50/Enemy03_Left3.png');      
+            map.loadImg('enemy03R0',path+'textures/50x50/Enemy03_Right0.png');                                                      
+            map.loadImg('enemy03R1',path+'textures/50x50/Enemy03_Right1.png');                                                      
+            map.loadImg('enemy03R2',path+'textures/50x50/Enemy03_Right3.png');                                                                                   
             map.loadImg('crack1_50',path+'textures/50x50/Crack.png');
             map.loadImg('crack2_50',path+'textures/50x50/Crack1.png');
             map.loadImg('crack1_25',path+'textures/25x25/Crack_25x25.png');
@@ -1140,7 +1142,7 @@ function mapInit()
             map.loadImg('ice50',path+'textures/50x50/Ice.png');
             map.loadImg('player25',path+'textures/25x25/Player_Front_25x25.png');
             map.loadImg('enemy01_25',path+'textures/25x25/Enemy01_25x25_r.png');
-             map.loadImg('enemy02_25',path+'textures/25x25/Enemy01_25x25.png');
+            map.loadImg('enemy02_25',path+'textures/25x25/Enemy01_25x25.png');
             map.loadImg('wall',path+'textures/50x50/Pyramid_Walls.png');
             map.loadImg('wall25',path+'textures/25x25/Pyramid_Walls_25x25.png');
             map.loadImg('key_1',path+'textures/50x50/Key01.png');
