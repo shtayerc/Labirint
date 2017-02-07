@@ -143,18 +143,19 @@ function gameInit()
                     for(var i=0;i<game.load.levels.num;i=i+1)
                     {
                         if(typeof game.load.levels.list[i] != 'undefined')
-                        if(game.load.levels.list[i].lvl.isClicked())
                         {
-                            game.load.loop=false;
-                            map.getLevel(game.session.username,i);
+                            if(game.load.levels.list[i].lvl.isClicked())
+                            {
+                                game.load.loop=false;
+                                map.getLevel(game.session.username,i);
 
+                            }
+                            if(game.load.levels.list[i].del.isClicked())
+                            {
+                                map.make.deleteLevel(game.session.username,i); 
+                                //game.load.levels.makeButtons();                     
+                            }
                         }
-                        if(game.load.levels.list[i].del.isClicked())
-                        {
-                            map.make.deleteLevel(game.session.username,i); 
-                            //game.load.levels.makeButtons();                     
-                        }
-
                     }
 
                 },
