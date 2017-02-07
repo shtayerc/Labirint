@@ -172,8 +172,10 @@ function gameInit()
                 {
                     for(var i=0;i<game.load.levels.name.length;i=i+1)
                     {
-                        game.load.levels.list[i].lvl.draw();
-                        game.load.levels.list[i].del.draw();
+                        if(typeof game.load.levels.list[i] != 'undefined')
+                        { game.load.levels.list[i].lvl.draw();
+                            game.load.levels.list[i].del.draw();
+                        }
                     }
 
                 },
@@ -497,9 +499,9 @@ function gameInit()
             player.inventory.clear();
             player.inventory.draw();
             game.console.draw();
-               sound.drawButton();
-                sound.checkButton();
-             
+            sound.drawButton();
+            sound.checkButton();
+
             if(map.button.restart.isClicked())
             {
                 map.restart();           
