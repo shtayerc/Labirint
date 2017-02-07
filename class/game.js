@@ -230,16 +230,7 @@ function gameInit()
             {
                 if(game.session.serverUp==true)
                 {
-
-                    /*  if(username == 'undefined')
-                    {
-
-                        game.form.show();
-                    }else
-                    {
-                        game.form.hide();
-                    }*/
-                    if(game.session.isActive())
+                   if(game.session.isActive())
                     {
                         game.form.hide();
                         map.levelIndex=game.session.progress;
@@ -249,7 +240,6 @@ function gameInit()
                     {
                         game.form.show();
                     }
-
                 }
 
                 game.clear();
@@ -265,9 +255,7 @@ function gameInit()
                     if(game.menu.button.logout.isClicked())
                     {
                         game.session.logout();
-
                     }
-
                 }
                 if(game.session.isActive())
                 {
@@ -546,14 +534,57 @@ function gameInit()
             enemy01.patrolAll();
             enemy02.patrolAll();   
             enemy03.patrolAll();
-            /*    if(game.tickCount%enemy02.speed==0)
+            if(game.tickCount%enemy03.animationSpeed==0)
             {
-                for(var i=0;i<enemy02.list.length;i=i+1)
+                var vmes;
+              for(var i=0;i<enemy03.list.length;i=i+1)
                 {
-                    enemy02.list[i].patrol();
+                    switch(enemy03.list[i].dir)
+                    {
+                        case 'up':
+                            vmes='B';
+                            break;
+                        case 'down':
+                            vmes='F';
+                            break;
+                        case 'left':
+                            vmes='L';
+                            break;
+                        case 'right':
+                            vmes='R';
+                            break;
+                    
+                    }
+                   if(enemy03.list[i].isMoving==true)
+                    {
+                switch(enemy03.list[i].num)
+                {
+                    case 0:
+                        enemy03.list[i].img=map.block['enemy03'+vmes+'0'];
+                        break;
+                    case 1:
+                        enemy03.list[i].img=map.block['enemy03'+vmes+'1'];
+                        break;
+
+                    case 2:
+                        enemy03.list[i].img=map.block['enemy03'+vmes+'2'];
+                        break;
+
+                }
+                    }else
+                    {
+                     enemy03.list[i].img=map.block['enemy03'+vmes+'0'];
+
+                    }
+                        enemy03.list[i].num+=1;
+                if(enemy03.list[i].num==3)
+                {
+
+                    enemy03.list[i].num=0;
+                }
                 }
             }
-            */
+        
             game.tickCount=game.tickCount+game.tick;
             if(game.tickCount>30000)
             {

@@ -181,7 +181,7 @@ function mapInit()
                 map.make.panel();
                 map.make.newLevel();
             },
-            saveLevel:function(username)
+            saveLevel:function(username,num)
             {
 
                 if(game.session.isActive())
@@ -195,15 +195,15 @@ function mapInit()
                                 return this.response;
                             }
                         }
-                        xmlhttp.open("GET", "saveLevel.php?username="+username+"&level="+map.make.levelString+"&name=Level "+game.load.levels.num, true);
+                        xmlhttp.open("GET", "saveLevel.php?username="+username+"&level="+map.make.levelString+"&name=Level "+num, true);
                         xmlhttp.send();
                         game.console.out('Level saved as');
 
-                        game.console.out('Level '+game.load.levels.num);
+                        game.console.out('Level '+num);
                         //     game.load.levels.name[game.load.levels.length]='Level '+game.load.levels.num;
                         //   game.load.levels.num=game.load.levels.num+1;
 
-                        ajaxGet(function (num){game.load.levels.num=num;},'countUserLevels.php','username='+username);
+                      //  ajaxGet(function (num){game.load.levels.num=num;},'countUserLevels.php','username='+username);
 
                     }
                     else
@@ -657,12 +657,13 @@ function mapInit()
                         {
                             map.make.levelString=toMapString(map.make.level);    
 
-                            if(map.make.saveLevel(game.session.username))
+                            ajaxGet(function (num){map.make.saveLevel(game.session.username,num);},'getLowLevelNum.php','username='+game.session.username);
+                            /*    if(map.make.saveLevel(game.session.username))
                             {
-                                game.console.out('Level saved');
+                                                       game.console.out('Level saved');
 
                             } 
-
+*/
                         }
 
                     }
