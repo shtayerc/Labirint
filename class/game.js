@@ -518,6 +518,7 @@ function gameInit()
             game.console.draw();
             sound.drawButton();
             sound.checkButton();
+            map.drawPanel();
 
             if(map.button.restart.isClicked())
             {

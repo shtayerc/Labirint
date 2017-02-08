@@ -710,10 +710,15 @@ function playerInit()
         },
         drawHp:function()
         {
-            screen.font = "25px Arial";
-            screen.fillStyle = "red";
-            screen.clearRect(430, 603, screen.measureText('999').width, map.blockSize);
-            screen.fillText(player.hp, 430, 625);
+            screen.fillStyle="red";
+            screen.fillRect(215, 607,player.hp/100*365, 10);
+            
+            screen.drawImage(map.block['hp'], 200, 603);
+
+          //  screen.font = "25px Arial";
+           // screen.fillStyle = "red";
+            //screen.clearRect(430, 603, screen.measureText('999').width, map.blockSize);
+           // screen.fillText(player.hp, 430, 625);
 
 
         },
