@@ -186,7 +186,7 @@ function mapInit()
 
                 if(game.session.isActive())
                 {
-                    if(num<9)
+                    if(num<10)
                     {
                         var xmlhttp = new XMLHttpRequest();
                         //xmlhttp.onreadystatechange = function() {
@@ -1123,6 +1123,7 @@ function mapInit()
         {
             map.loadImg('mute',path+'textures/Interface/Mute.png');
             map.loadImg('sound',path+'textures/Interface/Sound.png');
+            map.loadImg('hp',path+'textures/Interface/Hp_Bar.png');
             map.loadImg('enemy03B0',path+'textures/50x50/Enemy03_Back0.png');
             map.loadImg('enemy03B1',path+'textures/50x50/Enemy03_Back1.png');       
             map.loadImg('enemy03B2',path+'textures/50x50/Enemy03_Back3.png');
