@@ -140,7 +140,7 @@ function gameInit()
                 name:[],
                 check:function()
                 {
-                    for(var i=0;i<game.load.levels.list.length;i=i+1)
+                    for(var i=0;i<game.load.levels.name.length;i=i+1)
                     {
                         if(typeof game.load.levels.list[i] != 'undefined')
                         {

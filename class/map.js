@@ -186,7 +186,7 @@ function mapInit()
 
                 if(game.session.isActive())
                 {
-                    if(game.load.levels.name.length<10)
+                    if(num<10)
                     {
                         var xmlhttp = new XMLHttpRequest();
                         //xmlhttp.onreadystatechange = function() {
