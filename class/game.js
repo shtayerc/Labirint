@@ -140,7 +140,7 @@ function gameInit()
                 name:[],
                 check:function()
                 {
-                    for(var i=0;i<game.load.levels.num;i=i+1)
+                    for(var i=0;i<game.load.levels.list.length;i=i+1)
                     {
                         if(typeof game.load.levels.list[i] != 'undefined')
                         {
@@ -451,14 +451,26 @@ function gameInit()
                 {
                     player.move('up');
 
+                } 
+                if(!player.canMove('up') && player.isMoving==false){
+                    player.dir='up';
+                    player.img=map.block['playerUp0'];
                 }
+
+
             }
             else if (key.down == true)
             {
                 if(player.canMove('down') && player.isMoving==false)
                 {   
                     player.move('down');
+                } 
+                if(!player.canMove('down') && player.isMoving==false){
+                    player.dir='down';
+                    player.img=map.block['playerDown0'];
                 }
+
+
             }
             else if (key.left == true)
             {
@@ -466,16 +478,31 @@ function gameInit()
                 {
                     player.move('left');
                 }
+                if(!player.canMove('left')&& player.isMoving==false){
+                    player.dir='left';
+                    player.img=map.block['playerLeft0'];
+                }
+
             }
             else if (key.right == true)
             {
-                if(player.canMove('right') && player.isMoving==false)
+                if(player.canMove('right')&& player.isMoving==false)
                 {
                     player.move('right');
                 }
+                if(!player.canMove('right') && player.isMoving==false){
+                    player.dir='right';
+                    player.img=map.block['playerRight0'];
+                }
+
+
+            }else if(key.space==true)
+            {
+
+            player.attack(player.dir);
             }
-
-
+        
+            
             if(player.isMoving==true)
             {
                 player.drawMovingFrame();

@@ -5,6 +5,7 @@ function keyInit()
         down:false,
         left:false,
         right:false,
+        space:false,
         addEventListeners:function(){
             document.addEventListener("keydown", key.onDown, false); //poslusa dogodek ko uporabnik stisne tipko
             document.addEventListener("keyup", key.onUp, false); //poslusa dogodek ko uporabnik spusti tipko
@@ -16,7 +17,7 @@ function keyInit()
                 event.preventDefault();
             }, false);
 
-       },
+        },
         removeEventListeners:function(){
             document.removeEventListener("keydown", key.onDown, false); //poslusa dogodek ko uporabnik stisne tipko
             document.removeEventListener("keyup", key.onUp, false); //poslusa dogodek ko uporabnik spusti tipko
@@ -29,7 +30,7 @@ function keyInit()
             }, false);
 
         },
- 
+
         onDown:function(event) {
             if (event.keyCode == 39) {
                 key.right = true;
@@ -42,6 +43,15 @@ function keyInit()
             }
             else if (event.keyCode == 40) {
                 key.down = true;
+            }else
+            {
+                if(event.keyCode ==32 || event.keyCode==0)
+                {
+
+                    key.space=true;
+                }
+
+
             }
 
         },
@@ -57,6 +67,10 @@ function keyInit()
             }
             else if (event.keyCode == 40) {
                 key.down = false;
+            }else if(event.keyCode ==32 || event.keyCode==0)
+            {
+
+                key.space=false;
             }
         }
     };
@@ -110,8 +124,8 @@ function keyInit()
 
             mouse.canvasCoord.x = event.clientX - (canvas.offsetLeft - window.pageXOffset);
             mouse.canvasCoord.y = event.clientY - (canvas.offsetTop - window.pageYOffset);
-         //   game.console.out(mouse.canvasCoord.x+" "+mouse.canvasCoord.y);
-         //   game.console.out('');
+            //   game.console.out(mouse.canvasCoord.x+" "+mouse.canvasCoord.y);
+            //   game.console.out('');
 
         }
     };

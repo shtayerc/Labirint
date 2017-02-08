@@ -4,13 +4,70 @@ function playerInit()
         color:"#0000FF",
         mapCoord:new coord(8,2), //koordinati v polju labirinta
         hp:100,
+        dmg:20,
         speed:5,
         img:map.block['playerDown1'],
         movingInterval:0,
         state:0,
         isMoving:false,
-        dir:'',
+        dir:'down',
+        canAttack:true,
         lastDir:'',
+        attack:function(dir)
+        {
+            var speed=120;
+            var cd=1000;
+            if(player.canAttack==true)
+            {
+                var nextBlock=new coord(0,0);
+                switch(dir)
+                {
+                    case 'up':
+                        nextBlock.x=player.mapCoord.x;
+                        nextBlock.y=player.mapCoord.y-1;
+                        break;
+                    case 'down':
+                        nextBlock.x=player.mapCoord.x;
+                        nextBlock.y=player.mapCoord.y+1;
+                        break;
+                    case 'left':
+                        nextBlock.x=player.mapCoord.x-1;
+                        nextBlock.y=player.mapCoord.y;
+                        break;
+                    case 'right':
+                        nextBlock.x=player.mapCoord.x+1;
+                        nextBlock.y=player.mapCoord.y;
+                        break;
+                }
+                if(map.level[nextBlock.y][nextBlock.x]==11 || map.level[nextBlock.y][nextBlock.x]==12 || map.level[nextBlock.y][nextBlock.x]==13)
+                {
+                switch(map.level[nextBlock.y][nextBlock.x])
+                    {
+                        case 11:
+                            
+                            enemy01.list[enemy01.findByCoord(nextBlock.x,nextBlock.y)].hp-=player.dmg;
+                            console.log(enemy01.list[enemy01.findByCoord(nextBlock.x,nextBlock.y)].hp);
+                            break;
+                        case 12:
+                            enemy02.list[enemy02.findByCoord(nextBlock.x,nextBlock.y)].hp-=player.dmg;
+                            console.log(enemy02.findByCoord(nextBlock.x,nextBlock.y));
+
+                            break;
+                        case 13:
+                             enemy03.list[enemy03.findByCoord(nextBlock.x,nextBlock.y)].hp-=player.dmg;
+
+                            console.log(enemy03.findByCoord(nextBlock.x,nextBlock.y));
+                            break;
+                    }
+                
+                }
+                player.canAttack=false;
+
+                player.img=map.block['playerAR0'];
+                setTimeout(function (){player.img=map.block['playerAR1'];},speed);
+                setTimeout(function (){ player.img=map.block['playerRight0'];player.canAttack=true;},cd);
+            }
+      },
         animation:{
             isPlaying:false,
             speed:160,
@@ -347,6 +404,7 @@ function playerInit()
             }
             if(dir=='up')
             {
+                player.dir='up';
                 player.animation.start(map.block['playerUp0'],map.block['playerUp2'],map.block['playerUp1']);
 
                 if(player.lastDir=='right')
@@ -372,7 +430,7 @@ function playerInit()
             }
             if(dir=='down')
             {
-
+                player.dir='down';
                 player.animation.start(map.block['playerDown0'],map.block['playerDown2'],map.block['playerDown1']);
                 player.movingFrame.yCh=+1;
                 if(player.lastDir=='right')
@@ -389,6 +447,7 @@ function playerInit()
             }
             if(dir=='left')
             {
+                player.dir='left';
                 player.animation.start(map.block['playerLeft0'],map.block['playerLeft2'],map.block['playerLeft1']);
                 player.movingFrame.xCh=-1;
                 if(player.lastDir=='down')
@@ -409,6 +468,7 @@ function playerInit()
             }
             if(dir== 'right')
             {
+                player.dir='right';
                 player.animation.start(map.block['playerRight0'],map.block['playerRight2'],map.block['playerRight1']);
 
                 if(player.lastDir=='down')
@@ -694,13 +754,14 @@ function playerInit()
           
              if(map.level[lastDir.y][lastDir.x]==12)
             {
-                player.hp=player.hp-enemy01.dmg;
+                player.hp=player.hp-enemy02.dmg;
 
             }
 
             if(map.level[lastDir.y][lastDir.x]==11)
             {
                 player.hp=player.hp-enemy01.dmg;
+                console.log(player.hp);
 
             }
         },

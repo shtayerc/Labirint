@@ -48,7 +48,8 @@ function enemy03Init(){
     {
         this.mapCoord=new coord(startCoordX,startCoordY);     //v new so koordinati dimenzionalnega polja
         this.img=map.block['enemy03F1'];
-       // this.movingInterval=0;
+        this.hp=100;
+        // this.movingInterval=0;
       //  this.test=10;
         this.isMoving=false;
         this.dir='right';

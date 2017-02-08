@@ -2,7 +2,7 @@ function enemyInit(){
 
     enemy01={
         list:[],
-        dmg:100,
+        dmg:20,
         mapNum:11,
         speed:200, //ms, more bit deljivo z game.tick
         add:function(startCoordX,startCoordY){
@@ -52,6 +52,7 @@ function enemyInit(){
         this.mapCoord=new coord(startCoordX,startCoordY);     //v new so koordinati dimenzionalnega polja
         this.img=map.block['enemy01R'];
         this.movingInterval=0;
+        this.hp=100;
         this.dir='right';
     }
     enemy_01.prototype.move=function(dir) //premakne izbrani objekt tipa enemy01 v smer podano v parametru(string npr.: 'right')
@@ -117,29 +118,36 @@ function enemyInit(){
     }
     enemy_01.prototype.patrol=function() //v tej funkciji je algoritem premikanje enemyja
     {
-        if(this.canMove(this.dir))
+        if(this.hp==0)
         {
-
-            this.move(this.dir);
-        }else
+              map.level[this.mapCoord.y][this.mapCoord.x]=0;
+                enemy01.list.splice(enemy01.findByCoord(this.mapCoord.x,this.mapCoord.y),1);
+       }else
         {
-            this.dir=oppositeDir(this.dir);
-
             if(this.canMove(this.dir))
             {
+
                 this.move(this.dir);
+            }else
+            {
+                this.dir=oppositeDir(this.dir);
+
+                if(this.canMove(this.dir))
+                {
+                    this.move(this.dir);
+                }
             }
-        }
-        if(this.dir=='right')
-        {
-            this.img=map.block['enemy01R'];
+            if(this.dir=='right')
+            {
+                this.img=map.block['enemy01R'];
 
-        }
-        if(this.dir=='left')
-        {
+            }
+            if(this.dir=='left')
+            {
 
-            this.img=map.block['enemy01L'];
+                this.img=map.block['enemy01L'];
 
+            }
         }
     }
 

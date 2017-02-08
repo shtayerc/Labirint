@@ -186,15 +186,15 @@ function mapInit()
 
                 if(game.session.isActive())
                 {
-                    if(game.load.levels.num<10)
+                    if(game.load.levels.name.length<10)
                     {
                         var xmlhttp = new XMLHttpRequest();
-                        xmlhttp.onreadystatechange = function() {
-                            if (this.readyState == 4 && this.status == 200) {
+                        //xmlhttp.onreadystatechange = function() {
+                           /* if (this.readyState == 4 && this.status == 200) {
 
                                 return this.response;
-                            }
-                        }
+                            }*/
+                     //   }
                         xmlhttp.open("GET", "saveLevel.php?username="+username+"&level="+map.make.levelString+"&name=Level "+num, true);
                         xmlhttp.send();
                         game.console.out('Level saved as');
@@ -1156,6 +1156,8 @@ function mapInit()
             map.loadImg('keylock_1_25',path+'textures/25x25/Keyhole01_25x25.png');
             map.loadImg('keylock_2_25',path+'textures/25x25/Keyhole02_25x25.png');
             map.loadImg('keylock_2',path+'textures/50x50/Keyhole02.png');
+            map.loadImg('playerAR0',path+'textures/50x50/Player_Right_stab.png');
+            map.loadImg('playerAR1',path+'textures/50x50/Player_Right_stab2.png');
             map.loadImg('playerDown0',path+'textures/50x50/Player_Front.png');
             map.loadImg('playerDown1',path+'textures/50x50/Player_Front1.png');
             map.loadImg('playerDown2',path+'textures/50x50/Player_Front2.png');

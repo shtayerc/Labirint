@@ -49,6 +49,7 @@ function enemy02Init(){
         this.mapCoord=new coord(startCoordX,startCoordY);     //v new so koordinati dimenzionalnega polja
         this.img=map.block['enemy01U'];
         this.movingInterval=0;
+        this.hp=100;
         this.dir='up';
     }
     enemy_02.prototype.move=function(dir) //premakne izbrani objekt tipa enemy01 v smer podano v parametru(string npr.: 'right')
@@ -114,6 +115,12 @@ function enemy02Init(){
     }
     enemy_02.prototype.patrol=function() //v tej funkciji je algoritem premikanje enemyja
     {
+    if(this.hp==0)
+        {
+           map.level[this.mapCoord.y][this.mapCoord.x]=0;
+            enemy02.list.splice(enemy02.findByCoord(this.mapCoord.x,this.mapCoord.y),1);
+        }else
+        {
         if(this.canMove(this.dir))
         {
 
@@ -137,6 +144,7 @@ function enemy02Init(){
 
             this.img=map.block['enemy01D'];
 
+        }
         }
     }
 
