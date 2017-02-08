@@ -1085,7 +1085,7 @@ function mapInit()
         },
         drawPanel:function() //narise orodno vrstico, ki se rise v meniju PLAY
         {
-            screen.clearRect(0,603,800,24);
+            screen.clearRect(0,603,650,24);
             player.drawHp();
             map.button.back.draw();
             map.button.restart.draw();
