@@ -17,6 +17,7 @@ function playerInit()
         {
             var speed=120;
             var cd=1000;
+            var vmes='';
             if(player.canAttack==true)
             {
                 var nextBlock=new coord(0,0);
@@ -25,18 +26,22 @@ function playerInit()
                     case 'up':
                         nextBlock.x=player.mapCoord.x;
                         nextBlock.y=player.mapCoord.y-1;
+                        vmes='F';
                         break;
                     case 'down':
                         nextBlock.x=player.mapCoord.x;
                         nextBlock.y=player.mapCoord.y+1;
+                        vmes='B';
                         break;
                     case 'left':
                         nextBlock.x=player.mapCoord.x-1;
                         nextBlock.y=player.mapCoord.y;
+                        vmes='L';
                         break;
                     case 'right':
                         nextBlock.x=player.mapCoord.x+1;
                         nextBlock.y=player.mapCoord.y;
+                        vmes='R';
                         break;
                 }
                 if(map.level[nextBlock.y][nextBlock.x]==11 || map.level[nextBlock.y][nextBlock.x]==12 || map.level[nextBlock.y][nextBlock.x]==13)
@@ -44,18 +49,17 @@ function playerInit()
                 switch(map.level[nextBlock.y][nextBlock.x])
                     {
                         case 11:
-                            
                             enemy01.list[enemy01.findByCoord(nextBlock.x,nextBlock.y)].hp-=player.dmg;
                             console.log(enemy01.list[enemy01.findByCoord(nextBlock.x,nextBlock.y)].hp);
                             break;
+
                         case 12:
                             enemy02.list[enemy02.findByCoord(nextBlock.x,nextBlock.y)].hp-=player.dmg;
                             console.log(enemy02.findByCoord(nextBlock.x,nextBlock.y));
-
                             break;
+
                         case 13:
                              enemy03.list[enemy03.findByCoord(nextBlock.x,nextBlock.y)].hp-=player.dmg;
-
                             console.log(enemy03.findByCoord(nextBlock.x,nextBlock.y));
                             break;
                     }
@@ -63,9 +67,10 @@ function playerInit()
                 }
                 player.canAttack=false;
 
-                player.img=map.block['playerAR0'];
-                setTimeout(function (){player.img=map.block['playerAR1'];},speed);
-                setTimeout(function (){ player.img=map.block['playerRight0'];player.canAttack=true;},cd);
+                player.img=map.block['playerA'+vmes+'0'];
+                setTimeout(function (vmes){player.img=map.block['playerA'+vmes+'1'];},speed,vmes);
+                setTimeout(function (dir){
+                    player.img=map.block['player'+dir.charAt(0).toUpperCase()+dir.slice(1)+'0'];player.canAttack=true;},cd,dir);
             }
       },
         animation:{

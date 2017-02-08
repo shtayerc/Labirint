@@ -1160,6 +1160,12 @@ function mapInit()
             map.loadImg('keylock_2',path+'textures/50x50/Keyhole02.png');
             map.loadImg('playerAR0',path+'textures/50x50/Player_Right_stab.png');
             map.loadImg('playerAR1',path+'textures/50x50/Player_Right_stab2.png');
+            map.loadImg('playerAL0',path+'textures/50x50/Player_Left_stab0.png');
+            map.loadImg('playerAL1',path+'textures/50x50/Player_Left_stab1.png');
+            map.loadImg('playerAF0',path+'textures/50x50/Player_Back_stab0.png');
+            map.loadImg('playerAF1',path+'textures/50x50/Player_Back_stab1.png');
+            map.loadImg('playerAB0',path+'textures/50x50/Player_Front_stab0.png');
+            map.loadImg('playerAB1',path+'textures/50x50/Player_Front_stab1.png');
             map.loadImg('playerDown0',path+'textures/50x50/Player_Front.png');
             map.loadImg('playerDown1',path+'textures/50x50/Player_Front1.png');
             map.loadImg('playerDown2',path+'textures/50x50/Player_Front2.png');
