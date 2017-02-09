@@ -55,13 +55,12 @@ function gameInit()
             enemy03.resetAll();
             map.keys.reset();
             player.lastDir="";
+            player.hp=100;
 
         },
         init:function()
         {
             player.getStartCoord();
-            // enemy01.patrolAll();
-
             map.level[player.mapCoord.y][player.mapCoord.x]=0; //nastavi zacetno polje igralca na 0, da ne moti ostalih funkcij ki preverjajo
 
         },
@@ -90,11 +89,7 @@ function gameInit()
             {
                 document.getElementsByTagName('form')[0].style.display=game.form.login; 
                 document.getElementsByTagName('form')[1].style.display=game.form.register;
-
-
-
             }
-
         },
         console:
             {
@@ -106,7 +101,6 @@ function gameInit()
                     add:function(text)
                     {
                         game.console.history.text[game.console.history.text.length]=text;
-
                     }
                 },
                 out:function(text)
@@ -128,7 +122,6 @@ function gameInit()
                 clear:function()
                 {
                     screen.clearRect(675, 603, 150, 25);
-
                 }
             },
         load:{
@@ -152,12 +145,10 @@ function gameInit()
                             }
                             if(game.load.levels.list[i].del.isClicked())
                             {
-                                map.make.deleteLevel(game.session.username,i); 
-                                //game.load.levels.makeButtons();                     
+                                map.make.deleteLevel(game.session.username,i);                     
                             }
                         }
                     }
-
                 },
                 makeButtons:function()
                 {
@@ -166,10 +157,7 @@ function gameInit()
                     {
                         game.load.levels.list[i]={lvl:new text(250,i*50+50,game.load.levels.name[i]), del:new text(350,i*50+50,'Delete')};    
                     }
-
-
-                    //},'getLevelName.php','username='+game.session.username);
-                },
+               },
                 draw:function()
                 {
                     for(var i=0;i<game.load.levels.name.length;i=i+1)
@@ -179,11 +167,9 @@ function gameInit()
                             game.load.levels.list[i].del.draw();
                         }
                     }
-
                 },
                 num:10,
                 list:[]
-
             },
             button:{
                 back:new text(0,627,'Back')
@@ -206,20 +192,14 @@ function gameInit()
                 {
                     setTimeout(game.load.main,game.load.tick);
                 }
-
-
             }
-
-
         },
         menu:{
-
             font:'25px Arial',
             color:'#ffffff',
             loop:true,
             tick:10,
             button:{
-
                 play:new text(250,250,'Play'),
                 make:new text(250,300,'Create stage'),
                 loadF:new text(250,350,'Load from file'),
@@ -267,30 +247,22 @@ function gameInit()
                         game.menu.loop=false;
                         game.load.loop=true;
                         game.clear();
-
-
                         ajaxGet(function (data){
                             game.load.levels.name=data.split('|');
-
                             game.load.levels.makeButtons();
                             game.load.main();
                         },'getLevelName.php','username='+game.session.username);
-
-
-
                     }
-
                 }
                 if(game.menu.button.play.isClicked())
                 {
                     game.form.hide();   
-                    game.reset();
                     game.menu.loop=false;
                     map.make.loop=false;
                     game.loop=true;
                     game.clear();
-
                     map.level=toArray(window['level_'+map.levelIndex]);
+                    game.reset();
                     game.init();
                     map.draw50();
                     map.drawPanel();
@@ -307,12 +279,12 @@ function gameInit()
                     if(map.make.levelString!='')
                     {
                         map.level=toArray(map.make.levelString);
-
                     }
                     if(game.session.isActive())
                     {
-                        ajaxGet(function (num){game.load.levels.num=num;},'countUserLevels.php','username='+game.session.username);
-
+                        ajaxGet(function (num){
+                            game.load.levels.num=num;
+                        },'countUserLevels.php','username='+game.session.username);
                     }
                     map.draw25();
                     map.make.loop=true;
@@ -323,15 +295,12 @@ function gameInit()
                 {
                     game.form.hide();
                     map.make.loadFromFile();
-
                 }
                 if(game.menu.loop!=false)
                 {
                     setTimeout(game.menu.main,game.menu.tick);
                 }
-
             }
-
         },
         clear:function()
         {
@@ -389,7 +358,7 @@ function gameInit()
                 map.keys.key_2.unlock();
                 break;
 
-                case 99:
+                case 99: //crack_2
                 map.restart();
                 break;
 
@@ -401,18 +370,16 @@ function gameInit()
                     game.saveProgress();
                     game.clear();
                     game.reset();
-                    player.getStartCoord();
+                    game.init();
                     map.draw50();
-                    // enemy01.patrolAll();
                     map.drawPanel();
                 }else
                 {
                     map.restart();
                 }         
                 break;
-
-
             } 
+
             switch(player.lastDir)
             {
                 case 'up':
@@ -452,12 +419,11 @@ function gameInit()
                     player.move('up');
 
                 } 
-                if(!player.canMove('up') && player.isMoving==false){
+                if(!player.canMove('up') && player.isMoving==false)
+                {
                     player.dir='up';
                     player.img=map.block['playerUp0'];
                 }
-
-
             }
             else if (key.down == true)
             {
@@ -465,12 +431,11 @@ function gameInit()
                 {   
                     player.move('down');
                 } 
-                if(!player.canMove('down') && player.isMoving==false){
+                if(!player.canMove('down') && player.isMoving==false)
+                {
                     player.dir='down';
                     player.img=map.block['playerDown0'];
                 }
-
-
             }
             else if (key.left == true)
             {
@@ -478,11 +443,11 @@ function gameInit()
                 {
                     player.move('left');
                 }
-                if(!player.canMove('left')&& player.isMoving==false){
+                if(!player.canMove('left')&& player.isMoving==false)
+                {
                     player.dir='left';
                     player.img=map.block['playerLeft0'];
                 }
-
             }
             else if (key.right == true)
             {
@@ -490,23 +455,18 @@ function gameInit()
                 {
                     player.move('right');
                 }
-                if(!player.canMove('right') && player.isMoving==false){
+                if(!player.canMove('right') && player.isMoving==false)
+                {
                     player.dir='right';
                     player.img=map.block['playerRight0'];
                 }
-
-
             }else if(key.space==true)
             {
-
-            player.attack(player.dir);
+                player.attack(player.dir);
             }
-        
-            
             if(player.isMoving==true)
             {
                 player.drawMovingFrame();
-
             }else
             {
                 map.clear();
@@ -524,16 +484,13 @@ function gameInit()
             {
                 map.restart();           
             }
+
             if(map.button.back.isClicked())
             {
-                //   console.log(map.getLevel('shtayerc',0));
-
                 if(map.make.flag==true)
                 {
                     game.reset();
                     game.loop=false;
-                    //  map.restart();
-                    // enemy01.resetAll();
                     game.clear();
                     map.level=toArray(map.make.levelString);
                     map.make.level=  toArray(map.make.levelString);
@@ -562,57 +519,8 @@ function gameInit()
             enemy01.patrolAll();
             enemy02.patrolAll();   
             enemy03.patrolAll();
-            if(game.tickCount%enemy03.animationSpeed==0)
-            {
-                var vmes;
-              for(var i=0;i<enemy03.list.length;i=i+1)
-                {
-                    switch(enemy03.list[i].dir)
-                    {
-                        case 'up':
-                            vmes='B';
-                            break;
-                        case 'down':
-                            vmes='F';
-                            break;
-                        case 'left':
-                            vmes='L';
-                            break;
-                        case 'right':
-                            vmes='R';
-                            break;
-                    
-                    }
-                   if(enemy03.list[i].isMoving==true)
-                    {
-                switch(enemy03.list[i].num)
-                {
-                    case 0:
-                        enemy03.list[i].img=map.block['enemy03'+vmes+'0'];
-                        break;
-                    case 1:
-                        enemy03.list[i].img=map.block['enemy03'+vmes+'1'];
-                        break;
-
-                    case 2:
-                        enemy03.list[i].img=map.block['enemy03'+vmes+'2'];
-                        break;
-
-                }
-                    }else
-                    {
-                     enemy03.list[i].img=map.block['enemy03'+vmes+'0'];
-
-                    }
-                        enemy03.list[i].num+=1;
-                if(enemy03.list[i].num==3)
-                {
-
-                    enemy03.list[i].num=0;
-                }
-                }
-            }
-        
+            enemy03.animation();
+            
             game.tickCount=game.tickCount+game.tick;
             if(game.tickCount>30000)
             {

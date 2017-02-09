@@ -5,9 +5,11 @@ function enemy02Init(){
         dmg:100,
         mapNum:12,
         speed:200, //ms, more bit deljivo z game.tick
-        add:function(startCoordX,startCoordY){
+        add:function(startCoordX,startCoordY)
+        {
             enemy02.list[enemy02.list.length]= new enemy_02(startCoordX,startCoordY);
         },
+
         findByCoord(x,y) //vrne index polja enemy01.list za podane koordinate
         {
             for(var i=0;i<enemy02.list.length;i=i+1)
@@ -21,25 +23,21 @@ function enemy02Init(){
             console.log('enemy not found');
 
         },
+
         resetAll:function()
         {
-            for(var i=0;i<enemy02.list.length;i=i+1)
-            {
-                clearInterval(enemy02.list[i].movingInterval);
-
-            }
             enemy02.list=[];
-
         },
+
         patrolAll:function() //funkcija gre cez polje enemy01.list in klice funkcijo enemy01.list[x].patrol() za vsako polje posebaj
         {
             if(game.tickCount%enemy02.speed==0)
             {
-            for(var i=0;i<enemy02.list.length;i=i+1)
-            {
-            enemy02.list[i].patrol();
+                for(var i=0;i<enemy02.list.length;i=i+1)
+                {
+                    enemy02.list[i].patrol();
 
-           }
+                }
             }
         }
     };
@@ -48,10 +46,10 @@ function enemy02Init(){
         this.startCoord=new coord(startCoordX,startCoordY);
         this.mapCoord=new coord(startCoordX,startCoordY);     //v new so koordinati dimenzionalnega polja
         this.img=map.block['enemy01U'];
-        this.movingInterval=0;
         this.hp=100;
         this.dir='up';
     }
+
     enemy_02.prototype.move=function(dir) //premakne izbrani objekt tipa enemy01 v smer podano v parametru(string npr.: 'right')
     {
         map.level[this.mapCoord.y][this.mapCoord.x]=0;
@@ -76,10 +74,8 @@ function enemy02Init(){
         }
 
         map.level[this.mapCoord.y][this.mapCoord.x]=enemy02.mapNum;
-
-
-
     }
+
     enemy_02.prototype.canMove=function(dir) //vrne true, ce je naslednji blok v podani smeri prazen(ce je 0), drugace vrne false. Parameter je string(npr.: 'right')
     {
         var nextBlock=new coord(0,0); //tu so shranjeni koordinati naslednjega bloka, ki se bo preverjal
@@ -113,38 +109,39 @@ function enemy02Init(){
         }
         return false;
     }
+
     enemy_02.prototype.patrol=function() //v tej funkciji je algoritem premikanje enemyja
     {
-    if(this.hp==0)
+        if(this.hp==0)
         {
-           map.level[this.mapCoord.y][this.mapCoord.x]=0;
+            map.level[this.mapCoord.y][this.mapCoord.x]=0;
             enemy02.list.splice(enemy02.findByCoord(this.mapCoord.x,this.mapCoord.y),1);
         }else
         {
-        if(this.canMove(this.dir))
-        {
-
-            this.move(this.dir);
-        }else
-        {
-            this.dir=oppositeDir(this.dir);
-
             if(this.canMove(this.dir))
             {
+
                 this.move(this.dir);
+            }else
+            {
+                this.dir=oppositeDir(this.dir);
+
+                if(this.canMove(this.dir))
+                {
+                    this.move(this.dir);
+                }
             }
-        }
-        if(this.dir=='up')
-        {
-            this.img=map.block['enemy01U'];
+            if(this.dir=='up')
+            {
+                this.img=map.block['enemy01U'];
 
-        }
-        if(this.dir=='down')
-        {
+            }
+            if(this.dir=='down')
+            {
 
-            this.img=map.block['enemy01D'];
+                this.img=map.block['enemy01D'];
 
-        }
+            }
         }
     }
 

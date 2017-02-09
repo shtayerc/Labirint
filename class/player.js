@@ -66,7 +66,6 @@ function playerInit()
                 
                 }
                 player.canAttack=false;
-
                 player.img=map.block['playerA'+vmes+'0'];
                 setTimeout(function (vmes){player.img=map.block['playerA'+vmes+'1'];},speed,vmes);
                 setTimeout(function (dir){
@@ -81,7 +80,6 @@ function playerInit()
             thirdImg:false,
             start:function (img1,img2,img3)
             {
-
                 player.animation.num=0;  
                 if(player.animation.isPlaying==false)
                 {  
@@ -121,9 +119,7 @@ function playerInit()
                     player.animation.num=0;
                     player.animation.isPlaying=false;
                     clearInterval(player.animation.interval);
-
                 }
-
             }
         },
         movingFrame:{
@@ -135,7 +131,6 @@ function playerInit()
             lastLine:0,
             exitCount:0, 
             interval:0 // tu je shranjen interval premikanja igralca
-
         },
         inventory:{
             canvasCoord:new coord(655,400),
@@ -149,7 +144,6 @@ function playerInit()
             clear:function()
             {
                 screen.clearRect(650,400,150,200);
-
             },
             draw:function()
             {
@@ -158,9 +152,6 @@ function playerInit()
                     screen.moveTo(0.5 + x + player.inventory.start.x, player.inventory.start.y);
                     screen.lineTo(0.5 + x + player.inventory.start.x, player.inventory.drawSize.y + player.inventory.start.y);
                 }
-
-
-
                 for (var x = 0; x <= player.inventory.drawSize.y; x += player.inventory.cellSize.y) {
                     screen.moveTo(player.inventory.start.x, 0.5 + x + player.inventory.start.y);
                     screen.lineTo(player.inventory.drawSize.x + player.inventory.start.x, 0.5 + x + player.inventory.start.y);
@@ -189,9 +180,6 @@ function playerInit()
                         i=0;
                         k=k+1;
                     }
-
-
-
                 }            
             },
             add:function(img,num)
@@ -206,8 +194,6 @@ function playerInit()
                         };
                         break;
                     }
-
-
                 }
             },
             update:function(i,num)
@@ -241,7 +227,6 @@ function playerInit()
             var curPos=new coord(0,0); //current position
             var mapa = new coord(1,1); //zacetna pozicija risanja v dvodimenzionalnem polju 
             var limit = new coord(32,25); // meja polja po sirini, po visini
-
             while(mapa.y < limit.y) //zanka gre od 0,0 do limit.x, limit.y
             {
                 mapa.x=1;
@@ -292,8 +277,6 @@ function playerInit()
             if(dir=='up')
             {
                 player.img=map.block['playerUp1'];
-         //       player.animation.start(map.block['playerUp1'],map.block['playerUp2'],map.block['playerUp1']);
-
                 if(player.lastDir=='right')
                 {
                     player.movingFrame.start.y=player.movingFrame.start.y-1;
@@ -318,7 +301,6 @@ function playerInit()
             if(dir=='down')
             {
                 player.img=map.block['playerDown1'];
-           //     player.animation.start(map.block['playerDown1'],map.block['playerDown2'],map.block['playerDown1']);
                 player.movingFrame.yCh=+1;
                 if(player.lastDir=='right')
                 {
@@ -335,7 +317,6 @@ function playerInit()
             if(dir=='left')
             {
              player.img=map.block['playerLeft1'];
-                //   player.animation.start(map.block['playerLeft0'],map.block['playerLeft2'],map.block['playerLeft1']);
                 player.movingFrame.xCh=-1;
                 if(player.lastDir=='down')
                 {
@@ -356,8 +337,6 @@ function playerInit()
             if(dir== 'right')
             {
                 player.img=map.block['playerRight1'];
-              //  player.animation.start(map.block['playerRight0'],map.block['playerRight2'],map.block['playerRight1']);
-
                 if(player.lastDir=='down')
                 {
                     player.movingFrame.start.y=player.movingFrame.start.y+1;
@@ -396,10 +375,8 @@ function playerInit()
                 player.movingFrame.midLine=player.movingFrame.midLine+player.movingFrame.yCh+player.movingFrame.xCh;     
                 player.movingFrame.exitCount+=1;
             },player.speed);
-
-
-        
         },
+
         move:function(dir)
         {   
             if(player.lastDir==dir)
@@ -506,16 +483,15 @@ function playerInit()
             },player.speed);
 
         },
+
         drawMovingFrame:function()
         { 
-
             map.clear();
             screen.drawImage(map.block['floorBig'], 0, 0);
             var curPos=new coord(0,0);
             var canLimit=new coord(601,551);
             var mapCoord=new coord(player.movingFrame.start.x,player.movingFrame.start.y);
-            // console.log(player.movingFrame.midLine);
-            if(player.movingFrame.xCh!=0) //levo ali desno
+           if(player.movingFrame.xCh!=0) //levo ali desno
             {
 
                 for(curPos.y=0;curPos.y<canLimit.y;curPos.y=curPos.y+map.blockSize)//leva vrsta
@@ -609,8 +585,6 @@ function playerInit()
                     }
                     mapCoord.y=mapCoord.y+1;
                 }
-
-
             }
             if(player.movingFrame.yCh!=0)  //gor ali dol
             {
@@ -701,32 +675,23 @@ function playerInit()
             player.draw();
         },
 
-
         canvasCoord:function()  //dejanski koordinati v canvasu, v funkciji se izracunajo iz player.mapCoord in map.blockSize
         {
             player.canvasCoord=new coord((this.mapCoord.x-1)*map.blockSize, (this.mapCoord.y-1)* map.blockSize);
         },
+
         draw:function()
         {
-            //  screen.drawImage(map.block['floor'], player.canvasCoord.x, player.canvasCoord.y);
-
             screen.drawImage(player.img, player.canvasCoord.x, player.canvasCoord.y);
-
         },
+
         drawHp:function()
         {
             screen.fillStyle="red";
-            screen.fillRect(215, 607,player.hp/100*365, 10);
-            
+            screen.fillRect(215, 607,player.hp/100*365, 10);          
             screen.drawImage(map.block['hp'], 200, 603);
+       },
 
-          //  screen.font = "25px Arial";
-           // screen.fillStyle = "red";
-            //screen.clearRect(430, 603, screen.measureText('999').width, map.blockSize);
-           // screen.fillText(player.hp, 430, 625);
-
-
-        },
         isDead:function()
         {
 
@@ -739,6 +704,7 @@ function playerInit()
 
             }
         },
+
         isHit:function()
         {   
             var lastDir=new coord(player.mapCoord.x,player.mapCoord.y);
@@ -758,23 +724,18 @@ function playerInit()
                     case 'right':
                         lastDir.x=lastDir.x-1;
                         break;
-
                 }
-            }    
-          
+            }         
              if(map.level[lastDir.y][lastDir.x]==12)
             {
                 player.hp=player.hp-enemy02.dmg;
-
             }
-
             if(map.level[lastDir.y][lastDir.x]==11)
             {
                 player.hp=player.hp-enemy01.dmg;
-                console.log(player.hp);
-
-            }
+           }
         },
+
         getCloseEnemy:function()
         {
             var dist=new coord(0,0);
@@ -795,13 +756,9 @@ function playerInit()
                     dist.y=Math.abs(enemy01.list[i].canvasCoord.y-player.canvasCoord.y);
                     pos.x=enemy01.list[i].canvasCoord.x;
                     pos.y=enemy01.list[i].canvasCoord.y;
-
-
-
                 }
             }
             return pos;
-
         },
 
         canMove:function(dir) //funkcija vrne true ce igralec lahko premakne v zeljeno smer(ce ni ovir), false ce se ne more
@@ -847,7 +804,8 @@ function playerInit()
             {
                 return false;
             }
-            if (map.level[nextBlock.y][nextBlock.x] != 2 && map.level[nextBlock.y][nextBlock.x] != 8 && map.level[nextBlock.y][nextBlock.x] != 6)
+            if (map.level[nextBlock.y][nextBlock.x] != 2 && map.level[nextBlock.y][nextBlock.x] != 8 
+                && map.level[nextBlock.y][nextBlock.x] != 6 && map.level[nextBlock.y][nextBlock.x] != 13)
                 //ce naslednji blok ni zid, ali kljucavnica vrne true
             {
                 return true;   

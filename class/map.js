@@ -9,33 +9,26 @@ function mapInit()
         button:{
             back:new text(0,625,'Back'),
             restart: new text(70,625,'Restart')
-
         },
         getLevel:function(username,num)
         {
             if(game.session.isActive())
             {
                 ajaxGet(function (level){
-
-                    map.make.loadLevel(level);},'getLevel.php','username='+username+'&num='+num);
+                    map.make.loadLevel(level);
+                },'getLevel.php','username='+username+'&num='+num);
             }
         },
         goToLevel:function(level)
         {
-
             clearInterval(player.animation.interval);
             map.levelIndex=level;
             map.level=toArray(window['level_'+map.levelIndex]);
             game.clear();
             game.reset();
-            //map.keys.reset();
-            // enemy01.resetAll();
             game.init();
-            // player.getStartCoord();
             map.draw50();
-            //  enemy01.patrolAll();
             map.drawPanel();
-
         },
         clear:function()
         {
@@ -106,18 +99,13 @@ function mapInit()
             },
             saveInFile:function(filename,text)
             {                   //https://jsfiddle.net/rce6nn3z/
-
                 var element = document.createElement('a');
                 element.setAttribute('href', 'data:text/maps;charset=utf-8,' + encodeURIComponent(text));
                 element.setAttribute('download', filename);
-
                 element.style.display = 'none';
                 document.body.appendChild(element);
-
                 element.click();
-
                 document.body.removeChild(element);
-
             },
             loadFromFile:function()
             {
@@ -136,39 +124,16 @@ function mapInit()
                     };
                     var test=x.files[0].slice(0,x.files[0].size);
                     reader.readAsBinaryString(test);
-
-
-
-
                 };
-
-
             },
             deleteLevel:function(username,num)
             {
                 if(game.session.isActive())
                 {
-
-                    /*          var xmlhttp = new XMLHttpRequest();
-                    xmlhttp.onreadystatechange = function() {
-                        if (this.readyState == 4 && this.status == 200) {
-
-                            return this.response;
-                        }
-                    }
-                    xmlhttp.open("GET", "deleteLevel.php?username="+username+"&num="+num, true);
-                    xmlhttp.send();
-
-*/
                     ajaxSend('deleteLevel.php','username='+username+'&num='+num);
                     game.load.levels.name.splice(num,1);
                     game.load.levels.makeButtons();
-                    //                   ajaxGet(function (num){game.load.levels.num=num;},'countUserLevels.php','username='+username);
-
-
-                }
-
-
+               }
             },
             loadLevel:function(level)
             {
@@ -189,26 +154,13 @@ function mapInit()
                     if(num<10)
                     {
                         var xmlhttp = new XMLHttpRequest();
-                        //xmlhttp.onreadystatechange = function() {
-                           /* if (this.readyState == 4 && this.status == 200) {
-
-                                return this.response;
-                            }*/
-                     //   }
                         xmlhttp.open("GET", "saveLevel.php?username="+username+"&level="+map.make.levelString+"&name=Level "+num, true);
                         xmlhttp.send();
                         game.console.out('Level saved as');
-
                         game.console.out('Level '+num);
-                        //     game.load.levels.name[game.load.levels.length]='Level '+game.load.levels.num;
-                        //   game.load.levels.num=game.load.levels.num+1;
-
-                      //  ajaxGet(function (num){game.load.levels.num=num;},'countUserLevels.php','username='+username);
-
                     }
                     else
                     {
-
                         game.console.out('10 levels max');
                     }
                 }
@@ -249,7 +201,6 @@ function mapInit()
                     case 6:
                         screen.clearRect(x, y, size, size);
                         screen.drawImage(map.block['player25'], x, y);
-
                         break;
 
                     case 7:
@@ -286,9 +237,6 @@ function mapInit()
                         screen.clearRect(x, y, size, size);
                         screen.drawImage(map.block['crack2_25'], x,y);
                         break;
-
-
-
                 }
                 screen.stroke(); 
             },
@@ -307,22 +255,6 @@ function mapInit()
                 {
                     switch(i)
                     {
-                        case 12:
-                            screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
-                            screen.drawImage(map.block['crack1_25'], map.make.selStart, 602);
-
-                            break;
-                        case 13:
-                            screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
-                            screen.drawImage(map.block['crack2_25'], map.make.selStart, 602);
-
-                            break;
-
-                        case 10:
-                            screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
-                            screen.drawImage(map.block['builder'], map.make.selStart, 602);
-                            break;
-
                         case 1:
                             screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
                             screen.drawImage(map.block['wall25'], map.make.selStart, 602);
@@ -367,13 +299,26 @@ function mapInit()
                             screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
                             screen.drawImage(map.block['enemy02_25'], map.make.selStart, 602);
                             break;
+                        
+                        case 10:
+                            screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
+                            screen.drawImage(map.block['builder'], map.make.selStart, 602);
+                            break;
 
                         case 11:
                             screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
                             screen.drawImage(map.block['ice25'], map.make.selStart, 602);
                             break;
+                        
+                        case 12:
+                            screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
+                            screen.drawImage(map.block['crack1_25'], map.make.selStart, 602);
+                            break;
 
-
+                        case 13:
+                            screen.clearRect(map.make.selStart, 602, map.blockSize/2, map.blockSize/2);
+                            screen.drawImage(map.block['crack2_25'], map.make.selStart, 602);
+                            break;
                     }
                     map.make.selStart+=map.blockSize/2;
                 }
@@ -416,25 +361,6 @@ function mapInit()
                 saveF:new text(480,625,'SaveFile'),
                 save:new text(580,625,'SaveDb')
 
-
-            },
-            left:function() //funkcija se izvede ko uporabnik pritisne puscico levo, ikone se premaknejo levo
-            {
-                console.log('left');
-                if(map.make.block>1)
-                {
-                    map.make.block=map.make.block-1;
-                    map.make.panel();
-                }
-            },
-            right:function() //funkcija se izvede ko uporabnik pritisne puscico desno, ikone se premaknejo desno
-            {
-                console.log('right');
-                if(map.make.block<map.make.blockNum-map.make.selNum-1)
-                {
-                    map.make.block=map.make.block+1;
-                    map.make.panel();
-                }
 
             },
             panel:function() //narise orodno vrstico za kreiranje levela
@@ -523,7 +449,6 @@ function mapInit()
                     game.console.out('One end allowed.');
                     ok=false;
                 }
-
                 return ok;
 
             },
@@ -540,12 +465,11 @@ function mapInit()
                 map.draw25();
                 map.make.checkSelect();
 
-
                 if (mouse.canvasCoord.y < 600 && mapa.y <= 24)
                 {
                     map.make.drawCurBlock(curPos.x,curPos.y);
-
                     document.body.style.cursor="none";
+                    
                     if (mouse.button.right == true) //ce pritisnes desno tipko zbrise blok
                     {
                         map.make.level[mapa.y][mapa.x] = 0;
@@ -554,7 +478,6 @@ function mapInit()
 
                     if (mouse.button.left == true)
                     {
-
                         switch(map.make.curBlock)
                         {
                             case 1:
@@ -591,7 +514,6 @@ function mapInit()
                                 map.make.level[mapa.y][mapa.x] = 1;
                                 screen.clearRect(curPos.x, curPos.y, newBlockSize, newBlockSize);
                                 screen.drawImage(map.block['player25'], curPos.x, curPos.y);
-
                                 break;
 
                             case 7:
@@ -629,23 +551,19 @@ function mapInit()
                                 screen.clearRect(curPos.x, curPos.y, newBlockSize, newBlockSize);
                                 screen.drawImage(map.block['crack1_25'], curPos.x, curPos.y);
                                 break;
+                            
                             case 13:
                                 map.make.level[mapa.y][mapa.x] = 99;
                                 screen.clearRect(curPos.x, curPos.y, newBlockSize, newBlockSize);
                                 screen.drawImage(map.block['crack2_25'], curPos.x, curPos.y);
                                 break;
-
-
-
-
-
                         }
                     }
                 }else
                 {
                     document.body.style.cursor="default";
-
                 }
+
                 map.make.panel();
                 map.level=map.make.level;
                 if(game.session.isActive())
@@ -658,13 +576,7 @@ function mapInit()
                             map.make.levelString=toMapString(map.make.level);    
 
                             ajaxGet(function (num){map.make.saveLevel(game.session.username,num);},'getLowLevelNum.php','username='+game.session.username);
-                            /*    if(map.make.saveLevel(game.session.username))
-                            {
-                                                       game.console.out('Level saved');
-
-                            } 
-*/
-                        }
+                       }
 
                     }
                 }
@@ -695,34 +607,23 @@ function mapInit()
                         mouse.click.left=false;
                         map.make.select.page=2;
                     }
-
-
-
                 }
 
                 if(map.make.button.back.isClicked())
                 {
-                    //if(typeof progress != 'undefined')
-                    // {
-                    //     game.form.show();
-                    // }
-                    game.reset();
-                    //  console.log('ja');
-                    //  enemy01.resetAll();
-                    map.make.flag=false;
+                   game.reset();
+                   map.make.flag=false;
                     map.make.loop=false;
                     map.make.levelString=toMapString(map.make.level);
                     game.clear();
-                    //  map.keys.reset();
-                    game.menu.loop=true;
+                     game.menu.loop=true;
                     game.menu.main();
 
                 }
                 if(map.make.button.clear.isClicked())
                 {
                     game.reset();
-                    //  enemy01.resetAll();
-                    game.clear();
+                     game.clear();
                     map.make.level=toArray(emptyLevel);
                     map.make.panel();
 
@@ -737,17 +638,12 @@ function mapInit()
                         map.make.loop=false;
                         game.loop=true;
                         game.reset();
-                        //enemy01.resetAll();
-                        game.clear();
+                       game.clear();
                         map.level=map.make.level;
-                        // map.keys.reset();
                         game.init();
-                        //  player.getStartCoord();
                         map.draw50();
                         map.drawPanel();
-                        //  enemy01.patrolAll();
-                        //   map.level[player.mapCoord.y][player.mapCoord.x]=0; //nastavi zacetno polje igralca na 0
-                        game.start();
+                       game.start();
                     }            
 
 
@@ -1063,14 +959,10 @@ function mapInit()
                     if (this.num == 0)
                     {
                         player.inventory.remove(player.inventory.getIndex('Key02_25x25'));
-
-                        // player.inventory.remove()
                         this.taken = false;
                     }else
                     {
                         player.inventory.update(player.inventory.getIndex('Key02_25x25.png'),map.keys.key_2.num);
-
-
                     }
                 }
             },
