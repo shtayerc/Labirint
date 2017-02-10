@@ -13,6 +13,7 @@ function playerInit()
         dir:'down',
         canAttack:true,
         lastDir:'',
+        fall:false,
         attack:function(dir)
         {
             var speed=120;
@@ -682,8 +683,11 @@ function playerInit()
 
         draw:function()
         {
+            if(player.fall==false)
+            {       
             screen.drawImage(player.img, player.canvasCoord.x, player.canvasCoord.y);
-        },
+            }
+            },
 
         drawHp:function()
         {

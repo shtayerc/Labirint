@@ -4,6 +4,55 @@ function gameInit()
         loop:true,
         tickCount:0,
         tick:50,
+        over:function()
+        {
+            map.clear();
+            map.draw50();
+            map.drawPanel();
+            screen.font = "50px Arial";
+            screen.fillStyle = "red";
+            screen.textAlign = "center";
+            screen.fillText('Game over', canvas.width / 2, canvas.height / 2);
+            screen.textAlign = "start";
+            game.loop=false;
+            sound.drawButton();
+            sound.checkButton();
+
+            if(map.button.back.isClicked())
+            {
+
+                if(map.make.flag==true)
+                {
+                    game.reset();
+                    game.loop=false;
+                    game.clear();
+                    map.level=toArray(map.make.levelString);
+                    map.make.level=  toArray(map.make.levelString);
+                    map.clear();
+                    map.draw25();
+                    map.make.panel();
+                    map.make.loop=true;
+                    map.make.newLevel();
+                }else
+                {
+                    game.reset();
+                    game.loop=false;
+                    game.menu.loop=true;
+                    game.clear();
+                    game.menu.main();
+                }
+
+                //  console.log('back');
+            }else if(map.button.restart.isClicked())
+            {
+                game.loop=true;
+                map.restart();
+                game.start();           
+            }else if(game.loop==false)
+            {
+                setTimeout(game.over,50);
+            }
+        },
         session:{
             username:'',
             progress:'',
@@ -56,6 +105,7 @@ function gameInit()
             map.keys.reset();
             player.lastDir="";
             player.hp=100;
+            player.fall=false;
 
         },
         init:function()
@@ -68,7 +118,7 @@ function gameInit()
         {
             if(game.session.isActive())
             {
-                ajaxSend('http://www2.scptuj.si/~murko.david1/Labirint/index.php','newprogress='+map.levelIndex+'&username='+username);
+                ajaxSend('http://www2.scptuj.si/~murko.david1/Labirint/index.php','newprogress='+map.levelIndex+'&username='+game.session.username);
             }
         },
         form:{
@@ -157,7 +207,7 @@ function gameInit()
                     {
                         game.load.levels.list[i]={lvl:new text(250,i*50+50,game.load.levels.name[i]), del:new text(350,i*50+50,'Delete')};    
                     }
-               },
+                },
                 draw:function()
                 {
                     for(var i=0;i<game.load.levels.name.length;i=i+1)
@@ -210,7 +260,7 @@ function gameInit()
             {
                 if(game.session.serverUp==true)
                 {
-                   if(game.session.isActive())
+                    if(game.session.isActive())
                     {
                         game.form.hide();
                         map.levelIndex=game.session.progress;
@@ -333,7 +383,7 @@ function gameInit()
                         map.level[player.mapCoord.y][player.mapCoord.x+1]=3;
                         break;
                 }
-                
+
                 break;
 
                 case 4: //ice
@@ -360,7 +410,9 @@ function gameInit()
                 break;
 
                 case 99: //crack_2
-                map.restart();
+                map.level[player.mapCoord.y][player.mapCoord.x]=null;
+                player.fall=true;
+                player.hp=0;    
                 break;
 
                 case 10: //end
@@ -513,15 +565,15 @@ function gameInit()
 
             if(player.isDead())
             {
-                player.hp=100;
-                map.restart();
-                player.drawHp();
+                game.over();
+                //  player.hp=100;
+                //   map.restart();
             }
             enemy01.patrolAll();
             enemy02.patrolAll();   
             enemy03.patrolAll();
             enemy03.animation();
-            
+
             game.tickCount=game.tickCount+game.tick;
             if(game.tickCount>30000)
             {
