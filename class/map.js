@@ -465,7 +465,7 @@ function mapInit()
                 map.draw25();
                 map.make.checkSelect();
 
-                if (mouse.canvasCoord.y < 600 && mapa.y <= 24)
+                if (mouse.canvasCoord.y < 600 && mapa.y <= 24 && mouse.canvasCoord.x<800)
                 {
                     map.make.drawCurBlock(curPos.x,curPos.y);
                     document.body.style.cursor="none";

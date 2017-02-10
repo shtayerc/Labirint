@@ -52,7 +52,10 @@ function enemy02Init(){
 
     enemy_02.prototype.move=function(dir) //premakne izbrani objekt tipa enemy01 v smer podano v parametru(string npr.: 'right')
     {
-        map.level[this.mapCoord.y][this.mapCoord.x]=0;
+        if( map.level[this.mapCoord.y][this.mapCoord.x]!=3) //fixed disapearing builder bug
+        {
+            map.level[this.mapCoord.y][this.mapCoord.x]=0;
+        }
         switch(dir)
         {
             case 'up':

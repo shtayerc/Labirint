@@ -804,7 +804,7 @@ function playerInit()
             {
                 return false;
             }
-            if (map.level[nextBlock.y][nextBlock.x] != 2 && map.level[nextBlock.y][nextBlock.x] != 8 
+           if (map.level[nextBlock.y][nextBlock.x] != 2 && map.level[nextBlock.y][nextBlock.x] != 8 
                 && map.level[nextBlock.y][nextBlock.x] != 6 && map.level[nextBlock.y][nextBlock.x] != 13)
                 //ce naslednji blok ni zid, ali kljucavnica vrne true
             {

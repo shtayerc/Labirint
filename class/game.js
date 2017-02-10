@@ -66,7 +66,7 @@ function gameInit()
         },
         saveProgress:function()
         {
-            if(typeof progress!= 'undefined')
+            if(game.session.isActive())
             {
                 ajaxSend('http://www2.scptuj.si/~murko.david1/Labirint/index.php','newprogress='+map.levelIndex+'&username='+username);
             }
@@ -333,6 +333,7 @@ function gameInit()
                         map.level[player.mapCoord.y][player.mapCoord.x+1]=3;
                         break;
                 }
+                
                 break;
 
                 case 4: //ice
