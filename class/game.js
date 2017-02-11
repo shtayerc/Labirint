@@ -4,6 +4,15 @@ function gameInit()
         loop:true,
         tickCount:0,
         tick:50,
+        checkBrowser:function()
+        {
+            if(navigator.userAgent.indexOf('Firefox')==-1)
+            {
+                 c="Suported browser is firefox, some function may not work as expected";
+
+                document.getElementById('err').innerHTML=c;
+                       }
+        },
         over:function()
         {
             map.clear();

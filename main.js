@@ -12,7 +12,9 @@ function main()
     playerInit();
     gameInit();
     game.session.checkServer();
-    map.loading();   
+    game.checkBrowser();
+    map.loading();
+
 
 }
 
