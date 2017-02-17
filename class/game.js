@@ -24,7 +24,7 @@ function gameInit()
                 document.getElementById('err').innerHTML=c;
            }else
            {
-                document.getElementById('err').innerHTML=document.getElementById('err').innerHTML+'\n'+c;
+                document.getElementById('err').innerHTML=document.getElementById('err').innerHTML+'<br>'+c;
            }
             }else
             {
