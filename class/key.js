@@ -33,15 +33,19 @@ function keyInit()
 
         onDown:function(event) {
             if (event.keyCode == 39) {
+                event.preventDefault();
                 key.right = true;
             }
             else if (event.keyCode == 37) {
+                event.preventDefault();
                 key.left = true;
             }
             else if (event.keyCode == 38) {
+                event.preventDefault();
                 key.up = true;
             }
             else if (event.keyCode == 40) {
+                event.preventDefault();
                 key.down = true;
             }else
             {
