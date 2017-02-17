@@ -8,10 +8,25 @@ function gameInit()
         {
             if(navigator.userAgent.indexOf('Firefox')==-1)
             {
-                 c="Suported browser is firefox, some function may not work as expected";
+                var c="Suported browser is firefox, some function may not work as expected";
 
                 document.getElementById('err').innerHTML=c;
                        }
+        },
+        checkPopUp:function()
+        {
+        var win=window.open('');
+            if(!win)
+            {
+            var c="For loading files enable pop up windows";
+           if(document.getElementById('err').innerHTML=='')
+           {
+                document.getElementById('err').innerHTML=c;
+           }else
+           {
+                document.getElementById('err').innerHTML=document.getElementById('err').innerHTML+'\n'+c;
+           }
+            }
         },
         over:function()
         {
