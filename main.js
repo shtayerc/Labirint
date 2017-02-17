@@ -13,6 +13,7 @@ function main()
     gameInit();
     game.session.checkServer();
     game.checkBrowser();
+    game.checkPopUp();
     map.loading();
 
 
