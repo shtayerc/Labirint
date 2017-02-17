@@ -26,8 +26,10 @@ function gameInit()
            {
                 document.getElementById('err').innerHTML=document.getElementById('err').innerHTML+'\n'+c;
            }
-            }
+            }else
+            {
             win.close();
+            }
         },
         over:function()
         {
