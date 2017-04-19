@@ -6,6 +6,7 @@ function enemy03Init(){
         dmg:99,
         mapNum:13,
         animationSpeed:200,
+        attack:false,
         speed:300, //ms
         add:function(startCoordX,startCoordY)
         {
@@ -30,6 +31,8 @@ function enemy03Init(){
                 var vmes;
                 for(var i=0;i<enemy03.list.length;i=i+1)
                 {
+                    if(enemy03.list[i].attack==false)
+                    {
                     switch(enemy03.list[i].dir)
                     {
                         case 'up':
@@ -67,6 +70,26 @@ function enemy03Init(){
                         enemy03.list[i].img=map.block['enemy03'+vmes+'0'];
 
                     }
+                    }else
+                    {
+                        switch(enemy03.list[i].num)
+                        {
+                            case 0:
+                                enemy03.list[i].img=map.block['enemy03Att0'];
+                                break;
+                            case 1:
+                                if(enemy03.list[i].mapCoord.y==player.mapCoord.y && enemy03.list[i].mapCoord.x+1==player.mapCoord.x)
+                                {
+                                player.hp=player.hp-10;
+                                }
+                                enemy03.list[i].img=map.block['enemy03Att1'];
+                                break;
+                            case 2:
+                                enemy03.list[i].img=map.block['enemy03R0'];
+                                break;
+                        }
+                    }
+
                     enemy03.list[i].num+=1;
                     if(enemy03.list[i].num==3)
                     {
@@ -105,6 +128,7 @@ function enemy03Init(){
         this.mapCoord=new coord(startCoordX,startCoordY);     //v new so koordinati dimenzionalnega polja
         this.img=map.block['enemy03F1'];
         this.hp=100;
+        this.attack=false;
         this.isMoving=false;
         this.dir='right';
         this.num=0;
@@ -231,7 +255,8 @@ function enemy03Init(){
         }
         if(nextBlock.y == player.mapCoord.y && player.mapCoord.x == nextBlock.x)
         {
-            console.log('attack');
+            this.attack=true;
+           // console.log('attack');
         }
     }
 
