@@ -62,8 +62,10 @@ function soundInit()
         },
         loadSounds:function()
         {
-
-
+            //console.log('load');
+            sound.add('key',path+'sounds/KeyPickup.wav');
+            sound.add('lock',path+'sounds/LockUnlock.wav');
+            sound.add('walk',path+'sounds/walk2.wav');
         }
 
     };

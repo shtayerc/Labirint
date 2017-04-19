@@ -1,10 +1,11 @@
 function main()
 {
     createCanvas();
+    soundInit();
     levelsInit();
     keyInit();
     mapInit();
-    map.loadBlocks();   
+    map.loadBlocks();
     enemyInit();
     enemy02Init();
     enemy03Init();
@@ -14,6 +15,7 @@ function main()
     game.session.checkServer();
     game.checkBrowser();
     game.checkPopUp();
+    sound.loadSounds();
     map.loading();
 
 

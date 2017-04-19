@@ -379,7 +379,8 @@ function playerInit()
         },
 
         move:function(dir)
-        {   
+        {
+            sound.play('walk');
             if(player.lastDir==dir)
             {
                 player.movingFrame.start.y=player.movingFrame.start.y+player.movingFrame.yCh;

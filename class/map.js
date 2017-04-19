@@ -906,6 +906,7 @@ function mapInit()
                 pickUp:function() //funkcija se klice ko je igralec bloku key_1
                 {
                     map.level[player.mapCoord.y][player.mapCoord.x] = 0;
+                    sound.play('key');
                     this.num = this.num + 1;
                     if (this.num == 1)
                     {
@@ -921,6 +922,7 @@ function mapInit()
                 unlock:function()
                 {
                     map.level[player.mapCoord.y][player.mapCoord.x] = 0;
+                    sound.play('lock');
                     this.num = this.num - 1;
                     map.drawPanel();
                     if (this.num == 0)
@@ -940,6 +942,7 @@ function mapInit()
                 pickUp:function()
                 {
                     map.level[player.mapCoord.y][player.mapCoord.x] = 0;
+                    sound.play('key');
                     this.num = this.num + 1;
                     if (this.num == 1)
                     {           
@@ -955,6 +958,7 @@ function mapInit()
                 unlock:function()
                 {
                     map.level[player.mapCoord.y][player.mapCoord.x] = 0;
+                    sound.play('lock');
                     this.num = this.num - 1;
                     if (this.num == 0)
                     {
