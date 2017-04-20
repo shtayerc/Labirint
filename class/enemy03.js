@@ -198,6 +198,13 @@ function enemy03Init(){
     enemy_03.prototype.patrol=function() //v tej funkciji je algoritem premikanje enemyja
     {
 
+        if(this.hp<=0)
+        {
+        
+        map.level[this.mapCoord.y][this.mapCoord.x]=0;
+        enemy03.list.splice(enemy03.findByCoord(this.mapCoord.x,this.mapCoord.y),1);
+  
+        }
         var dir='';
         this.isMoving=false;
         if(player.mapCoord.x < this.mapCoord.x)

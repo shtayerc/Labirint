@@ -60,7 +60,7 @@ function playerInit()
                             break;
 
                         case 13:
-                             enemy03.list[enemy03.findByCoord(nextBlock.x,nextBlock.y)].hp-=player.dmg;
+                             enemy03.list[enemy03.findByCoord(nextBlock.x,nextBlock.y)].hp-=2*player.dmg;
                             console.log(enemy03.findByCoord(nextBlock.x,nextBlock.y));
                             break;
                     }
