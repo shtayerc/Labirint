@@ -5,7 +5,7 @@ function playerInit()
         mapCoord:new coord(8,2), //koordinati v polju labirinta
         hp:100,
         dmg:20,
-        speed:4,
+        speed:5,
         img:map.block['playerDown1'],
         movingInterval:0,
         state:0,
