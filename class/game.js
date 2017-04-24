@@ -608,7 +608,8 @@ function gameInit()
             }
             if(game.loop != false)
             {
-                setTimeout(game.start, game.tick);
+             window.requestAnimFrame(game.start);
+                //   setTimeout(game.start, game.tick);
             }
 
         }

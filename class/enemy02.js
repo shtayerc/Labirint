@@ -4,7 +4,7 @@ function enemy02Init(){
         list:[],
         dmg:100,
         mapNum:12,
-        speed:200, //ms, more bit deljivo z game.tick
+        speed:600, //ms, more bit deljivo z game.tick
         add:function(startCoordX,startCoordY)
         {
             enemy02.list[enemy02.list.length]= new enemy_02(startCoordX,startCoordY);
@@ -12,7 +12,8 @@ function enemy02Init(){
 
         findByCoord(x,y) //vrne index polja enemy01.list za podane koordinate
         {
-            for(var i=0;i<enemy02.list.length;i=i+1)
+            var len=enemy02.list.length;
+            for(var i=0;i<len;i=i+1)
             {
                 if(enemy02.list[i].mapCoord.x==x && enemy02.list[i].mapCoord.y==y)
                 {
@@ -33,7 +34,8 @@ function enemy02Init(){
         {
             if(game.tickCount%enemy02.speed==0)
             {
-                for(var i=0;i<enemy02.list.length;i=i+1)
+                var len=enemy02.list.length;
+                for(var i=0;i<len;i=i+1)
                 {
                     enemy02.list[i].patrol();
 

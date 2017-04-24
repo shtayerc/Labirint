@@ -5,9 +5,9 @@ function enemy03Init(){
         list:[],
         dmg:99,
         mapNum:13,
-        animationSpeed:200,
+        animationSpeed:400,
         attack:false,
-        speed:300, //ms
+        speed:1200, //ms
         add:function(startCoordX,startCoordY)
         {
             enemy03.list[enemy03.list.length]= new enemy_03(startCoordX,startCoordY);
@@ -29,7 +29,8 @@ function enemy03Init(){
             if(game.tickCount%enemy03.animationSpeed==0)
             {
                 var vmes;
-                for(var i=0;i<enemy03.list.length;i=i+1)
+                var len=enemy03.list.length;
+                for(var i=0;i<len;i=i+1)
                 {
                     if(enemy03.list[i].attack==false)
                     {
@@ -114,7 +115,8 @@ function enemy03Init(){
         {
             if(game.tickCount%enemy03.speed==0)
             {
-                for(var i=0;i<enemy03.list.length;i=i+1)
+                var len=enemy03.list.length;
+                for(var i=0;i<len;i=i+1)
                 {
                     enemy03.list[i].patrol();
 

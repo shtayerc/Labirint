@@ -5,7 +5,7 @@ function playerInit()
         mapCoord:new coord(8,2), //koordinati v polju labirinta
         hp:100,
         dmg:20,
-        speed:5,
+        speed:4,
         img:map.block['playerDown1'],
         movingInterval:0,
         state:0,
@@ -745,7 +745,8 @@ function playerInit()
         {
             var dist=new coord(0,0);
             var pos=new coord(0,0);
-            for(var i=0;i<enemy01.list.length;i=i+1)
+            var len=enemy01.list.length;
+            for(var i=0;i<len;i=i+1)
             {
                 if(i==0)
                 {

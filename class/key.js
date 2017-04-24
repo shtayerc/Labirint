@@ -7,6 +7,17 @@ function keyInit()
         right:false,
         space:false,
         addEventListeners:function(){
+            window.requestAnimFrame = (function(){
+      return  window.requestAnimationFrame       ||
+              window.webkitRequestAnimationFrame ||
+              window.mozRequestAnimationFrame    ||
+              window.oRequestAnimationFrame      ||
+              window.msRequestAnimationFrame     ||
+              function(/* function */ callback, /* DOMElement */ element){
+                window.setTimeout(callback, 1000 / 30);
+              };
+    })();
+
             document.addEventListener("keydown", key.onDown, false); //poslusa dogodek ko uporabnik stisne tipko
             document.addEventListener("keyup", key.onUp, false); //poslusa dogodek ko uporabnik spusti tipko
             canvas.addEventListener("mousemove", mouse.onMove); //poslusa dogodek ko se misko premakne znotraj canvas in racuna koordinate
