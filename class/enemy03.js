@@ -81,7 +81,7 @@ function enemy03Init(){
                             case 1:
                                 if(enemy03.list[i].mapCoord.y==player.mapCoord.y && enemy03.list[i].mapCoord.x+1==player.mapCoord.x)
                                 {
-                                player.hp=player.hp-10;
+                                player.hp=player.hp-5;
                                 }
                                 enemy03.list[i].img=map.block['enemy03Att1'];
                                 break;
